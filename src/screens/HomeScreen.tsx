@@ -1,46 +1,56 @@
-import { SafeAreaView } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { randomUUID } from 'expo-crypto';
+import { Configuration, OpenAIApi } from 'openai';
 import { useCallback, useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
-import { RootStackParamList } from '../types/navigation';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ChatAI } from '../constants';
 import { useApiKey } from '../hooks/useApiKey';
+import { useOpenAI } from '../hooks/useOpenAI';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
-
-export const HomeScreen = ({}: Props) => {
+export const HomeScreen = () => {
   const tw = useTailwind();
-  const [messages, setMessages] = useState<Array<IMessage>>([]);
-  const [loading, setLoading] = useState(false);
+  const [openAI, setOpenAI] = useState<OpenAIApi | null>(null);
   const { apiKey, loadApiKey } = useApiKey();
+  const { messages, setMessages, loading, sendMessages } = useOpenAI(openAI);
+
   useEffect(() => {
-    loadApiKey();
     setMessages([
       {
-        _id: 1,
-        text: 'Hello developer',
+        _id: randomUUID(),
+        text: 'Waiting for input...',
         createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
+        user: ChatAI,
       },
     ]);
   }, []);
 
-  const onSend = useCallback((messages: Array<IMessage> = []) => {
-    setMessages((previousMessages: Array<IMessage>) =>
-      GiftedChat.append(previousMessages, messages)
-    );
-    setLoading(true);
-  }, []);
+  useEffect(() => {
+    loadApiKey();
+  }, [loadApiKey]);
+
+  useEffect(() => {
+    if (!apiKey) {
+      return;
+    }
+    setOpenAI(new OpenAIApi(new Configuration({ apiKey })));
+  }, [apiKey]);
+
+  const onSend = useCallback(
+    (newMsgs: Array<IMessage> = []) => {
+      if (!openAI) {
+        console.error('openAI is null');
+        return;
+      }
+      sendMessages(newMsgs);
+    },
+    [openAI, sendMessages]
+  );
 
   return (
     <SafeAreaView style={tw('flex-1')}>
       <GiftedChat
-        messages={messages}
+        messages={messages.slice().reverse()}
         onSend={(messages) => onSend(messages)}
         isTyping={loading}
         user={{

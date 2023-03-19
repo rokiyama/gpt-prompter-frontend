@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import 'react-native-url-polyfill/auto';
 import { Provider } from 'react-redux';
 import { TailwindProvider } from 'tailwind-rn';
 import { store } from './src/redux/store';
