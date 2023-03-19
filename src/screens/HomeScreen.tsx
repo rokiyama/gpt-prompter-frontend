@@ -1,9 +1,13 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Text, View } from 'react-native';
+import { useTailwind } from 'tailwind-rn';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { increment, selectCount } from '../redux/slices/exampleSlice';
-import { useTailwind } from 'tailwind-rn';
+import { RootStackParamList } from '../types/navigation';
 
-export const HomeScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+export const HomeScreen = ({}: Props) => {
   const tw = useTailwind();
   const count = useAppSelector(selectCount);
   const dispatch = useAppDispatch();
