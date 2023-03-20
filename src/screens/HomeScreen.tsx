@@ -1,11 +1,9 @@
 import { randomUUID } from 'expo-crypto';
 import { Configuration, OpenAIApi } from 'openai';
 import { useCallback, useEffect, useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { Button, SafeAreaView, View } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
-import { DangerButton } from '../component/DangerButton';
-import { PrimaryButton } from '../component/PrimaryButton';
 import { ChatAI } from '../constants';
 import { useApiKey } from '../hooks/useApiKey';
 import { useOpenAI } from '../hooks/useOpenAI';
@@ -78,14 +76,14 @@ export const HomeScreen = () => {
         }}
         renderChatFooter={() => (
           <View style={tw('flex-row justify-center')}>
-            <PrimaryButton
+            <Button
               title="Reset"
               onPress={() => setMessages([FIRST_MESSAGE])}
             />
-            {loading && <DangerButton title="Cancel" onPress={cancel} />}
-            {speaking && <PrimaryButton title="Stop" onPress={stop} />}
+            {loading && <Button title="Cancel" color="red" onPress={cancel} />}
+            {speaking && <Button title="Stop" color="red" onPress={stop} />}
             {!loading && !speaking && messages.length > 2 && (
-              <PrimaryButton title="Replay" onPress={speakLatestMessage} />
+              <Button title="Replay" onPress={speakLatestMessage} />
             )}
           </View>
         )}
