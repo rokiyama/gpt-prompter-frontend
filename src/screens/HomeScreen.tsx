@@ -41,7 +41,7 @@ export const HomeScreen = () => {
     setOpenAI(new OpenAIApi(new Configuration({ apiKey })));
   }, [apiKey]);
 
-  useEffect(() => {
+  const speakLatestMessage = () => {
     if (messages.length < 2) {
       return;
     }
@@ -50,6 +50,10 @@ export const HomeScreen = () => {
       return;
     }
     speak(latest.text);
+  };
+
+  useEffect(() => {
+    speakLatestMessage();
   }, [messages]);
 
   const onSend = useCallback(
@@ -80,6 +84,9 @@ export const HomeScreen = () => {
             />
             {loading && <DangerButton title="Cancel" onPress={cancel} />}
             {speaking && <PrimaryButton title="Stop" onPress={stop} />}
+            {!loading && !speaking && messages.length > 2 && (
+              <PrimaryButton title="Replay" onPress={speakLatestMessage} />
+            )}
           </View>
         )}
       />

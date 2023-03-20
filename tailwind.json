@@ -7,6 +7,11 @@
 			"marginLeft": 4
 		}
 	},
+	"mb-2": {
+		"style": {
+			"marginBottom": 8
+		}
+	},
 	"flex-1": {
 		"style": {
 			"flexGrow": 1,
