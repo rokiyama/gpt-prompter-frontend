@@ -12,9 +12,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
     useState<AbortController | null>(null);
 
   const sendMessages = useCallback(
-    async (newMsgs: Array<IMessage>) => {
-      const allMessages = [...messages, ...newMsgs];
-      setMessages(allMessages);
+    async (messages: Array<IMessage>) => {
       if (!openAI) {
         return;
       }
@@ -27,7 +25,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
             model: 'gpt-3.5-turbo',
             messages: [
               { role: 'system', content: 'You are a helpful assistant.' },
-              ...[...messages, ...newMsgs].map(
+              ...[...messages].map(
                 (m): ChatCompletionRequestMessage => ({
                   role: m.user._id === ChatAI._id ? 'assistant' : 'user',
                   content: m.text,
@@ -42,7 +40,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
           console.log(JSON.stringify(res.data));
         }
         setMessages([
-          ...allMessages,
+          ...messages,
           {
             _id: randomUUID(),
             text: res.data.choices[0].message?.content || '',
@@ -58,9 +56,8 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
         }
       }
       setLoading(false);
-      console.log(messages);
     },
-    [openAI, messages, setMessages]
+    [openAI, setMessages]
   );
 
   const cancel = useCallback(() => {

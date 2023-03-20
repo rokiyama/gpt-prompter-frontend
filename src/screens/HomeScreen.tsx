@@ -26,7 +26,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     setMessages([FIRST_MESSAGE]);
-  }, []);
+  }, [setMessages]);
 
   useEffect(() => {
     loadApiKey();
@@ -39,7 +39,7 @@ export const HomeScreen = () => {
     setOpenAI(new OpenAIApi(new Configuration({ apiKey })));
   }, [apiKey]);
 
-  const speakLatestMessage = () => {
+  const speakLatestMessage = useCallback(() => {
     if (messages.length < 2) {
       return;
     }
@@ -48,21 +48,19 @@ export const HomeScreen = () => {
       return;
     }
     speak(latest.text);
-  };
+  }, [messages, speak]);
 
   useEffect(() => {
     speakLatestMessage();
-  }, [messages]);
+  }, [messages, speakLatestMessage]);
 
   const onSend = useCallback(
     (newMsgs: Array<IMessage> = []) => {
-      if (!openAI) {
-        console.error('openAI is null');
-        return;
-      }
-      sendMessages(newMsgs);
+      const allMessages = [...messages, ...newMsgs];
+      setMessages(allMessages);
+      sendMessages(allMessages);
     },
-    [openAI, sendMessages]
+    [messages, sendMessages, setMessages]
   );
 
   return (
@@ -84,6 +82,9 @@ export const HomeScreen = () => {
             {speaking && <Button title="Stop" color="red" onPress={stop} />}
             {!loading && !speaking && messages.length > 2 && (
               <Button title="Replay" onPress={speakLatestMessage} />
+            )}
+            {!loading && !speaking && messages.length > 1 && (
+              <Button title="Resend" onPress={() => sendMessages(messages)} />
             )}
           </View>
         )}
