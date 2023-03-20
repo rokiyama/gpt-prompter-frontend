@@ -1,5 +1,7 @@
-export const ChatAI = {
+import { User } from 'react-native-gifted-chat';
+
+export const ChatAI: User = {
   _id: 2,
   name: 'ChatGPT',
-  avatar: 'https://placeimg.com/140/140/any',
+  avatar: 'https://chat.openai.com/apple-touch-icon.png',
 };
