@@ -3,7 +3,7 @@ import { randomUUID } from 'expo-crypto';
 import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
 import { useCallback, useState } from 'react';
 import { IMessage } from 'react-native-gifted-chat';
-import { ChatAI } from '../constants';
+import { CHAT_AI, FIRST_MESSAGE, SYSTEM } from '../constants';
 
 export const useOpenAI = (openAI: OpenAIApi | null) => {
   const [messages, setMessages] = useState<Array<IMessage>>([]);
@@ -19,19 +19,25 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
       setLoading(true);
       const ac = new AbortController();
       setAbortController(ac);
+      const content = [
+        ...[...messages.filter((m) => m._id !== FIRST_MESSAGE._id)].map(
+          (m): ChatCompletionRequestMessage => ({
+            role:
+              m.user._id === CHAT_AI._id
+                ? 'assistant'
+                : m.user._id === SYSTEM._id
+                ? 'system'
+                : 'user',
+            content: m.text,
+          })
+        ),
+      ];
+      console.log(content);
       try {
         const res = await openAI.createChatCompletion(
           {
             model: 'gpt-3.5-turbo',
-            messages: [
-              { role: 'system', content: 'You are a helpful assistant.' },
-              ...[...messages].map(
-                (m): ChatCompletionRequestMessage => ({
-                  role: m.user._id === ChatAI._id ? 'assistant' : 'user',
-                  content: m.text,
-                })
-              ),
-            ],
+            messages: content,
           },
           { signal: ac.signal }
         );
@@ -45,7 +51,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
             _id: randomUUID(),
             text: res.data.choices[0].message?.content || '',
             createdAt: new Date(),
-            user: ChatAI,
+            user: CHAT_AI,
           },
         ]);
       } catch (err) {

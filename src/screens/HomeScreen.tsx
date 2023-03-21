@@ -1,20 +1,13 @@
 import { randomUUID } from 'expo-crypto';
 import { Configuration, OpenAIApi } from 'openai';
 import { useCallback, useEffect, useState } from 'react';
-import { Button, SafeAreaView, View } from 'react-native';
+import { Alert, Button, SafeAreaView, View } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
-import { ChatAI } from '../constants';
+import { CHAT_AI, FIRST_MESSAGE, SYSTEM } from '../constants';
 import { useApiKey } from '../hooks/useApiKey';
 import { useOpenAI } from '../hooks/useOpenAI';
 import { useSpeech } from '../hooks/useSpeech';
-
-const FIRST_MESSAGE = {
-  _id: randomUUID(),
-  text: 'Waiting for input...',
-  createdAt: new Date(),
-  user: ChatAI,
-};
 
 export const HomeScreen = () => {
   const tw = useTailwind();
@@ -44,7 +37,7 @@ export const HomeScreen = () => {
       return;
     }
     const latest = messages[messages.length - 1];
-    if (latest.user._id !== ChatAI._id) {
+    if (latest.user._id !== CHAT_AI._id) {
       return;
     }
     speak(latest.text);
@@ -56,12 +49,29 @@ export const HomeScreen = () => {
 
   const onSend = useCallback(
     (newMsgs: Array<IMessage> = []) => {
+      console.log(newMsgs);
       const allMessages = [...messages, ...newMsgs];
       setMessages(allMessages);
       sendMessages(allMessages);
     },
     [messages, sendMessages, setMessages]
   );
+
+  const sendSystemMessage = () => {
+    Alert.prompt('Input system message:', '', (input) => {
+      if (input) {
+        setMessages([
+          ...messages,
+          {
+            _id: randomUUID(),
+            createdAt: Date.now(),
+            text: input,
+            user: SYSTEM,
+          },
+        ]);
+      }
+    });
+  };
 
   return (
     <SafeAreaView style={tw('flex-1')}>
@@ -74,6 +84,7 @@ export const HomeScreen = () => {
         }}
         renderChatFooter={() => (
           <View style={tw('flex-row justify-center')}>
+            {!loading && <Button title="System" onPress={sendSystemMessage} />}
             <Button
               title="Reset"
               onPress={() => setMessages([FIRST_MESSAGE])}
