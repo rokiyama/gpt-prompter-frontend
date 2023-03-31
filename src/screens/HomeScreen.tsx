@@ -1,13 +1,14 @@
 import { randomUUID } from 'expo-crypto';
 import { Configuration, OpenAIApi } from 'openai';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Button, SafeAreaView, View } from 'react-native';
+import { Alert, SafeAreaView, View } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { CHAT_AI, FIRST_MESSAGE, SYSTEM } from '../constants';
 import { useApiKey } from '../hooks/useApiKey';
 import { useOpenAI } from '../hooks/useOpenAI';
 import { useSpeech } from '../hooks/useSpeech';
+import { Button } from '../component/Button';
 
 export const HomeScreen = () => {
   const tw = useTailwind();

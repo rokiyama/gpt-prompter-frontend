@@ -17,5 +17,6 @@ export const FIRST_MESSAGE = {
   _id: randomUUID(),
   text: 'Waiting for input...',
   createdAt: new Date(),
-  user: CHAT_AI,
+  user: SYSTEM,
+  system: true,
 };
