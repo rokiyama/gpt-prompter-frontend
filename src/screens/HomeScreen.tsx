@@ -16,7 +16,7 @@ export const HomeScreen = () => {
   const { apiKey, loadApiKey } = useApiKey();
   const { messages, setMessages, loading, sendMessages, cancel } =
     useOpenAI(openAI);
-  const { speaking, speak, stop } = useSpeech();
+  // const { speaking, speak, stop } = useSpeech();
 
   useEffect(() => {
     setMessages([FIRST_MESSAGE]);
@@ -33,20 +33,20 @@ export const HomeScreen = () => {
     setOpenAI(new OpenAIApi(new Configuration({ apiKey })));
   }, [apiKey]);
 
-  const speakLatestMessage = useCallback(() => {
-    if (messages.length < 2) {
-      return;
-    }
-    const latest = messages[messages.length - 1];
-    if (latest.user._id !== CHAT_AI._id) {
-      return;
-    }
-    speak(latest.text);
-  }, [messages, speak]);
+  // const speakLatestMessage = useCallback(() => {
+  //   if (messages.length < 2) {
+  //     return;
+  //   }
+  //   const latest = messages[messages.length - 1];
+  //   if (latest.user._id !== CHAT_AI._id) {
+  //     return;
+  //   }
+  //   speak(latest.text);
+  // }, [messages, speak]);
 
-  useEffect(() => {
-    speakLatestMessage();
-  }, [messages, speakLatestMessage]);
+  // useEffect(() => {
+  //   speakLatestMessage();
+  // }, [messages, speakLatestMessage]);
 
   const onSend = useCallback(
     (newMsgs: Array<IMessage> = []) => {
@@ -91,11 +91,11 @@ export const HomeScreen = () => {
               onPress={() => setMessages([FIRST_MESSAGE])}
             />
             {loading && <Button title="Cancel" color="red" onPress={cancel} />}
-            {speaking && <Button title="Stop" color="red" onPress={stop} />}
+            {/* {speaking && <Button title="Stop" color="red" onPress={stop} />}
             {!loading && !speaking && messages.length > 2 && (
               <Button title="Replay" onPress={speakLatestMessage} />
-            )}
-            {!loading && !speaking && messages.length > 1 && (
+            )} */}
+            {!loading && /*!speaking &&*/ messages.length > 1 && (
               <Button title="Resend" onPress={() => sendMessages(messages)} />
             )}
           </View>
