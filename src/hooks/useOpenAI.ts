@@ -3,7 +3,7 @@ import { randomUUID } from 'expo-crypto';
 import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
 import { useCallback, useState } from 'react';
 import { IMessage } from 'react-native-gifted-chat';
-import { CHAT_AI, FIRST_MESSAGE, SYSTEM } from '../constants';
+import { CHAT_AI, SYSTEM } from '../constants';
 
 export const useOpenAI = (openAI: OpenAIApi | null) => {
   const [messages, setMessages] = useState<Array<IMessage>>([]);
@@ -20,7 +20,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
       const ac = new AbortController();
       setAbortController(ac);
       const content = [
-        ...[...messages.filter((m) => m._id !== FIRST_MESSAGE._id)].map(
+        ...messages.map(
           (m): ChatCompletionRequestMessage => ({
             role:
               m.user._id === CHAT_AI._id
