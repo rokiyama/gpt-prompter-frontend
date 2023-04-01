@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { randomUUID } from 'expo-crypto';
 import { Configuration, OpenAIApi } from 'openai';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, PlatformColor, SafeAreaView, Text, View } from 'react-native';
+import { Alert, Platform, SafeAreaView, Text, View } from 'react-native';
 import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { AlertModal } from '../component/AlertModal';
@@ -130,11 +130,15 @@ export const HomeScreen = ({ navigation }: Props) => {
           user={{
             _id: 1,
           }}
-          placeholder=""
+          placeholder={i18n.t('sendMessage')}
           renderSend={(props) => (
             <Send {...props}>
               <View style={tw('m-2')}>
-                <Ionicons name="send" size={25} color={PlatformColor('link')} />
+                <Ionicons
+                  name="send"
+                  size={25}
+                  color={Platform.OS === 'android' ? '#2196F3' : '#007AFF'}
+                />
               </View>
             </Send>
           )}
