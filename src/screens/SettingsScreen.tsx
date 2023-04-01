@@ -1,38 +1,33 @@
-import { useState } from 'react';
-import { Modal, StyleSheet, Text, TextInput, View } from 'react-native';
-import { SafeAreaView } from 'react-native';
+import { useMemo, useState } from 'react';
+import { SafeAreaView, Text } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
+import { ApiKeyModal } from '../component/ApiKeyModal';
 import { Button } from '../component/Button';
+import { i18n } from '../i18n';
+import { useAppSelector } from '../redux/hooks';
+import { selectApiKey } from '../redux/slices/settingsSlice';
 
 export const SettingsScreen = () => {
   const tw = useTailwind();
-  const [text, onChangeText] = useState('Text input');
   const [modalVisible, setModalVisible] = useState(false);
+  const apiKey = useAppSelector(selectApiKey);
+  const masked = useMemo(
+    () =>
+      apiKey
+        ? apiKey.split('').map((c, i) => (i < 3 ? c : '*'))
+        : i18n.t('notSet'),
+    [apiKey]
+  );
 
   return (
-    <SafeAreaView>
-      <TextInput onChangeText={onChangeText} value={text} />
-      <Button title="Open modal" onPress={() => setModalVisible(true)} />
-      <Modal visible={modalVisible} transparent animationType="slide">
-        <View style={tw('flex-1 justify-center items-center')}>
-          <View style={[tw('bg-white m-5 p-10 rounded-md'), style.shadow]}>
-            <Text>Hello!</Text>
-            <Button title="Close" onPress={() => setModalVisible(false)} />
-          </View>
-        </View>
-      </Modal>
+    <SafeAreaView style={tw('m-3')}>
+      <Text style={tw('m-2')}>{i18n.t('apiKey')}:</Text>
+      <Text style={tw('m-2 flex-wrap text-slate-400')}>{masked}</Text>
+      <Button
+        title={i18n.t('setApiKey')}
+        onPress={() => setModalVisible(true)}
+      />
+      <ApiKeyModal visible={modalVisible} setVisible={setModalVisible} />
     </SafeAreaView>
   );
 };
-
-const style = StyleSheet.create({
-  shadow: {
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-});

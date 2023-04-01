@@ -1,21 +1,30 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { randomUUID } from 'expo-crypto';
 import { Configuration, OpenAIApi } from 'openai';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, SafeAreaView, Text, View } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
+import { AlertModal } from '../component/AlertModal';
 import { Button } from '../component/Button';
 import { SYSTEM } from '../constants';
-import { useApiKey } from '../hooks/useApiKey';
 import { useOpenAI } from '../hooks/useOpenAI';
 import { i18n } from '../i18n';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { selectApiKey, setApiKey } from '../redux/slices/settingsSlice';
+import { RootStackParamList } from '../types/navigation';
+import { loadApiKey } from '../utils/apiKeyPersistent';
 
-// type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ navigation }: Props) => {
   const tw = useTailwind();
   const [openAI, setOpenAI] = useState<OpenAIApi | null>(null);
-  const { apiKey, loadApiKey } = useApiKey();
+  // const { apiKey } = useApiKey();
+  const apiKey = useAppSelector(selectApiKey);
+  const dispatch = useAppDispatch();
+  const [alertModalVisible, setAlertModalVisible] = useState(false);
+
   const { messages, setMessages, loading, sendMessages, cancel } =
     useOpenAI(openAI);
 
@@ -24,8 +33,15 @@ export const HomeScreen = () => {
   }, [setMessages]);
 
   useEffect(() => {
-    loadApiKey();
-  }, [loadApiKey]);
+    (async () => {
+      const apiKey = await loadApiKey();
+      if (apiKey) {
+        dispatch(setApiKey(apiKey));
+      } else {
+        setAlertModalVisible(true);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (!apiKey) {
@@ -84,6 +100,11 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView style={tw('flex-1 items-center')}>
+      <AlertModal
+        visible={alertModalVisible}
+        setVisible={setAlertModalVisible}
+        onPressOk={() => navigation.push('Settings')}
+      />
       <View>
         <Text style={tw('text-lg mt-10')}>
           {messages.length < 1 ? i18n.t('welcome') : undefined}
