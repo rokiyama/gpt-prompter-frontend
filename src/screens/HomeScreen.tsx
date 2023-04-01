@@ -1,6 +1,6 @@
 import { randomUUID } from 'expo-crypto';
 import { Configuration, OpenAIApi } from 'openai';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, SafeAreaView, Text, View } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
@@ -8,6 +8,7 @@ import { Button } from '../component/Button';
 import { SYSTEM } from '../constants';
 import { useApiKey } from '../hooks/useApiKey';
 import { useOpenAI } from '../hooks/useOpenAI';
+import { i18n } from '../i18n';
 
 export const HomeScreen = () => {
   const tw = useTailwind();
@@ -15,7 +16,6 @@ export const HomeScreen = () => {
   const { apiKey, loadApiKey } = useApiKey();
   const { messages, setMessages, loading, sendMessages, cancel } =
     useOpenAI(openAI);
-  // const { speaking, speak, stop } = useSpeech();
 
   useEffect(() => {
     setMessages([]);
@@ -32,6 +32,7 @@ export const HomeScreen = () => {
     setOpenAI(new OpenAIApi(new Configuration({ apiKey })));
   }, [apiKey]);
 
+  // const { speaking, speak, stop } = useSpeech();
   // const speakLatestMessage = useCallback(() => {
   //   if (messages.length < 2) {
   //     return;
@@ -42,7 +43,6 @@ export const HomeScreen = () => {
   //   }
   //   speak(latest.text);
   // }, [messages, speak]);
-
   // useEffect(() => {
   //   speakLatestMessage();
   // }, [messages, speakLatestMessage]);
@@ -74,36 +74,56 @@ export const HomeScreen = () => {
     });
   };
 
+  const giftedChatRef = useRef<GiftedChat>(null);
+  useEffect(() => {
+    console.log('focusTextInput');
+    giftedChatRef.current?.focusTextInput();
+  }, []);
+
   return (
     <SafeAreaView style={tw('flex-1 items-center')}>
       <View>
         <Text style={tw('text-lg mt-10')}>
-          {messages.length < 1 ? '何か話してみましょう。' : undefined}
+          {messages.length < 1 ? i18n.t('welcome') : undefined}
         </Text>
       </View>
       <View style={tw('flex-1 flex-row')}>
         <GiftedChat
+          ref={giftedChatRef}
           messages={messages.slice().reverse()}
           onSend={(messages) => onSend(messages)}
           isTyping={loading}
           user={{
             _id: 1,
           }}
+          placeholder=""
           renderChatFooter={() => (
             <View style={tw('flex-row justify-center')}>
               {!loading && (
-                <Button title="System" onPress={sendSystemMessage} />
+                <Button
+                  title={i18n.t('systemMessage')}
+                  onPress={sendSystemMessage}
+                />
               )}
-              <Button title="Reset" onPress={() => setMessages([])} />
+              <Button
+                title={i18n.t('reset')}
+                onPress={() => {
+                  setMessages([]);
+                  giftedChatRef.current?.focusTextInput();
+                }}
+              />
               {loading && (
-                <Button title="Cancel" color="red" onPress={cancel} />
+                <Button title={i18n.t('cancel')} color="red" onPress={cancel} />
               )}
               {/* {speaking && <Button title="Stop" color="red" onPress={stop} />}
             {!loading && !speaking && messages.length > 2 && (
               <Button title="Replay" onPress={speakLatestMessage} />
             )} */}
               {!loading && /*!speaking &&*/ messages.length > 1 && (
-                <Button title="Resend" onPress={() => sendMessages(messages)} />
+                <Button
+                  title={i18n.t('resend')}
+                  onPress={() => sendMessages(messages)}
+                />
               )}
             </View>
           )}
