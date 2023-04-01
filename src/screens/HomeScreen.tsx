@@ -10,6 +10,8 @@ import { useApiKey } from '../hooks/useApiKey';
 import { useOpenAI } from '../hooks/useOpenAI';
 import { i18n } from '../i18n';
 
+// type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
 export const HomeScreen = () => {
   const tw = useTailwind();
   const [openAI, setOpenAI] = useState<OpenAIApi | null>(null);
@@ -91,7 +93,10 @@ export const HomeScreen = () => {
         <GiftedChat
           ref={giftedChatRef}
           messages={messages.slice().reverse()}
-          onSend={(messages) => onSend(messages)}
+          onSend={(messages) => {
+            onSend(messages);
+            giftedChatRef.current?.textInput.blur();
+          }}
           isTyping={loading}
           user={{
             _id: 1,

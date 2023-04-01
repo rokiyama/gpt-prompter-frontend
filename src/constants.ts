@@ -1,5 +1,3 @@
-import { FontAwesome } from '@expo/vector-icons';
-import { randomUUID } from 'expo-crypto';
 import { User } from 'react-native-gifted-chat';
 
 export const CHAT_AI: User = {

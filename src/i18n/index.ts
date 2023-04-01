@@ -8,6 +8,7 @@ export const i18n = new I18n({
     reset: 'Reset',
     cancel: 'Cancel',
     resend: 'Resend',
+    settings: 'Settings',
   },
   ja: {
     welcome: '何か話してみましょう。',
@@ -15,6 +16,7 @@ export const i18n = new I18n({
     reset: 'リセット',
     cancel: '中断',
     resend: '再送信',
+    settings: '設定',
   },
 });
 

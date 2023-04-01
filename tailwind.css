@@ -2,6 +2,18 @@
   margin: 0.25rem
 }
 
+.m-8 {
+  margin: 2rem
+}
+
+.m-5 {
+  margin: 1.25rem
+}
+
+.m-10 {
+  margin: 2.5rem
+}
+
 .mt-10 {
   margin-top: 2.5rem
 }
@@ -14,12 +26,42 @@
   flex-direction: row
 }
 
+.content-center {
+  align-content: center
+}
+
 .items-center {
   align-items: center
 }
 
 .justify-center {
   justify-content: center
+}
+
+.rounded {
+  border-radius: 0.25rem
+}
+
+.rounded-md {
+  border-radius: 0.375rem
+}
+
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity))
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity))
+}
+
+.p-5 {
+  padding: 1.25rem
+}
+
+.p-10 {
+  padding: 2.5rem
 }
 
 .text-lg {

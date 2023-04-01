@@ -4,8 +4,11 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-url-polyfill/auto';
 import { Provider } from 'react-redux';
 import { TailwindProvider } from 'tailwind-rn';
+import { Button } from './src/component/Button';
+import { i18n } from './src/i18n';
 import { store } from './src/redux/store';
 import { HomeScreen } from './src/screens/HomeScreen';
+import { SettingsScreen } from './src/screens/SettingsScreen';
 import { RootStackParamList } from './src/types/navigation';
 import utilities from './tailwind.json';
 
@@ -20,7 +23,20 @@ export default function App() {
             <Stack.Screen
               name="Home"
               component={HomeScreen}
-              options={{ headerShown: false }}
+              options={({ navigation }) => ({
+                headerTitle: 'ChatAI',
+                headerRight: () => (
+                  <Button
+                    title={i18n.t('settings')}
+                    onPress={() => navigation.push('Settings')}
+                  />
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="Settings"
+              component={SettingsScreen}
+              options={{ headerTitle: i18n.t('settings') }}
             />
           </Stack.Navigator>
         </NavigationContainer>
