@@ -1,9 +1,10 @@
+import { Ionicons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { randomUUID } from 'expo-crypto';
 import { Configuration, OpenAIApi } from 'openai';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, SafeAreaView, Text, View } from 'react-native';
-import { GiftedChat, IMessage } from 'react-native-gifted-chat';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, PlatformColor, SafeAreaView, Text, View } from 'react-native';
+import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { AlertModal } from '../component/AlertModal';
 import { Button } from '../component/Button';
@@ -20,17 +21,19 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 export const HomeScreen = ({ navigation }: Props) => {
   const tw = useTailwind();
   const [openAI, setOpenAI] = useState<OpenAIApi | null>(null);
-  // const { apiKey } = useApiKey();
   const apiKey = useAppSelector(selectApiKey);
   const dispatch = useAppDispatch();
   const [alertModalVisible, setAlertModalVisible] = useState(false);
 
-  const { messages, setMessages, loading, sendMessages, cancel } =
-    useOpenAI(openAI);
-
-  useEffect(() => {
-    setMessages([]);
-  }, [setMessages]);
+  const {
+    messages,
+    setMessages,
+    loading,
+    sendMessages,
+    cancel,
+    errorMessage,
+    clearError,
+  } = useOpenAI(openAI);
 
   useEffect(() => {
     (async () => {
@@ -43,10 +46,13 @@ export const HomeScreen = ({ navigation }: Props) => {
     })();
   }, []);
 
+  const giftedChatRef = useRef<GiftedChat>(null);
   useEffect(() => {
-    if (!apiKey) {
-      return;
-    }
+    giftedChatRef.current?.focusTextInput();
+  }, []);
+
+  useEffect(() => {
+    if (!apiKey) return;
     setOpenAI(new OpenAIApi(new Configuration({ apiKey })));
   }, [apiKey]);
 
@@ -65,17 +71,20 @@ export const HomeScreen = ({ navigation }: Props) => {
   //   speakLatestMessage();
   // }, [messages, speakLatestMessage]);
 
-  const onSend = useCallback(
-    (newMsgs: Array<IMessage> = []) => {
-      console.log(newMsgs);
-      const allMessages = [...messages, ...newMsgs];
-      setMessages(allMessages);
-      sendMessages(allMessages);
-    },
-    [messages, sendMessages, setMessages]
-  );
+  const onSend = (newMessages: Array<IMessage>) => {
+    clearError();
+    const allMessages = [...messages, ...newMessages];
+    if (!openAI) {
+      setAlertModalVisible(true);
+      return;
+    }
+    setMessages(allMessages);
+    sendMessages(allMessages);
+    giftedChatRef.current?.textInput.blur();
+  };
 
   const sendSystemMessage = () => {
+    clearError();
     Alert.prompt('Input system message:', '', (input) => {
       if (input) {
         setMessages([
@@ -92,12 +101,6 @@ export const HomeScreen = ({ navigation }: Props) => {
     });
   };
 
-  const giftedChatRef = useRef<GiftedChat>(null);
-  useEffect(() => {
-    console.log('focusTextInput');
-    giftedChatRef.current?.focusTextInput();
-  }, []);
-
   return (
     <SafeAreaView style={tw('flex-1 items-center')}>
       <AlertModal
@@ -105,6 +108,14 @@ export const HomeScreen = ({ navigation }: Props) => {
         setVisible={setAlertModalVisible}
         onPressOk={() => navigation.push('Settings')}
       />
+      {errorMessage && (
+        <View>
+          <Text style={tw('text-lg mt-10 text-red-500')}>
+            {i18n.t('errorOccurred')}:
+          </Text>
+          <Text style={tw('text-lg mb-10 text-red-500')}>{errorMessage}</Text>
+        </View>
+      )}
       <View>
         <Text style={tw('text-lg mt-10')}>
           {messages.length < 1 ? i18n.t('welcome') : undefined}
@@ -114,15 +125,19 @@ export const HomeScreen = ({ navigation }: Props) => {
         <GiftedChat
           ref={giftedChatRef}
           messages={messages.slice().reverse()}
-          onSend={(messages) => {
-            onSend(messages);
-            giftedChatRef.current?.textInput.blur();
-          }}
+          onSend={onSend}
           isTyping={loading}
           user={{
             _id: 1,
           }}
           placeholder=""
+          renderSend={(props) => (
+            <Send {...props}>
+              <View style={tw('m-2')}>
+                <Ionicons name="send" size={25} color={PlatformColor('link')} />
+              </View>
+            </Send>
+          )}
           renderChatFooter={() => (
             <View style={tw('flex-row justify-center')}>
               {!loading && (
@@ -134,6 +149,7 @@ export const HomeScreen = ({ navigation }: Props) => {
               <Button
                 title={i18n.t('reset')}
                 onPress={() => {
+                  clearError();
                   setMessages([]);
                   giftedChatRef.current?.focusTextInput();
                 }}
@@ -148,7 +164,10 @@ export const HomeScreen = ({ navigation }: Props) => {
               {!loading && /*!speaking &&*/ messages.length > 1 && (
                 <Button
                   title={i18n.t('resend')}
-                  onPress={() => sendMessages(messages)}
+                  onPress={() => {
+                    clearError();
+                    sendMessages(messages);
+                  }}
                 />
               )}
             </View>

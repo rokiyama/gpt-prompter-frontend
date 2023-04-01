@@ -17,6 +17,7 @@ export const i18n = new I18n({
     notSet: 'Not set',
     apiKeyIsNotSet:
       'API key is not set. Please set it from the settings screen.',
+    errorOccurred: 'An error has occurred',
   },
   ja: {
     ok: 'OK',
@@ -33,6 +34,7 @@ export const i18n = new I18n({
     notSet: '未設定',
     apiKeyIsNotSet:
       'APIキーが設定されていません。設定画面より設定してください。',
+    errorOccurred: 'エラーが発生しました',
   },
 });
 

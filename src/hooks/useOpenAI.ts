@@ -10,10 +10,12 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
   const [loading, setLoading] = useState(false);
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const sendMessages = useCallback(
     async (messages: Array<IMessage>) => {
       if (!openAI) {
+        console.error('openAI client is null');
         return;
       }
       setLoading(true);
@@ -60,6 +62,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
           console.log('cancelled');
         } else {
           console.error(err);
+          setErrorMessage(String(err));
         }
       }
       setLoading(false);
@@ -75,11 +78,17 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
     abortController.abort();
   }, [abortController]);
 
+  const clearError = useCallback(() => {
+    setErrorMessage('');
+  }, []);
+
   return {
     messages,
     setMessages,
     loading,
     sendMessages,
     cancel,
+    errorMessage,
+    clearError,
   };
 };
