@@ -15,7 +15,7 @@ export const AlertModal = ({ visible, setVisible, onPressOk }: Props) => {
 
   return (
     <Modal visible={visible}>
-      <Text style={tw('m-2')}>{i18n.t('apiKeyIsNotSet')}</Text>
+      <Text style={tw('m-2 text-lg')}>{i18n.t('apiKeyIsNotSet')}</Text>
       <View style={tw('flex-row justify-end')}>
         <Button
           title={i18n.t('settings')}

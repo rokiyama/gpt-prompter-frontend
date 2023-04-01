@@ -116,11 +116,11 @@ export const HomeScreen = ({ navigation }: Props) => {
           <Text style={tw('text-lg mb-10 text-red-500')}>{errorMessage}</Text>
         </View>
       )}
-      <View>
-        <Text style={tw('text-lg mt-10')}>
-          {messages.length < 1 ? i18n.t('welcome') : undefined}
-        </Text>
-      </View>
+      {messages.length < 1 && (
+        <View>
+          <Text style={tw('text-lg mt-10')}>{i18n.t('welcome')}</Text>
+        </View>
+      )}
       <View style={tw('flex-1 flex-row')}>
         <GiftedChat
           ref={giftedChatRef}
@@ -143,7 +143,7 @@ export const HomeScreen = ({ navigation }: Props) => {
             </Send>
           )}
           renderChatFooter={() => (
-            <View style={tw('flex-row justify-center')}>
+            <View style={tw('flex-row justify-center mb-2')}>
               {!loading && (
                 <Button
                   title={i18n.t('systemMessage')}

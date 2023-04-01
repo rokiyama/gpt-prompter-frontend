@@ -1,11 +1,33 @@
-import { useMemo, useState } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { ReactNode, useMemo, useState } from 'react';
+import { Linking, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { ApiKeyModal } from '../component/ApiKeyModal';
 import { Button } from '../component/Button';
 import { i18n } from '../i18n';
 import { useAppSelector } from '../redux/hooks';
 import { selectApiKey } from '../redux/slices/settingsSlice';
+import ParsedText from 'react-native-parsed-text';
+
+const ListText = ({ children }: { children: ReactNode }) => {
+  const tw = useTailwind();
+  const onPress = (url: string) => {
+    Linking.openURL(url);
+  };
+  return (
+    <ParsedText
+      style={tw('m-1 flex-wrap text-slate-500')}
+      parse={[
+        {
+          type: 'url',
+          style: tw('text-blue-400 underline'),
+          onPress,
+        },
+      ]}
+    >
+      {children}
+    </ParsedText>
+  );
+};
 
 export const SettingsScreen = () => {
   const tw = useTailwind();
@@ -28,6 +50,19 @@ export const SettingsScreen = () => {
         onPress={() => setModalVisible(true)}
       />
       <ApiKeyModal visible={modalVisible} setVisible={setModalVisible} />
+      <View style={tw('mt-4')}>
+        <ListText>{i18n.t('apiKeyDescription.0')}</ListText>
+        <ListText>{i18n.t('apiKeyDescription.1')}</ListText>
+        <ListText>{i18n.t('apiKeyDescription.2')}</ListText>
+        <ListText>{i18n.t('apiKeyDescription.3')}</ListText>
+      </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  url: {
+    color: 'red',
+    textDecorationLine: 'underline',
+  },
+});

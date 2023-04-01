@@ -34,9 +34,15 @@ export const i18n = new I18n({
     inputApiKey: 'APIキーを入力してください。',
     notSet: '未設定',
     apiKeyIsNotSet:
-      'APIキーが設定されていません。設定画面より設定してください。',
+      'ChatAIの利用を開始するために、OpenAIのAPIキーを設定しましょう。設定画面より設定してください。',
     errorOccurred: 'エラーが発生しました',
     sendMessage: 'メッセージを送信',
+    apiKeyDescription: [
+      'APIキーとは、OpenAIのAPIを使用するためのキーです。APIキーはOpenAI Platformから生成することができます。',
+      '以下の手順でAPIキーを生成し、コピーしてください。',
+      '・OpenAPI にサインアップする\nhttps://platform.openai.com',
+      '・Menu → View API keys → Create new secret key を選択',
+    ],
   },
 });
 
