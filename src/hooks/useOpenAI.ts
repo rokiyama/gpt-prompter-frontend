@@ -38,6 +38,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
           {
             model: 'gpt-3.5-turbo',
             messages: content,
+            max_tokens: 200,
           },
           { signal: ac.signal }
         );
