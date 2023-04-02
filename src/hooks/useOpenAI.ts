@@ -2,18 +2,21 @@ import axios from 'axios';
 import { randomUUID } from 'expo-crypto';
 import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
 import { useCallback, useState } from 'react';
-import { IMessage } from 'react-native-gifted-chat';
 import { CHAT_AI, SYSTEM } from '../constants';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { addMessages, selectMessages } from '../redux/slices/chatSlice';
+import { Message } from '../types/chat';
 
 export const useOpenAI = (openAI: OpenAIApi | null) => {
-  const [messages, setMessages] = useState<Array<IMessage>>([]);
+  const messages = useAppSelector(selectMessages);
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
 
   const sendMessages = useCallback(
-    async (messages: Array<IMessage>) => {
+    async (messages: Array<Message>) => {
       if (!openAI) {
         console.error('openAI client is null');
         return;
@@ -25,16 +28,15 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
         ...messages.map(
           (m): ChatCompletionRequestMessage => ({
             role:
-              m.user._id === CHAT_AI._id
+              m.user.id === CHAT_AI.id
                 ? 'assistant'
-                : m.user._id === SYSTEM._id
+                : m.user.id === SYSTEM.id
                 ? 'system'
                 : 'user',
             content: m.text,
           })
         ),
       ];
-      console.log(content);
       try {
         const res = await openAI.createChatCompletion(
           {
@@ -48,15 +50,16 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
           console.warn('res.data.choices.length !== 1');
           console.log(JSON.stringify(res.data));
         }
-        setMessages([
-          ...messages,
-          {
-            _id: randomUUID(),
-            text: res.data.choices[0].message?.content || '',
-            createdAt: new Date(),
-            user: CHAT_AI,
-          },
-        ]);
+        dispatch(
+          addMessages([
+            {
+              id: randomUUID(),
+              text: res.data.choices[0].message?.content || '',
+              createdAt: Date.now(),
+              user: CHAT_AI,
+            },
+          ])
+        );
       } catch (err) {
         if (axios.isCancel(err)) {
           console.log('cancelled');
@@ -67,7 +70,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
       }
       setLoading(false);
     },
-    [openAI, setMessages]
+    [openAI, dispatch]
   );
 
   const cancel = useCallback(() => {
@@ -84,7 +87,6 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
 
   return {
     messages,
-    setMessages,
     loading,
     sendMessages,
     cancel,

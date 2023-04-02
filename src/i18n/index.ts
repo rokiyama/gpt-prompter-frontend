@@ -19,6 +19,13 @@ export const i18n = new I18n({
       'API key is not set. Please set it from the settings screen.',
     errorOccurred: 'An error has occurred',
     sendMessage: 'Send a message',
+    apiKeyDescription: [
+      "An API key is a key used to access OpenAI's API. An API key can be generated from the OpenAI Platform.",
+      'Please follow the steps below to generate and copy the API key.',
+      '- Sign up for OpenAPI at https://platform.openai.com .',
+      "- Execute 'Create new secret key' on the page https://platform.openai.com/account/api-keys .",
+    ],
+    confirmSystemMessage: 'Are you sure you want to enter this system message?',
   },
   ja: {
     ok: 'OK',
@@ -40,9 +47,10 @@ export const i18n = new I18n({
     apiKeyDescription: [
       'APIキーとは、OpenAIのAPIを使用するためのキーです。APIキーはOpenAI Platformから生成することができます。',
       '以下の手順でAPIキーを生成し、コピーしてください。',
-      '・OpenAPI にサインアップする\nhttps://platform.openai.com',
-      '・Menu → View API keys → Create new secret key を選択',
+      '・https://platform.openai.com からOpenAPIにサインアップする',
+      '・https://platform.openai.com/account/api-keys のページでCreate new secret keyを実行',
     ],
+    confirmSystemMessage: 'このシステムメッセージを入力しますか？',
   },
 });
 

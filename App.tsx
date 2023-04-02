@@ -9,6 +9,7 @@ import { i18n } from './src/i18n';
 import { store } from './src/redux/store';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
+import { SystemMessageScreen } from './src/screens/SystemMessageScreen';
 import { RootStackParamList } from './src/types/navigation';
 import utilities from './tailwind.json';
 
@@ -37,6 +38,11 @@ export default function App() {
               name="Settings"
               component={SettingsScreen}
               options={{ headerTitle: i18n.t('settings') }}
+            />
+            <Stack.Screen
+              name="SystemMessage"
+              component={SystemMessageScreen}
+              options={{ headerTitle: i18n.t('systemMessage') }}
             />
           </Stack.Navigator>
         </NavigationContainer>

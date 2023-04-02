@@ -25,13 +25,12 @@ export const ApiKeyModal = ({ visible, setVisible }: Props) => {
         style={tw('m-2')}
         onChangeText={setText}
         value={text}
-        placeholder="API Key"
+        placeholder="sk-..."
         multiline
       />
       <View style={tw('flex-row justify-end')}>
         <Button
           title={i18n.t('cancel')}
-          color="red"
           onPress={() => {
             setVisible(false);
             setText('');

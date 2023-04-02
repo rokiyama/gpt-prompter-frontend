@@ -20,7 +20,7 @@ export const Modal = ({ visible, children }: Props) => {
   );
 };
 
-const style = StyleSheet.create({
+export const style = StyleSheet.create({
   shadow: {
     shadowOffset: {
       width: 0,

@@ -10,7 +10,7 @@ const initialState: SettingsState = {
 };
 
 export const settingsSlice = createSlice({
-  name: 'user',
+  name: 'settings',
   initialState,
   reducers: {
     setApiKey: (state, action: PayloadAction<string>) => {
@@ -23,4 +23,4 @@ export const { setApiKey } = settingsSlice.actions;
 
 export const selectApiKey = (state: RootState) => state.settings.apiKey;
 
-export default settingsSlice.reducer;
+// export default settingsSlice.reducer;

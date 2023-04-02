@@ -1,18 +1,19 @@
 import { Ionicons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { randomUUID } from 'expo-crypto';
 import { Configuration, OpenAIApi } from 'openai';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Platform, SafeAreaView, Text, View } from 'react-native';
+import { Platform, SafeAreaView, Text, View } from 'react-native';
 import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { AlertModal } from '../component/AlertModal';
 import { Button } from '../component/Button';
-import { SYSTEM } from '../constants';
+import { USER } from '../constants';
 import { useOpenAI } from '../hooks/useOpenAI';
 import { i18n } from '../i18n';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { addMessages, clearMessages } from '../redux/slices/chatSlice';
 import { selectApiKey, setApiKey } from '../redux/slices/settingsSlice';
+import { toGiftedUser, toIMessage, toMessage } from '../types/chat';
 import { RootStackParamList } from '../types/navigation';
 import { loadApiKey } from '../utils/apiKeyPersistent';
 
@@ -24,16 +25,8 @@ export const HomeScreen = ({ navigation }: Props) => {
   const apiKey = useAppSelector(selectApiKey);
   const dispatch = useAppDispatch();
   const [alertModalVisible, setAlertModalVisible] = useState(false);
-
-  const {
-    messages,
-    setMessages,
-    loading,
-    sendMessages,
-    cancel,
-    errorMessage,
-    clearError,
-  } = useOpenAI(openAI);
+  const { messages, loading, sendMessages, cancel, errorMessage, clearError } =
+    useOpenAI(openAI);
 
   useEffect(() => {
     (async () => {
@@ -73,36 +66,20 @@ export const HomeScreen = ({ navigation }: Props) => {
 
   const onSend = (newMessages: Array<IMessage>) => {
     clearError();
-    const allMessages = [...messages, ...newMessages];
     if (!openAI) {
       setAlertModalVisible(true);
       return;
     }
-    setMessages(allMessages);
+    console.log(newMessages);
+    const news = newMessages.map(toMessage);
+    const allMessages = [...messages, ...news];
+    dispatch(addMessages(news));
     sendMessages(allMessages);
     giftedChatRef.current?.textInput.blur();
   };
 
-  const sendSystemMessage = () => {
-    clearError();
-    Alert.prompt('Input system message:', '', (input) => {
-      if (input) {
-        setMessages([
-          ...messages,
-          {
-            _id: randomUUID(),
-            createdAt: Date.now(),
-            text: input,
-            user: SYSTEM,
-            system: true,
-          },
-        ]);
-      }
-    });
-  };
-
   return (
-    <SafeAreaView style={tw('flex-1 items-center')}>
+    <SafeAreaView style={tw('flex-1 items-center bg-white')}>
       <AlertModal
         visible={alertModalVisible}
         setVisible={setAlertModalVisible}
@@ -124,12 +101,10 @@ export const HomeScreen = ({ navigation }: Props) => {
       <View style={tw('flex-1 flex-row')}>
         <GiftedChat
           ref={giftedChatRef}
-          messages={messages.slice().reverse()}
+          messages={messages.slice().reverse().map(toIMessage)}
           onSend={onSend}
           isTyping={loading}
-          user={{
-            _id: 1,
-          }}
+          user={toGiftedUser(USER)}
           placeholder={i18n.t('sendMessage')}
           renderSend={(props) => (
             <Send {...props}>
@@ -144,17 +119,11 @@ export const HomeScreen = ({ navigation }: Props) => {
           )}
           renderChatFooter={() => (
             <View style={tw('flex-row justify-center mb-2')}>
-              {!loading && (
-                <Button
-                  title={i18n.t('systemMessage')}
-                  onPress={sendSystemMessage}
-                />
-              )}
               <Button
                 title={i18n.t('reset')}
                 onPress={() => {
                   clearError();
-                  setMessages([]);
+                  dispatch(clearMessages());
                   giftedChatRef.current?.focusTextInput();
                 }}
               />
@@ -172,6 +141,12 @@ export const HomeScreen = ({ navigation }: Props) => {
                     clearError();
                     sendMessages(messages);
                   }}
+                />
+              )}
+              {!loading && (
+                <Button
+                  title={i18n.t('systemMessage')}
+                  onPress={() => navigation.push('SystemMessage')}
                 />
               )}
             </View>
