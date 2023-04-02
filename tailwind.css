@@ -30,6 +30,10 @@
   margin-top: 1rem
 }
 
+.flex {
+  display: flex
+}
+
 .flex-1 {
   flex: 1 1 0%
 }
@@ -42,8 +46,16 @@
   flex-wrap: wrap
 }
 
+.items-start {
+  align-items: flex-start
+}
+
 .items-center {
   align-items: center
+}
+
+.justify-start {
+  justify-content: flex-start
 }
 
 .justify-end {
@@ -52,6 +64,10 @@
 
 .justify-center {
   justify-content: center
+}
+
+.justify-between {
+  justify-content: space-between
 }
 
 .rounded-lg {

@@ -16,14 +16,5 @@ export const SYSTEM: User = {
   name: 'system',
 };
 
-export const testdata = {
-  ja: [
-    { id: '0', text: 'あなたは親切なアシスタントです。' },
-    { id: '1', text: '猫になったつもりで会話してください。' },
-    { id: '2', text: '絵文字をたくさん使ってください。' },
-  ],
-  en: [
-    { id: '10', text: 'You are a helpful assistant.' },
-    { id: '11', text: 'Converse as if you were a cat.' },
-  ],
-};
+export const SYSTEM_MESSAGES_URL =
+  'https://gist.githubusercontent.com/rokiyama/a09fd44947da19b1fd5785c43d779073/raw/e39590d3fe05964282ab99dfef29055e2b056e85/gpt-chat-system-messages.json';
