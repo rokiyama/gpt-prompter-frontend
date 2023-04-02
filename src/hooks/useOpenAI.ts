@@ -63,6 +63,11 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
       } catch (err) {
         if (axios.isCancel(err)) {
           console.log('cancelled');
+        } else if (axios.isAxiosError(err)) {
+          console.error('axiosError', err);
+          setErrorMessage(
+            `${err.message}\n${err.response?.data?.error?.message}`
+          );
         } else {
           console.error(err);
           setErrorMessage(String(err));
