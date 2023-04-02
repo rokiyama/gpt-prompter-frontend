@@ -1,8 +1,8 @@
 import { Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
-import { Button } from '../component/Button';
-import { i18n } from '../i18n';
-import { Modal } from './Modal';
+import { Button } from '../atoms/Button';
+import { i18n } from '../../i18n';
+import { Modal } from '../atoms/Modal';
 
 type Props = {
   visible: boolean;

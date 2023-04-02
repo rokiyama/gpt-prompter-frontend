@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-url-polyfill/auto';
 import { Provider } from 'react-redux';
 import { TailwindProvider } from 'tailwind-rn';
-import { Button } from './src/component/Button';
+import { Button } from './src/component/atoms/Button';
 import { i18n } from './src/i18n';
 import { store } from './src/redux/store';
 import { HomeScreen } from './src/screens/HomeScreen';

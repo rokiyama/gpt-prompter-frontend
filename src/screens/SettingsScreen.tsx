@@ -1,8 +1,8 @@
 import { ReactNode, useMemo, useState } from 'react';
 import { Linking, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
-import { ApiKeyModal } from '../component/ApiKeyModal';
-import { Button } from '../component/Button';
+import { ApiKeyModal } from '../component/organisms/ApiKeyModal';
+import { Button } from '../component/atoms/Button';
 import { i18n } from '../i18n';
 import { useAppSelector } from '../redux/hooks';
 import { selectApiKey } from '../redux/slices/settingsSlice';
