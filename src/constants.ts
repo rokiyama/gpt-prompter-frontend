@@ -17,4 +17,4 @@ export const SYSTEM: User = {
 };
 
 export const SYSTEM_MESSAGES_URL =
-  'https://gist.github.com/rokiyama/a09fd44947da19b1fd5785c43d779073/raw/268fc4e798cb4dae7b401e9a3ce58c238c06f275/gpt-chat-system-messages.json';
+  'https://gpt-chat-misc.vercel.app/systemMessage.json';
