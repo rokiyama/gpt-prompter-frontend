@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../atoms/Button';
 import { i18n } from '../../i18n';
@@ -24,9 +24,9 @@ export const SystemMessagesModal = ({
   return (
     <Modal visible={visible}>
       <Text style={tw('m-2 text-lg')}>{i18n.t('confirmSystemMessage')}</Text>
-      <Text style={tw('m-2 text-sm')} numberOfLines={16}>
-        {text}
-      </Text>
+      <ScrollView style={tw('flex-grow-0')}>
+        <Text style={tw('m-2 text-sm')}>{text}</Text>
+      </ScrollView>
       <View style={tw('flex-row justify-end')}>
         <Button
           title={i18n.t('cancel')}
