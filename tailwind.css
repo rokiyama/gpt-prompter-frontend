@@ -71,12 +71,12 @@
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
-.p-10 {
-  padding: 2.5rem
-}
-
 .p-4 {
   padding: 1rem
+}
+
+.p-5 {
+  padding: 1.25rem
 }
 
 .px-1 {

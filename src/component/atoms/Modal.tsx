@@ -14,7 +14,7 @@ export const Modal = ({ visible, children }: Props) => {
       <View style={tw('flex-1 justify-center items-center')}>
         <View
           style={[
-            tw('bg-white m-5 p-10 rounded-md'),
+            tw('bg-white m-3 p-5 rounded-md'),
             {
               shadowOffset: {
                 width: 0,

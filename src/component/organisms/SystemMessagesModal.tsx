@@ -23,7 +23,7 @@ export const SystemMessagesModal = ({
 
   return (
     <Modal visible={visible}>
-      <Text style={tw('m-2 text-lg')}>{i18n.t('confirmSystemMessage')}</Text>
+      <Text style={tw('text-lg')}>{i18n.t('confirmSystemMessage')}</Text>
       <ScrollView style={tw('flex-grow-0')}>
         <Text style={tw('m-2 text-sm')}>{text}</Text>
       </ScrollView>
