@@ -1,7 +1,7 @@
 import { IMessage, User as GiftedUser } from 'react-native-gifted-chat';
 
 export type Message = {
-  id: string;
+  id: string | number;
   text: string;
   createdAt: number;
   user: User;
@@ -10,7 +10,7 @@ export type Message = {
 
 export const toMessage = (m: IMessage): Message => ({
   ...m,
-  id: typeof m._id === 'number' ? m._id.toString() : m._id,
+  id: m._id,
   text: m.text,
   createdAt:
     typeof m.createdAt === 'object' ? m.createdAt.getTime() : m.createdAt,
@@ -25,16 +25,15 @@ export const toIMessage = (m: Message): IMessage => ({
 });
 
 export type User = {
-  id: string;
+  id: string | number;
   name: string;
-  avatar?: string;
+  avatar?: string | number;
 };
 
 export const toUser = (user: GiftedUser): User => ({
-  id: typeof user._id === 'number' ? user._id.toString() : user._id,
+  id: user._id,
   name: user.name || '',
-  avatar:
-    typeof user.avatar !== 'string' ? user.avatar?.toString() : user.avatar,
+  avatar: typeof user.avatar !== 'function' ? user.avatar : undefined,
 });
 
 export const toGiftedUser = (user: User): GiftedUser => ({
