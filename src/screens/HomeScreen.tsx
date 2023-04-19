@@ -5,17 +5,16 @@ import { useEffect, useRef, useState } from 'react';
 import { Platform, SafeAreaView, Text, View } from 'react-native';
 import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
-import { AlertModal } from '../component/organisms/AlertModal';
 import { Button } from '../component/atoms/Button';
+import { AlertModal } from '../component/organisms/AlertModal';
 import { USER } from '../constants';
 import { useOpenAI } from '../hooks/useOpenAI';
 import { i18n } from '../i18n';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { addMessages, clearMessages } from '../redux/slices/chatSlice';
-import { selectApiKey, setApiKey } from '../redux/slices/settingsSlice';
+import { selectApiKey } from '../redux/slices/settingsSlice';
 import { toGiftedUser, toIMessage, toMessage } from '../types/chat';
 import { RootStackParamList } from '../types/navigation';
-import { loadApiKey } from '../utils/apiKeyPersistent';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -28,21 +27,7 @@ export const HomeScreen = ({ navigation }: Props) => {
   const { messages, loading, sendMessages, cancel, errorMessage, clearError } =
     useOpenAI(openAI);
 
-  useEffect(() => {
-    (async () => {
-      const apiKey = await loadApiKey();
-      if (apiKey) {
-        dispatch(setApiKey(apiKey));
-      } else {
-        setAlertModalVisible(true);
-      }
-    })();
-  }, []);
-
   const giftedChatRef = useRef<GiftedChat>(null);
-  useEffect(() => {
-    giftedChatRef.current?.focusTextInput();
-  }, []);
 
   useEffect(() => {
     if (!apiKey) return;

@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import 'react-native-url-polyfill/auto';
 import { Button } from '../component/atoms/Button';
+import { useApiKey } from '../hooks/useApiKey';
 import { i18n } from '../i18n';
 import { HomeScreen } from '../screens/HomeScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
@@ -11,6 +12,7 @@ import { RootStackParamList } from '../types/navigation';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
+  useApiKey();
   return (
     <NavigationContainer>
       <Stack.Navigator>
