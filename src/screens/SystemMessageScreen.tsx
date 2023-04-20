@@ -1,5 +1,4 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { randomUUID } from 'expo-crypto';
 import { useState } from 'react';
 import { FlatList, SafeAreaView, Text } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
@@ -10,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { addMessages } from '../redux/slices/chatSlice';
 import { selectSystemMessages } from '../redux/slices/externalDataSlice';
 import { RootStackParamList } from '../types/navigation';
+import { uuid } from '../utils/uuid';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SystemMessage'>;
 
@@ -45,7 +45,7 @@ export const SystemMessageScreen = ({ navigation }: Props) => {
             dispatch(
               addMessages([
                 {
-                  id: randomUUID(),
+                  id: uuid(),
                   createdAt: Date.now(),
                   text: systemMessages[selected].text,
                   user: SYSTEM,

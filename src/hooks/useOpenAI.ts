@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { randomUUID } from 'expo-crypto';
+import { uuid } from '../utils/uuid';
 import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
 import { useCallback, useState } from 'react';
 import { CHAT_AI, SYSTEM } from '../constants';
@@ -53,7 +53,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
         dispatch(
           addMessages([
             {
-              id: randomUUID(),
+              id: uuid(),
               text: res.data.choices[0].message?.content || '',
               createdAt: Date.now(),
               user: CHAT_AI,
