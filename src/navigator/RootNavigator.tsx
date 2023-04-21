@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import 'react-native-url-polyfill/auto';
 import { Button } from '../component/atoms/Button';
-import { useSettings } from '../hooks/useApiKey';
+import { useSettings } from '../hooks/useSettings';
 import { i18n } from '../i18n';
 import { HomeScreen } from '../screens/HomeScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
