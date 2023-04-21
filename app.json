@@ -26,7 +26,7 @@
     },
     "plugins": ["expo-localization"],
     "extra": {
-      "apiUrl": "https://t51l7nd1d5.execute-api.ap-northeast-2.amazonaws.com/prod/v1/chat"
+      "backendApiUrl": "https://t51l7nd1d5.execute-api.ap-northeast-2.amazonaws.com/prod/v1/chat"
     }
   }
 }

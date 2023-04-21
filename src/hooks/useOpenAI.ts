@@ -25,6 +25,7 @@ export const useOpenAI = () => {
       setLoading(true);
       const ac = new AbortController();
       setAbortController(ac);
+      const axiosOpts = { signal: ac.signal };
       const body = {
         model: 'gpt-3.5-turbo',
         messages: [
@@ -46,20 +47,16 @@ export const useOpenAI = () => {
         if (mode === 'apiKey') {
           if (!openAiClient) {
             setErrorMessage('openAiClient is null');
+            setLoading(false);
             return;
           }
-          const res = await openAiClient.createChatCompletion(body, {
-            signal: ac.signal,
-          });
+          const res = await openAiClient.createChatCompletion(body, axiosOpts);
           answer = res.data;
         } else {
           const res = await axios.post(
-            Constants.expoConfig?.extra?.apiUrl,
-            {
-              userId,
-              body,
-            },
-            { signal: ac.signal }
+            Constants.expoConfig?.extra?.backendApiUrl,
+            { userId, body },
+            axiosOpts
           );
           const parsed = ApiResponse.parse(res.data);
           console.log(parsed);
@@ -73,7 +70,7 @@ export const useOpenAI = () => {
             {
               id: answer.id,
               text: answer.choices[0].message?.content || '',
-              createdAt: Date.now(),
+              createdAt: answer.created,
               user: CHAT_AI,
             },
           ])
