@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { z } from 'zod';
-import { RootState } from '../store';
 import { uuid } from '../../utils/uuid';
+import { RootState } from '../store';
 
 const ASYNC_STORAGE_KEY_SETTINGS = 'SETTINGS';
 

@@ -1,24 +1,27 @@
 import axios from 'axios';
-import { uuid } from '../utils/uuid';
 import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { CHAT_AI, SYSTEM } from '../constants';
+import { OpenAiClientContext } from '../context/OpenAiClientProvider';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { addMessages, selectMessages } from '../redux/slices/chatSlice';
 import { Message } from '../types/chat';
+import { uuid } from '../utils/uuid';
 
-export const useOpenAI = (openAI: OpenAIApi | null) => {
+export const useOpenAI = () => {
   const messages = useAppSelector(selectMessages);
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const openAiClient = useContext(OpenAiClientContext);
+  console.log('openAiClient:', openAiClient);
 
   const sendMessages = useCallback(
     async (messages: Array<Message>) => {
-      if (!openAI) {
-        console.error('openAI client is null');
+      if (!openAiClient) {
+        setErrorMessage('openAiClient is null');
         return;
       }
       setLoading(true);
@@ -38,7 +41,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
         ),
       ];
       try {
-        const res = await openAI.createChatCompletion(
+        const res = await openAiClient.createChatCompletion(
           {
             model: 'gpt-3.5-turbo',
             messages: content,
@@ -75,7 +78,7 @@ export const useOpenAI = (openAI: OpenAIApi | null) => {
       }
       setLoading(false);
     },
-    [openAI, dispatch]
+    [dispatch, openAiClient]
   );
 
   const cancel = useCallback(() => {
