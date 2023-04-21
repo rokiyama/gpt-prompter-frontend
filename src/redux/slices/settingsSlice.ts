@@ -60,8 +60,6 @@ export const settingsSlice = createSlice({
 });
 
 export const selectSettings = (state: RootState) => state.settings;
-export const selectApiKey = (state: RootState) => state.settings.apiKey;
-export const selectUseApiKey = (state: RootState) => state.settings.mode;
 
 const saveSettings = async (settings: SettingsState) => {
   await AsyncStorage.setItem(

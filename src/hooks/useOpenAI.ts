@@ -1,63 +1,78 @@
 import axios from 'axios';
-import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
+import Constants from 'expo-constants';
+import { ChatCompletionRequestMessage } from 'openai';
 import { useCallback, useContext, useState } from 'react';
 import { CHAT_AI, SYSTEM } from '../constants';
 import { OpenAiClientContext } from '../context/OpenAiClientProvider';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { addMessages, selectMessages } from '../redux/slices/chatSlice';
+import { selectSettings } from '../redux/slices/settingsSlice';
 import { Message } from '../types/chat';
-import { uuid } from '../utils/uuid';
+import { ApiResponse } from '../types/response';
 
 export const useOpenAI = () => {
   const messages = useAppSelector(selectMessages);
+  const { userId, mode } = useAppSelector(selectSettings);
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const openAiClient = useContext(OpenAiClientContext);
-  console.log('openAiClient:', openAiClient);
 
   const sendMessages = useCallback(
     async (messages: Array<Message>) => {
-      if (!openAiClient) {
-        setErrorMessage('openAiClient is null');
-        return;
-      }
       setLoading(true);
       const ac = new AbortController();
       setAbortController(ac);
-      const content = [
-        ...messages.map(
-          (m): ChatCompletionRequestMessage => ({
-            role:
-              m.user.id === CHAT_AI.id
-                ? 'assistant'
-                : m.user.id === SYSTEM.id
-                ? 'system'
-                : 'user',
-            content: m.text,
-          })
-        ),
-      ];
+      const body = {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          ...messages.map(
+            (m): ChatCompletionRequestMessage => ({
+              role:
+                m.user.id === CHAT_AI.id
+                  ? 'assistant'
+                  : m.user.id === SYSTEM.id
+                  ? 'system'
+                  : 'user',
+              content: m.text,
+            })
+          ),
+        ],
+      };
+      let answer: ApiResponse['body'];
       try {
-        const res = await openAiClient.createChatCompletion(
-          {
-            model: 'gpt-3.5-turbo',
-            messages: content,
-            max_tokens: 200,
-          },
-          { signal: ac.signal }
-        );
-        if (res.data.choices.length !== 1) {
+        if (mode === 'apiKey') {
+          if (!openAiClient) {
+            setErrorMessage('openAiClient is null');
+            return;
+          }
+          const res = await openAiClient.createChatCompletion(body, {
+            signal: ac.signal,
+          });
+          answer = res.data;
+        } else {
+          const res = await axios.post(
+            Constants.expoConfig?.extra?.apiUrl,
+            {
+              userId,
+              body,
+            },
+            { signal: ac.signal }
+          );
+          const parsed = ApiResponse.parse(res.data);
+          console.log(parsed);
+          answer = parsed.body;
+        }
+        if (answer.choices.length !== 1) {
           console.warn('res.data.choices.length !== 1');
-          console.log(JSON.stringify(res.data));
         }
         dispatch(
           addMessages([
             {
-              id: uuid(),
-              text: res.data.choices[0].message?.content || '',
+              id: answer.id,
+              text: answer.choices[0].message?.content || '',
               createdAt: Date.now(),
               user: CHAT_AI,
             },
@@ -78,7 +93,7 @@ export const useOpenAI = () => {
       }
       setLoading(false);
     },
-    [dispatch, openAiClient]
+    [dispatch, openAiClient, mode, userId]
   );
 
   const cancel = useCallback(() => {

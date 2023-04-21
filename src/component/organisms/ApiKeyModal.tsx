@@ -17,7 +17,6 @@ export const ApiKeyModal = ({ visible, setVisible }: Props) => {
   const [text, setText] = useState('');
   const dispatch = useAppDispatch();
   const settings = useAppSelector(selectSettings);
-  console.log('settings:', settings);
 
   return (
     <Modal visible={visible}>

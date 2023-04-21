@@ -39,13 +39,12 @@ export const Chat = ({ openSystemMessage }: Props) => {
   // }, [messages, speakLatestMessage]);
 
   const onSend = useCallback(
-    (newMessages: Array<IMessage>) => {
+    (newGiftedMessages: Array<IMessage>) => {
       clearError();
       giftedChatRef.current?.textInput.blur();
-      const news = newMessages.map(toMessage);
-      const allMessages = [...messages, ...news];
-      dispatch(addMessages(news));
-      sendMessages(allMessages);
+      const newMessages = newGiftedMessages.map(toMessage);
+      dispatch(addMessages(newMessages));
+      sendMessages([...messages, ...newMessages]);
     },
     [dispatch, clearError, sendMessages, messages]
   );
