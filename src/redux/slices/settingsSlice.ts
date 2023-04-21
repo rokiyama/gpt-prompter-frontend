@@ -1,25 +1,28 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loadApiKey, saveApiKey } from '../../utils/apiKeyPersistent';
+import { loadSettings, saveSettings } from '../../utils/apiKeyPersistent';
 import { RootState } from '../store';
 
-interface SettingsState {
+export interface SettingsState {
+  userId: string;
   apiKey: string;
+  useApiKey: boolean;
 }
 
 const initialState: SettingsState = {
+  userId: '',
   apiKey: '',
+  useApiKey: false,
 };
 
 export const load = createAsyncThunk('settings/load', async () => {
-  const apiKey = await loadApiKey();
-  return apiKey ?? '';
+  return await loadSettings();
 });
 
 export const save = createAsyncThunk(
   'settings/save',
-  async (apiKey: string) => {
-    await saveApiKey(apiKey);
-    return apiKey;
+  async (settings: SettingsState) => {
+    await saveSettings(settings);
+    return settings;
   }
 );
 
@@ -33,16 +36,17 @@ export const settingsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(load.fulfilled, (state, action) => {
-      state.apiKey = action.payload;
+      return action.payload;
     });
     builder.addCase(save.fulfilled, (state, action) => {
-      state.apiKey = action.payload;
+      return action.payload;
     });
   },
 });
 
-export const { setApiKey } = settingsSlice.actions;
+// export const { setApiKey } = settingsSlice.actions;
 
+export const selectSettings = (state: RootState) => state.settings;
 export const selectApiKey = (state: RootState) => state.settings.apiKey;
 
 // export default settingsSlice.reducer;

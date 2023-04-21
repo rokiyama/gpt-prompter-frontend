@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { i18n } from '../../i18n';
-import { useAppDispatch } from '../../redux/hooks';
-import { save } from '../../redux/slices/settingsSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { save, selectSettings } from '../../redux/slices/settingsSlice';
 import { Button } from '../atoms/Button';
 import { Modal } from '../atoms/Modal';
 
@@ -16,6 +16,8 @@ export const ApiKeyModal = ({ visible, setVisible }: Props) => {
   const tw = useTailwind();
   const [text, setText] = useState('');
   const dispatch = useAppDispatch();
+  const settings = useAppSelector(selectSettings);
+  console.log('settings:', settings);
 
   return (
     <Modal visible={visible}>
@@ -38,7 +40,12 @@ export const ApiKeyModal = ({ visible, setVisible }: Props) => {
         <Button
           title={i18n.t('ok')}
           onPress={() => {
-            dispatch(save(text));
+            dispatch(
+              save({
+                ...settings,
+                apiKey: text,
+              })
+            );
             setVisible(false);
             setText('');
           }}

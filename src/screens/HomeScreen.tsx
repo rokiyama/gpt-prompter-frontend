@@ -22,6 +22,7 @@ export const HomeScreen = ({ navigation }: Props) => {
   const tw = useTailwind();
   const [openAI, setOpenAI] = useState<OpenAIApi | null>(null);
   const apiKey = useAppSelector(selectApiKey);
+  console.log('apiKey:', apiKey);
   const dispatch = useAppDispatch();
   const [alertModalVisible, setAlertModalVisible] = useState(false);
   const { messages, loading, sendMessages, cancel, errorMessage, clearError } =
