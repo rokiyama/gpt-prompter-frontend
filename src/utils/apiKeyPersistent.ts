@@ -8,5 +8,7 @@ export const loadApiKey = async () => {
   }
 };
 
-export const saveApiKey = (apiKey: string) =>
+export const saveApiKey = (apiKey: string) => {
   AsyncStorage.setItem('OPENAI_API_KEY', apiKey);
+  console.log('[useApiKeyPersistent] saved');
+};

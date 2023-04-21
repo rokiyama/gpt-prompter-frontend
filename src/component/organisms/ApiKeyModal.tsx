@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
-import { Button } from '../atoms/Button';
 import { i18n } from '../../i18n';
 import { useAppDispatch } from '../../redux/hooks';
-import { setApiKey } from '../../redux/slices/settingsSlice';
-import { saveApiKey } from '../../utils/apiKeyPersistent';
+import { save } from '../../redux/slices/settingsSlice';
+import { Button } from '../atoms/Button';
 import { Modal } from '../atoms/Modal';
 
 type Props = {
@@ -39,8 +38,7 @@ export const ApiKeyModal = ({ visible, setVisible }: Props) => {
         <Button
           title={i18n.t('ok')}
           onPress={() => {
-            saveApiKey(text);
-            dispatch(setApiKey(text));
+            dispatch(save(text));
             setVisible(false);
             setText('');
           }}
