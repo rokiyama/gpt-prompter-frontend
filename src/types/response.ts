@@ -1,32 +1,32 @@
-import { z } from 'zod';
+import { array, number, object, string, TypeOf } from 'zod';
 
-export const ApiResponse = z.object({
-  id: z.string(),
-  appVersion: z.string(),
-  body: z.object({
-    id: z.string(),
-    object: z.string(),
-    created: z.number(),
-    choices: z.array(
-      z.object({
-        index: z.number().optional(),
-        message: z
-          .object({
-            role: z.string(),
-            content: z.string(),
-          })
-          .optional(),
-        finish_reason: z.string().optional(),
+export const ApiResponse = object({
+  id: string(),
+  appVersion: string(),
+  error: object({
+    code: string(),
+    message: string(),
+  }).optional(),
+  body: object({
+    id: string(),
+    object: string(),
+    created: number(),
+    choices: array(
+      object({
+        index: number().optional(),
+        message: object({
+          role: string(),
+          content: string(),
+        }).optional(),
+        finish_reason: string().optional(),
       })
     ),
-    usage: z
-      .object({
-        prompt_tokens: z.number(),
-        completion_tokens: z.number(),
-        total_tokens: z.number(),
-      })
-      .optional(),
-  }),
+    usage: object({
+      prompt_tokens: number(),
+      completion_tokens: number(),
+      total_tokens: number(),
+    }).optional(),
+  }).optional(),
 });
 
-export type ApiResponse = z.infer<typeof ApiResponse>;
+export type ApiResponse = TypeOf<typeof ApiResponse>;

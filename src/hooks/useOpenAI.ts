@@ -58,23 +58,30 @@ export const useOpenAI = () => {
             { userId, body },
             axiosOpts
           );
+          console.log(res.data);
           const parsed = ApiResponse.parse(res.data);
-          console.log(parsed);
+          if (parsed.error) {
+            setErrorMessage(`[${parsed.error.code}] ${parsed.error.message}`);
+            setLoading(false);
+            return;
+          }
           answer = parsed.body;
         }
-        if (answer.choices.length !== 1) {
-          console.warn('res.data.choices.length !== 1');
+        if (answer) {
+          if (answer.choices.length !== 1) {
+            console.warn('res.data.choices.length !== 1');
+          }
+          dispatch(
+            addMessages([
+              {
+                id: answer.id,
+                text: answer.choices[0].message?.content || '',
+                createdAt: answer.created * 1000,
+                user: CHAT_AI,
+              },
+            ])
+          );
         }
-        dispatch(
-          addMessages([
-            {
-              id: answer.id,
-              text: answer.choices[0].message?.content || '',
-              createdAt: answer.created,
-              user: CHAT_AI,
-            },
-          ])
-        );
       } catch (err) {
         if (axios.isCancel(err)) {
           console.log('cancelled');
