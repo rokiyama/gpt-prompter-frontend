@@ -48,11 +48,7 @@ export const save = createAsyncThunk(
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
-  reducers: {
-    //   setApiKey: (state, action: PayloadAction<string>) => {
-    //     state.apiKey = action.payload;
-    //   },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(load.fulfilled, (_, action) => {
       return action.payload;
@@ -63,13 +59,9 @@ export const settingsSlice = createSlice({
   },
 });
 
-// export const { setApiKey } = settingsSlice.actions;
-
 export const selectSettings = (state: RootState) => state.settings;
 export const selectApiKey = (state: RootState) => state.settings.apiKey;
 export const selectUseApiKey = (state: RootState) => state.settings.mode;
-
-// export default settingsSlice.reducer;
 
 const saveSettings = async (settings: SettingsState) => {
   await AsyncStorage.setItem(
