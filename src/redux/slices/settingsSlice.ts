@@ -5,13 +5,13 @@ import { RootState } from '../store';
 export interface SettingsState {
   userId: string;
   apiKey: string;
-  useApiKey: boolean;
+  mode: 'userId' | 'apiKey';
 }
 
-const initialState: SettingsState = {
+export const initialState: SettingsState = {
   userId: '',
   apiKey: '',
-  useApiKey: false,
+  mode: 'userId',
 };
 
 export const load = createAsyncThunk('settings/load', async () => {
@@ -48,5 +48,6 @@ export const settingsSlice = createSlice({
 
 export const selectSettings = (state: RootState) => state.settings;
 export const selectApiKey = (state: RootState) => state.settings.apiKey;
+export const selectUseApiKey = (state: RootState) => state.settings.mode;
 
 // export default settingsSlice.reducer;
