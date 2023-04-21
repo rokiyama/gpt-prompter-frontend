@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loadSettings, saveSettings } from '../../utils/apiKeyPersistent';
+import { loadSettings, saveSettings } from '../../utils/settingsPersistent';
 import { RootState } from '../store';
 
 export interface SettingsState {
@@ -35,10 +35,10 @@ export const settingsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(load.fulfilled, (state, action) => {
+    builder.addCase(load.fulfilled, (_, action) => {
       return action.payload;
     });
-    builder.addCase(save.fulfilled, (state, action) => {
+    builder.addCase(save.fulfilled, (_, action) => {
       return action.payload;
     });
   },

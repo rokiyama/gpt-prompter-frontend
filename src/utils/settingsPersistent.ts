@@ -3,11 +3,20 @@ import { z } from 'zod';
 import { SettingsState } from '../redux/slices/settingsSlice';
 import { uuid } from './uuid';
 
-const Settings = z.object({
-  userId: z.string(),
-  apiKey: z.string(),
-  useApiKey: z.boolean(),
-});
+const schemaForType =
+  <T>() =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  <S extends z.ZodType<T, any, any>>(arg: S) => {
+    return arg;
+  };
+
+const Settings = schemaForType<SettingsState>()(
+  z.object({
+    userId: z.string(),
+    apiKey: z.string(),
+    useApiKey: z.boolean(),
+  })
+);
 
 export const loadSettings = async () => {
   const value = await AsyncStorage.getItem('SETTINGS');
