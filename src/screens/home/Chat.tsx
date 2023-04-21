@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Platform, SafeAreaView, Text, View } from 'react-native';
 import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
@@ -38,15 +38,17 @@ export const Chat = ({ openSystemMessage }: Props) => {
   //   speakLatestMessage();
   // }, [messages, speakLatestMessage]);
 
-  const onSend = (newMessages: Array<IMessage>) => {
-    clearError();
-    console.log(newMessages);
-    const news = newMessages.map(toMessage);
-    const allMessages = [...messages, ...news];
-    dispatch(addMessages(news));
-    sendMessages(allMessages);
-    giftedChatRef.current?.textInput.blur();
-  };
+  const onSend = useCallback(
+    (newMessages: Array<IMessage>) => {
+      clearError();
+      giftedChatRef.current?.textInput.blur();
+      const news = newMessages.map(toMessage);
+      const allMessages = [...messages, ...news];
+      dispatch(addMessages(news));
+      sendMessages(allMessages);
+    },
+    [dispatch, clearError, sendMessages, messages]
+  );
 
   return (
     <SafeAreaView style={tw('flex-1 items-center bg-white')}>
