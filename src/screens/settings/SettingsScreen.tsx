@@ -2,11 +2,11 @@ import { ReactNode, useMemo, useState } from 'react';
 import { Linking, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import ParsedText from 'react-native-parsed-text';
 import { useTailwind } from 'tailwind-rn';
-import { Button } from '../component/atoms/Button';
-import { ApiKeyModal } from '../component/organisms/ApiKeyModal';
-import { i18n } from '../i18n';
-import { useAppSelector } from '../redux/hooks';
-import { selectSettings } from '../redux/slices/settingsSlice';
+import { Button } from '../../component/atoms/Button';
+import { ApiKeyModal } from '../../component/organisms/ApiKeyModal';
+import { i18n } from '../../i18n';
+import { useAppSelector } from '../../redux/hooks';
+import { selectSettings } from '../../redux/slices/settingsSlice';
 
 const ListText = ({ children }: { children: ReactNode }) => {
   const tw = useTailwind();

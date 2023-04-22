@@ -3,9 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import 'react-native-url-polyfill/auto';
 import { Button } from '../component/atoms/Button';
 import { useSettings } from '../hooks/useSettings';
+import { useSystemMessages } from '../hooks/useSystemMessages';
 import { i18n } from '../i18n';
 import { HomeScreen } from '../screens/home/HomeScreen';
-import { SettingsScreen } from '../screens/SettingsScreen';
+import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { SystemMessageScreen } from '../screens/SystemMessageScreen';
 import { RootStackParamList } from '../types/navigation';
 
@@ -13,6 +14,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
   useSettings();
+  useSystemMessages();
   return (
     <NavigationContainer>
       <Stack.Navigator>
