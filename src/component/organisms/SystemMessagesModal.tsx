@@ -1,7 +1,7 @@
 import { ScrollView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
-import { Button } from '../atoms/Button';
 import { i18n } from '../../i18n';
+import { Button } from '../atoms/Button';
 import { Modal } from '../atoms/Modal';
 
 type Props = {
@@ -23,8 +23,10 @@ export const SystemMessagesModal = ({
 
   return (
     <Modal visible={visible}>
-      <Text style={tw('text-lg')}>{i18n.t('confirmSystemMessage')}</Text>
-      <ScrollView style={tw('flex-grow-0')}>
+      <Text style={tw('flex-row text-lg')}>
+        {i18n.t('confirmSystemMessage')}
+      </Text>
+      <ScrollView contentContainerStyle={tw('flex-grow')}>
         <Text style={tw('m-2 text-sm')}>{text}</Text>
       </ScrollView>
       <View style={tw('flex-row justify-end')}>
