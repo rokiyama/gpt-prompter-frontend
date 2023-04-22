@@ -51,6 +51,7 @@ export const useOpenAI = () => {
             return;
           }
           const res = await openAiClient.createChatCompletion(body, axiosOpts);
+          console.log('openAi result', res);
           answer = res.data;
         } else {
           const res = await axios.post(
@@ -58,7 +59,7 @@ export const useOpenAI = () => {
             { userId, body },
             axiosOpts
           );
-          console.log(res.data);
+          console.log('backendApi result', res.data);
           const parsed = ApiResponse.parse(res.data);
           if (parsed.error) {
             setErrorMessage(`[${parsed.error.code}] ${parsed.error.message}`);
