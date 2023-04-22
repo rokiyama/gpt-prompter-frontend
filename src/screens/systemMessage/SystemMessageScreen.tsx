@@ -2,14 +2,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import { FlatList, SafeAreaView, Text } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
-import { Card } from '../component/atoms/Card';
-import { SystemMessagesModal } from '../component/organisms/SystemMessagesModal';
-import { SYSTEM } from '../constants';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { addMessages } from '../redux/slices/chatSlice';
-import { selectSystemMessages } from '../redux/slices/externalDataSlice';
-import { RootStackParamList } from '../types/navigation';
-import { uuid } from '../utils/uuid';
+import { Card } from '../../component/atoms/Card';
+import { SystemMessagesModal } from './SystemMessagesModal';
+import { SYSTEM } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { addMessages } from '../../redux/slices/chatSlice';
+import { selectSystemMessages } from '../../redux/slices/externalDataSlice';
+import { RootStackParamList } from '../../types/navigation';
+import { uuid } from '../../utils/uuid';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SystemMessage'>;
 
