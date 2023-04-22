@@ -15,6 +15,3 @@ export const SYSTEM: User = {
   id: 'system',
   name: 'system',
 };
-
-export const SYSTEM_MESSAGES_URL =
-  'https://gpt-chat-misc.vercel.app/systemMessage.json';

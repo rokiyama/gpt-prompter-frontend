@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { z } from 'zod';
+import { schemaForType } from '../../utils/schema';
 import { uuid } from '../../utils/uuid';
 import { RootState } from '../store';
 
@@ -67,13 +68,6 @@ const saveSettings = async (settings: SettingsState) => {
     JSON.stringify(settings)
   );
 };
-
-const schemaForType =
-  <T>() =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  <S extends z.ZodType<T, any, any>>(arg: S) => {
-    return arg;
-  };
 
 const Settings = schemaForType<SettingsState>()(
   z.object({

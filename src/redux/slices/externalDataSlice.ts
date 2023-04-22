@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import Constants from 'expo-constants';
 import { getLocales } from 'expo-localization';
-import { SYSTEM_MESSAGES_URL } from '../../constants';
 import { isSystemMessage, SystemMessage } from '../../types/externalData';
 import { RootState } from '../store';
 
@@ -16,10 +16,11 @@ const initialState: ExternalDataState = {
 export const loadSystemMessages = createAsyncThunk(
   'externalData/systemMessages',
   async () => {
-    console.log('loading', SYSTEM_MESSAGES_URL);
     try {
       const locales = getLocales()[0];
-      const res = await axios.get(SYSTEM_MESSAGES_URL);
+      const res = await axios.get(
+        Constants.expoConfig?.extra?.systemMessagesUrl
+      );
       const arr =
         res.data && locales.languageCode === 'ja' ? res.data.ja : res.data.en;
       if (arr && Array.isArray(arr) && arr.every(isSystemMessage)) {
