@@ -21,6 +21,7 @@ export const i18n = new I18n({
     errorOccurred: 'An error has occurred',
     sendMessage: 'Send a message',
     apiKeyDescription: [
+      'The API key gives the app direct access to the OpenAI API.',
       "An API key is a key used to access OpenAI's API. An API key can be generated from the OpenAI Platform.",
       'Please follow the steps below to generate and copy the API key.',
       '- Sign up for OpenAPI at https://platform.openai.com .',
@@ -47,6 +48,7 @@ export const i18n = new I18n({
     errorOccurred: 'エラーが発生しました',
     sendMessage: 'メッセージを送信',
     apiKeyDescription: [
+      'APIキーを使用すると、アプリはOpenAI APIに直接アクセスするようになります。',
       'APIキーとは、OpenAIのAPIを使用するためのキーです。APIキーはOpenAI Platformから生成することができます。',
       '以下の手順でAPIキーを生成し、コピーしてください。',
       '・https://platform.openai.com からOpenAPIにサインアップする',

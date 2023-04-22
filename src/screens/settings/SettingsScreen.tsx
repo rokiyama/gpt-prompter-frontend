@@ -13,11 +13,7 @@ import { Button } from '../../component/atoms/Button';
 import { ApiKeyModal } from '../../component/organisms/ApiKeyModal';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import {
-  save,
-  selectSettings,
-  settingsSlice,
-} from '../../redux/slices/settingsSlice';
+import { save, selectSettings } from '../../redux/slices/settingsSlice';
 
 const ListText = ({ children }: { children: ReactNode }) => {
   const tw = useTailwind();
@@ -46,6 +42,16 @@ export const SettingsScreen = () => {
   const { userId, apiKey, mode } = useAppSelector(selectSettings);
   const dispatch = useAppDispatch();
 
+  const toggle = (value: boolean) => {
+    dispatch(
+      save({
+        userId,
+        apiKey,
+        mode: value ? 'apiKey' : 'userId',
+      })
+    );
+  };
+
   const masked = useMemo(
     () =>
       apiKey
@@ -62,30 +68,15 @@ export const SettingsScreen = () => {
         )}
       >
         <Text style={tw('m-2')}>{i18n.t('useApiKeyMode')}</Text>
-        <Switch
-          value={mode === 'apiKey'}
-          onValueChange={(value) => {
-            dispatch(
-              save({
-                userId,
-                apiKey,
-                mode: value ? 'apiKey' : 'userId',
-              })
-            );
-          }}
-        />
+        <Switch value={mode === 'apiKey'} onValueChange={toggle} />
       </View>
-      <View
-        style={[
-          tw('bg-white m-3 p-4 rounded-md'),
-          { display: mode !== 'apiKey' ? 'none' : undefined },
-        ]}
-      >
+      <View style={tw('bg-white m-3 p-4 rounded-md')}>
         <Text style={tw('m-2')}>{i18n.t('apiKey')}:</Text>
         <Text style={tw('m-2 flex-wrap text-slate-400')}>{masked}</Text>
         <Button
           title={i18n.t('setApiKey')}
           onPress={() => setModalVisible(true)}
+          disabled={mode !== 'apiKey'}
         />
         <ApiKeyModal visible={modalVisible} setVisible={setModalVisible} />
       </View>
@@ -94,6 +85,7 @@ export const SettingsScreen = () => {
         <ListText>{i18n.t('apiKeyDescription.1')}</ListText>
         <ListText>{i18n.t('apiKeyDescription.2')}</ListText>
         <ListText>{i18n.t('apiKeyDescription.3')}</ListText>
+        <ListText>{i18n.t('apiKeyDescription.4')}</ListText>
       </View>
     </SafeAreaView>
   );
