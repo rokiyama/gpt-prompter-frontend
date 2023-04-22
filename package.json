@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "format": "prettier -w .",
     "build:tailwind": "tailwindcss --input input.css --output tailwind.css --no-autoprefixer && tailwind-rn",
-    "dev:tailwind": "concurrently \"tailwindcss --input input.css --output tailwind.css --no-autoprefixer --watch\" \"tailwind-rn --watch\""
+    "dev:tailwind": "concurrently \"tailwindcss --input input.css --output tailwind.css --no-autoprefixer --watch\" \"tailwind-rn --watch\"",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.17.11",
@@ -18,6 +19,7 @@
     "@reduxjs/toolkit": "^1.9.3",
     "axios": "^1.3.4",
     "expo": "~48.0.6",
+    "expo-contacts": "~12.0.1",
     "expo-crypto": "~12.2.1",
     "expo-localization": "~14.1.1",
     "expo-speech": "~11.1.1",
@@ -33,8 +35,7 @@
     "react-native-url-polyfill": "^1.3.0",
     "react-redux": "^8.0.5",
     "tailwind-rn": "^4.2.0",
-    "zod": "^3.21.4",
-    "expo-contacts": "~12.0.1"
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -44,6 +45,7 @@
     "concurrently": "^7.6.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
+    "patch-package": "^6.5.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "tailwindcss": "^3.2.7",
