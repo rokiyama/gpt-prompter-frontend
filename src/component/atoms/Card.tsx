@@ -15,7 +15,7 @@ export const Card = ({ style: propStyle, onPress, children }: Props) => {
       onPress={onPress}
       style={[
         propStyle,
-        tw('bg-white m-5 p-4 rounded-lg'),
+        tw('bg-white m-2 p-3 rounded-lg'),
         {
           shadowOffset: {
             width: 0,

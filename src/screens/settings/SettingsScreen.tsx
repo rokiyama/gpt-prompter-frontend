@@ -70,6 +70,9 @@ export const SettingsScreen = () => {
         <Text style={tw('m-2')}>{i18n.t('useApiKeyMode')}</Text>
         <Switch value={mode === 'apiKey'} onValueChange={toggle} />
       </View>
+      <View style={tw('m-2')}>
+        <ListText>{i18n.t('apiKeyDescription')}</ListText>
+      </View>
       <View style={tw('bg-white m-3 p-4 rounded-md')}>
         <Text style={tw('m-2')}>{i18n.t('apiKey')}:</Text>
         <Text style={tw('m-2 flex-wrap text-slate-400')}>{masked}</Text>
@@ -80,12 +83,11 @@ export const SettingsScreen = () => {
         />
         <ApiKeyModal visible={modalVisible} setVisible={setModalVisible} />
       </View>
-      <View style={tw('mt-4')}>
-        <ListText>{i18n.t('apiKeyDescription.0')}</ListText>
-        <ListText>{i18n.t('apiKeyDescription.1')}</ListText>
-        <ListText>{i18n.t('apiKeyDescription.2')}</ListText>
-        <ListText>{i18n.t('apiKeyDescription.3')}</ListText>
-        <ListText>{i18n.t('apiKeyDescription.4')}</ListText>
+      <View style={tw('m-2')}>
+        <ListText>{i18n.t('apiKeyInstruction.0')}</ListText>
+        <ListText>{i18n.t('apiKeyInstruction.1')}</ListText>
+        <ListText>{i18n.t('apiKeyInstruction.2')}</ListText>
+        <ListText>{i18n.t('apiKeyInstruction.3')}</ListText>
       </View>
     </SafeAreaView>
   );

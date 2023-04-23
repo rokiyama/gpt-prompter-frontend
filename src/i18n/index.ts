@@ -20,7 +20,9 @@ export const i18n = new I18n({
       'API key is not set. Please set it from the settings screen.',
     errorOccurred: 'An error has occurred',
     sendMessage: 'Send a message',
-    apiKeyDescription: [
+    apiKeyDescription:
+      'By default, the app calls the OpenAI API via the server; the API key allows the app to access the OpenAI API directly, without going through the server.',
+    apiKeyInstruction: [
       'The API key gives the app direct access to the OpenAI API.',
       "An API key is a key used to access OpenAI's API. An API key can be generated from the OpenAI Platform.",
       'Please follow the steps below to generate and copy the API key.',
@@ -47,8 +49,9 @@ export const i18n = new I18n({
       'ChatAIの利用を開始するために、OpenAIのAPIキーを設定しましょう。設定画面より設定してください。',
     errorOccurred: 'エラーが発生しました',
     sendMessage: 'メッセージを送信',
-    apiKeyDescription: [
-      'APIキーを使用すると、アプリはOpenAI APIに直接アクセスするようになります。',
+    apiKeyDescription:
+      '通常、アプリはサーバ経由でOpenAIのAPIを呼び出します。APIキーを使用すると、アプリはサーバを経由せず、OpenAI APIに直接アクセスするようになります。',
+    apiKeyInstruction: [
       'APIキーとは、OpenAIのAPIを使用するためのキーです。APIキーはOpenAI Platformから生成することができます。',
       '以下の手順でAPIキーを生成し、コピーしてください。',
       '・https://platform.openai.com からOpenAPIにサインアップする',

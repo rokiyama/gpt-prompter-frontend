@@ -32,14 +32,15 @@ const ModalContent = ({ children }: { children: ReactNode }) => {
     );
   }
   return (
-    <View style={tw('flex-1 flex-grow justify-start bg-gray-100')}>
-      <View style={tw('flex-1 bg-white m-8 p-5 rounded-md')}>{children}</View>
+    <View style={tw('flex-1 justify-start bg-gray-100')}>
+      <View style={tw('flex-1 justify-start bg-white m-8 p-5 rounded-md')}>
+        {children}
+      </View>
     </View>
   );
 };
 
 export const Modal = ({ visible, children }: Props) => {
-  const tw = useTailwind();
   return (
     <RNModal
       visible={visible}
