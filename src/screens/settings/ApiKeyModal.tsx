@@ -26,7 +26,7 @@ export const ApiKeyModal = ({ visible, setVisible }: Props) => {
         onChangeText={setText}
         value={text}
         placeholder="sk-..."
-        multiline
+        secureTextEntry
       />
       <View style={tw('flex-row justify-end')}>
         <Button
