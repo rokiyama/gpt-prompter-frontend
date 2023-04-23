@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { z } from 'zod';
 import { schemaForType } from '../../utils/schema';
 import { uuid } from '../../utils/uuid';
@@ -9,14 +9,14 @@ const ASYNC_STORAGE_KEY_SETTINGS = 'SETTINGS';
 
 interface SettingsState {
   userId: string;
-  apiKey: string;
   mode: 'userId' | 'apiKey';
+  isApiKeyConfigured: boolean;
 }
 
 const initialState: SettingsState = {
   userId: '',
-  apiKey: '',
   mode: 'userId',
+  isApiKeyConfigured: false,
 };
 
 export const load = createAsyncThunk('settings/load', async () => {
@@ -49,7 +49,11 @@ export const save = createAsyncThunk(
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsApiKeyConfigured: (state, action: PayloadAction<boolean>) => {
+      state.isApiKeyConfigured = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(load.fulfilled, (_, action) => {
       return action.payload;
@@ -59,6 +63,8 @@ export const settingsSlice = createSlice({
     });
   },
 });
+
+export const { setIsApiKeyConfigured } = settingsSlice.actions;
 
 export const selectSettings = (state: RootState) => state.settings;
 
@@ -72,7 +78,7 @@ const saveSettings = async (settings: SettingsState) => {
 const Settings = schemaForType<SettingsState>()(
   z.object({
     userId: z.string(),
-    apiKey: z.string(),
     mode: z.union([z.literal('userId'), z.literal('apiKey')]),
+    isApiKeyConfigured: z.boolean(),
   })
 );

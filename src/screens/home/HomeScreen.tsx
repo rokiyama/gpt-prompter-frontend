@@ -1,14 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Chat } from './Chat';
-import { OpenAiClientProvider } from '../../context/OpenAiClientProvider';
 import { RootStackParamList } from '../../types/navigation';
+import { Chat } from './Chat';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export const HomeScreen = ({ navigation }: Props) => {
-  return (
-    <OpenAiClientProvider>
-      <Chat openSystemMessage={() => navigation.push('SystemMessage')} />
-    </OpenAiClientProvider>
-  );
+  return <Chat openSystemMessage={() => navigation.push('SystemMessage')} />;
 };

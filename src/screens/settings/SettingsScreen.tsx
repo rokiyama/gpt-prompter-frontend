@@ -1,19 +1,12 @@
-import { ReactNode, useMemo, useState } from 'react';
-import {
-  Linking,
-  SafeAreaView,
-  StyleSheet,
-  Switch,
-  Text,
-  View,
-} from 'react-native';
+import { ReactNode, useState } from 'react';
+import { Linking, SafeAreaView, Switch, Text, View } from 'react-native';
 import ParsedText from 'react-native-parsed-text';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
-import { ApiKeyModal } from './ApiKeyModal';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
+import { ApiKeyModal } from './ApiKeyModal';
 
 const ListText = ({ children }: { children: ReactNode }) => {
   const tw = useTailwind();
@@ -39,26 +32,17 @@ const ListText = ({ children }: { children: ReactNode }) => {
 export const SettingsScreen = () => {
   const tw = useTailwind();
   const [modalVisible, setModalVisible] = useState(false);
-  const { userId, apiKey, mode } = useAppSelector(selectSettings);
+  const settings = useAppSelector(selectSettings);
   const dispatch = useAppDispatch();
 
   const toggle = (value: boolean) => {
     dispatch(
       save({
-        userId,
-        apiKey,
+        ...settings,
         mode: value ? 'apiKey' : 'userId',
       })
     );
   };
-
-  const masked = useMemo(
-    () =>
-      apiKey
-        ? apiKey.split('').map((c, i) => (i < 3 ? c : '*'))
-        : i18n.t('notSet'),
-    [apiKey]
-  );
 
   return (
     <SafeAreaView style={tw('m-3')}>
@@ -68,18 +52,22 @@ export const SettingsScreen = () => {
         )}
       >
         <Text style={tw('m-2')}>{i18n.t('useApiKeyMode')}</Text>
-        <Switch value={mode === 'apiKey'} onValueChange={toggle} />
+        <Switch value={settings.mode === 'apiKey'} onValueChange={toggle} />
       </View>
       <View style={tw('m-2')}>
         <ListText>{i18n.t('apiKeyDescription')}</ListText>
       </View>
       <View style={tw('bg-white m-3 p-4 rounded-md')}>
         <Text style={tw('m-2')}>{i18n.t('apiKey')}:</Text>
-        <Text style={tw('m-2 flex-wrap text-slate-400')}>{masked}</Text>
+        <Text style={tw('m-2 flex-wrap text-slate-400')}>
+          {settings.isApiKeyConfigured
+            ? i18n.t('configured')
+            : i18n.t('notYetConfigured')}
+        </Text>
         <Button
           title={i18n.t('setApiKey')}
           onPress={() => setModalVisible(true)}
-          disabled={mode !== 'apiKey'}
+          disabled={settings.mode !== 'apiKey'}
         />
         <ApiKeyModal visible={modalVisible} setVisible={setModalVisible} />
       </View>
@@ -92,10 +80,3 @@ export const SettingsScreen = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  url: {
-    color: 'red',
-    textDecorationLine: 'underline',
-  },
-});

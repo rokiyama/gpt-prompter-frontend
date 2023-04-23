@@ -18,7 +18,7 @@ export const useOpenAI = () => {
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const openAiClient = useContext(OpenAiClientContext);
+  const context = useContext(OpenAiClientContext);
 
   const sendMessages = useCallback(
     async (messages: Array<Message>) => {
@@ -45,12 +45,15 @@ export const useOpenAI = () => {
       let answer: ApiResponse['body'];
       try {
         if (mode === 'apiKey') {
-          if (!openAiClient) {
+          if (!context?.openAiClient) {
             setErrorMessage('openAiClient is null');
             setLoading(false);
             return;
           }
-          const res = await openAiClient.createChatCompletion(body, axiosOpts);
+          const res = await context.openAiClient.createChatCompletion(
+            body,
+            axiosOpts
+          );
           console.log('openAi result', res);
           answer = res.data;
         } else {
@@ -98,7 +101,7 @@ export const useOpenAI = () => {
       }
       setLoading(false);
     },
-    [dispatch, openAiClient, mode, userId]
+    [dispatch, context, mode, userId]
   );
 
   const cancel = useCallback(() => {

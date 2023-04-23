@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
-import { i18n } from '../../i18n';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { save, selectSettings } from '../../redux/slices/settingsSlice';
 import { Button } from '../../component/atoms/Button';
 import { Modal } from '../../component/atoms/Modal';
+import { OpenAiClientContext } from '../../context/OpenAiClientProvider';
+import { i18n } from '../../i18n';
 
 type Props = {
   visible: boolean;
@@ -15,8 +14,7 @@ type Props = {
 export const ApiKeyModal = ({ visible, setVisible }: Props) => {
   const tw = useTailwind();
   const [text, setText] = useState('');
-  const dispatch = useAppDispatch();
-  const settings = useAppSelector(selectSettings);
+  const context = useContext(OpenAiClientContext);
 
   return (
     <Modal visible={visible}>
@@ -39,12 +37,11 @@ export const ApiKeyModal = ({ visible, setVisible }: Props) => {
         <Button
           title={i18n.t('ok')}
           onPress={() => {
-            dispatch(
-              save({
-                ...settings,
-                apiKey: text,
-              })
-            );
+            if (!context?.saveApiKey) {
+              console.log('context is ', context);
+              return;
+            }
+            context.saveApiKey(text);
             setVisible(false);
             setText('');
           }}
