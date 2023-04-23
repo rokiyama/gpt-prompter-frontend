@@ -4,8 +4,8 @@ import { useTailwind } from 'tailwind-rn';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
-import { Button } from '../atoms/Button';
-import { Modal } from '../atoms/Modal';
+import { Button } from '../../component/atoms/Button';
+import { Modal } from '../../component/atoms/Modal';
 
 type Props = {
   visible: boolean;

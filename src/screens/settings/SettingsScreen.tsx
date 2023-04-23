@@ -10,7 +10,7 @@ import {
 import ParsedText from 'react-native-parsed-text';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
-import { ApiKeyModal } from '../../component/organisms/ApiKeyModal';
+import { ApiKeyModal } from './ApiKeyModal';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
