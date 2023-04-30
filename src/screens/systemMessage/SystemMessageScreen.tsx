@@ -21,7 +21,6 @@ export const SystemMessageScreen = ({ navigation }: Props) => {
   const dispatch = useAppDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
-  const [inputModalVisible, setInputModalVisible] = useState(false);
   const systemMessages = useAppSelector(selectSystemMessages);
 
   return (
@@ -30,10 +29,9 @@ export const SystemMessageScreen = ({ navigation }: Props) => {
         <Text>{i18n.t('systemMessageDescription')}</Text>
       </View>
       <View style={tw('bg-white m-2 p-2 rounded-md')}>
-        <Button
-          title={i18n.t('inputManually')}
-          onPress={() => {
-            setInputModalVisible(true);
+        <TextInputModal
+          onClose={() => {
+            navigation.pop();
           }}
         />
       </View>
@@ -51,29 +49,6 @@ export const SystemMessageScreen = ({ navigation }: Props) => {
             <Text numberOfLines={4}>{item.text}</Text>
           </Card>
         )}
-      />
-      <TextInputModal
-        visible={inputModalVisible}
-        setVisible={setInputModalVisible}
-        onPressOk={(text) => {
-          if (text != null) {
-            dispatch(
-              addMessages([
-                {
-                  id: uuid(),
-                  createdAt: Date.now(),
-                  text,
-                  user: SYSTEM,
-                  system: true,
-                },
-              ])
-            );
-          }
-          navigation.pop();
-        }}
-        onPressCancel={() => {
-          setSelected(null);
-        }}
       />
       <SystemMessagesModal
         visible={modalVisible}
