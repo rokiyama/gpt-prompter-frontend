@@ -1,14 +1,20 @@
 import axios from 'axios';
 import Constants from 'expo-constants';
 import { ChatCompletionRequestMessage } from 'openai';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { CHAT_AI, SYSTEM } from '../constants';
 import { OpenAiClientContext } from '../context/OpenAiClientProvider';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { addMessages, selectMessages } from '../redux/slices/chatSlice';
+import {
+  addMessages,
+  selectMessages,
+  appendLastMessage,
+} from '../redux/slices/chatSlice';
 import { selectSettings } from '../redux/slices/settingsSlice';
 import { Message } from '../types/chat';
 import { ApiResponse } from '../types/response';
+import { WSResponse } from '../types/ws';
+import { uuid } from '../utils/uuid';
 
 export const useOpenAI = () => {
   const messages = useAppSelector(selectMessages);
@@ -27,7 +33,7 @@ export const useOpenAI = () => {
       setAbortController(ac);
       const axiosOpts = { signal: ac.signal };
       const body = {
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4',
         messages: [
           ...messages.map(
             (m): ChatCompletionRequestMessage => ({
@@ -42,7 +48,6 @@ export const useOpenAI = () => {
           ),
         ],
       };
-      let answer: ApiResponse['body'];
       try {
         if (mode === 'apiKey') {
           if (!context?.openAiClient) {
@@ -55,23 +60,7 @@ export const useOpenAI = () => {
             axiosOpts
           );
           console.log('openAi result', res);
-          answer = res.data;
-        } else {
-          const res = await axios.post(
-            Constants.expoConfig?.extra?.backendApiUrl,
-            { userId, body },
-            axiosOpts
-          );
-          console.log('backendApi result', res.data);
-          const parsed = ApiResponse.parse(res.data);
-          if (parsed.error) {
-            setErrorMessage(`[${parsed.error.code}] ${parsed.error.message}`);
-            setLoading(false);
-            return;
-          }
-          answer = parsed.body;
-        }
-        if (answer) {
+          const answer = res.data;
           if (answer.choices.length !== 1) {
             console.warn('res.data.choices.length !== 1');
           }
@@ -85,6 +74,43 @@ export const useOpenAI = () => {
               },
             ])
           );
+        } else {
+          dispatch(
+            addMessages([
+              {
+                id: uuid(),
+                text: '',
+                createdAt: new Date().getTime(),
+                user: CHAT_AI,
+              },
+            ])
+          );
+          console.log(
+            'new socket',
+            Constants.expoConfig?.extra?.backendApiWsUrl
+          );
+          const socket = new WebSocket(
+            Constants.expoConfig?.extra?.backendApiWsUrl
+          );
+          console.log('addEventListener');
+          socket.onmessage = (event) => {
+            // setMessages((current) => [...current, event.data]);
+            const obj = JSON.parse(event.data);
+            const parsed = WSResponse.parse(obj);
+            if (parsed.done) {
+              socket.close();
+            }
+            if (parsed.chunk?.choices.length) {
+              dispatch(
+                appendLastMessage(parsed.chunk?.choices[0].delta.content)
+              );
+            }
+          };
+          socket.onopen = () => {
+            const req = JSON.stringify({ action: 'message', userId, body });
+            console.log('send', req);
+            socket.send(req);
+          };
         }
       } catch (err) {
         if (axios.isCancel(err)) {
