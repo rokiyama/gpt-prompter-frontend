@@ -16,7 +16,12 @@ export const WSResponse = object({
       })
     ),
   }).optional(),
-  done: boolean(),
+  done: boolean().optional(),
+  appVersion: string(),
+  error: object({
+    code: string(),
+    message: string(),
+  }).optional(),
 });
 
 export type WSResponse = TypeOf<typeof WSResponse>;

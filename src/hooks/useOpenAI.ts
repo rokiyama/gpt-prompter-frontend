@@ -51,40 +51,40 @@ export const useOpenAI = () => {
 
       const sock = new WebSocket(Constants.expoConfig?.extra?.backendApiWsUrl);
       setSocket(sock);
-      try {
-        sock.onopen = () => {
-          sock.send(JSON.stringify({ action: 'message', userId, body }));
-        };
-        sock.onmessage = (event) => {
-          const obj = JSON.parse(event.data);
-          console.log('received', obj);
-          const parsed = WSResponse.safeParse(obj);
-          if (!parsed.success) {
-            console.error('parse error', parsed.error, obj);
-            return;
-          }
-          if (parsed.data.done) {
-            sock.close();
-            return;
-          }
-          if (parsed.data.chunk?.choices.length) {
-            dispatch(
-              appendLastMessage(parsed.data.chunk?.choices[0].delta.content)
-            );
-          }
-        };
-        sock.onclose = () => {
-          setSocket(null);
-          setLoading(false);
-        };
-      } catch (err) {
-        console.error(err);
-        console.log(body);
-        setErrorMessage(String(err));
-        sock.close();
-      }
+      sock.onopen = () => {
+        sock.send(JSON.stringify({ action: 'message', userId, body }));
+      };
+      sock.onmessage = (event) => {
+        const obj = JSON.parse(event.data);
+        console.log('received', obj);
+        const parsed = WSResponse.safeParse(obj);
+        if (!parsed.success) {
+          console.error('parse error', parsed.error, obj);
+          return;
+        }
+        if (parsed.data.error) {
+          console.error(parsed.data.error, body);
+          setErrorMessage(
+            parsed.data.error.code + ':' + parsed.data.error.message
+          );
+          sock.close();
+        }
+        if (parsed.data.done) {
+          sock.close();
+          return;
+        }
+        if (parsed.data.chunk?.choices.length) {
+          dispatch(
+            appendLastMessage(parsed.data.chunk?.choices[0].delta.content)
+          );
+        }
+      };
+      sock.onclose = () => {
+        setSocket(null);
+        setLoading(false);
+      };
     },
-    [dispatch, userId]
+    [dispatch, model, userId]
   );
 
   const cancel = useCallback(() => {
