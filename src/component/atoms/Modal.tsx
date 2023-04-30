@@ -1,11 +1,14 @@
 import { ReactNode } from 'react';
-import { Modal as RNModal, Platform, SafeAreaView, View } from 'react-native';
+import {
+  Modal as RNModal,
+  ModalProps,
+  Platform,
+  SafeAreaView,
+  View,
+} from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 
-type Props = {
-  visible: boolean;
-  children: ReactNode;
-};
+type Props = Pick<ModalProps, 'visible' | 'presentationStyle' | 'children'>;
 
 const ModalContent = ({ children }: { children: ReactNode }) => {
   const tw = useTailwind();
@@ -40,13 +43,15 @@ const ModalContent = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const Modal = ({ visible, children }: Props) => {
+export const Modal = ({ visible, presentationStyle, children }: Props) => {
   return (
     <RNModal
       visible={visible}
       transparent={Platform.OS === 'android'}
       animationType="slide"
-      presentationStyle={Platform.OS === 'ios' ? 'pageSheet' : undefined}
+      presentationStyle={
+        presentationStyle || Platform.OS === 'ios' ? 'pageSheet' : undefined
+      }
     >
       <ModalContent>{children}</ModalContent>
     </RNModal>

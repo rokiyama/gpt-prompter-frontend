@@ -3,11 +3,7 @@ import { ChatCompletionRequestMessage } from 'openai';
 import { useCallback, useState } from 'react';
 import { CHAT_AI, SYSTEM } from '../constants';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import {
-  addMessages,
-  appendLastMessage,
-  selectMessages,
-} from '../redux/slices/chatSlice';
+import { addMessages, appendLastMessage } from '../redux/slices/chatSlice';
 import { selectSettings } from '../redux/slices/settingsSlice';
 import { Message } from '../types/chat';
 import { WSResponse } from '../types/ws';
@@ -19,13 +15,14 @@ export const useOpenAI = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const { model } = useAppSelector(selectSettings);
 
   const sendMessages = useCallback(
     async (messages: Array<Message>) => {
       setLoading(true);
 
       const body = {
-        model: 'gpt-4',
+        model,
         messages: [
           ...messages.map(
             (m): ChatCompletionRequestMessage => ({

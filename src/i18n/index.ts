@@ -32,6 +32,9 @@ export const i18n = new I18n({
       "- Execute 'Create new secret key' on the page https://platform.openai.com/account/api-keys .",
     ],
     confirmSystemMessage: 'Are you sure you want to enter this system message?',
+    gptModel: 'Model',
+    changeModel: 'Change model',
+    selectModel: 'Select model',
   },
   ja: {
     ok: 'OK',
@@ -62,6 +65,9 @@ export const i18n = new I18n({
       '・https://platform.openai.com/account/api-keys のページでCreate new secret keyを実行',
     ],
     confirmSystemMessage: 'このシステムメッセージを入力しますか？',
+    gptModel: 'モデル',
+    changeModel: 'モデルを変更',
+    selectModel: 'モデルを選択してください',
   },
 });
 

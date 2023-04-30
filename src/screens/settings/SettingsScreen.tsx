@@ -3,9 +3,11 @@ import { Linking, SafeAreaView, Switch, Text, View } from 'react-native';
 import ParsedText from 'react-native-parsed-text';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
+import { Modal } from '../../component/atoms/Modal';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
+import { SelectModelModal } from './SelectModelModal';
 
 const ListText = ({ children }: { children: ReactNode }) => {
   const tw = useTailwind();
@@ -45,6 +47,26 @@ export const SettingsScreen = () => {
 
   return (
     <SafeAreaView style={tw('m-3')}>
+      <View style={tw('bg-white m-3 p-4 rounded-md')}>
+        <View style={tw('flex-row')}>
+          <Text style={tw('m-2')}>{i18n.t('gptModel')}:</Text>
+          <Text style={tw('m-2 flex-wrap text-slate-400')}>
+            {settings.model}
+          </Text>
+        </View>
+        <Button
+          title={i18n.t('changeModel')}
+          onPress={() => setModalVisible(true)}
+        />
+      </View>
+      <SelectModelModal
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        select={(model) => {
+          dispatch(save({ ...settings, model }));
+        }}
+      />
+
       <View
         style={tw(
           'flex-row items-center justify-between bg-white m-3 p-4 rounded-md'
