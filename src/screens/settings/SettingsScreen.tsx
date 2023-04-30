@@ -6,7 +6,6 @@ import { Button } from '../../component/atoms/Button';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
-import { ApiKeyModal } from './ApiKeyModal';
 
 const ListText = ({ children }: { children: ReactNode }) => {
   const tw = useTailwind();
@@ -69,7 +68,6 @@ export const SettingsScreen = () => {
           onPress={() => setModalVisible(true)}
           disabled={settings.mode !== 'apiKey'}
         />
-        <ApiKeyModal visible={modalVisible} setVisible={setModalVisible} />
       </View>
       <View style={tw('m-2')}>
         <ListText>{i18n.t('apiKeyInstruction.0')}</ListText>

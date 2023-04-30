@@ -7,8 +7,12 @@ import { Button } from '../../component/atoms/Button';
 import { USER } from '../../constants';
 import { useOpenAI } from '../../hooks/useOpenAI';
 import { i18n } from '../../i18n';
-import { useAppDispatch } from '../../redux/hooks';
-import { addMessages, clearMessages } from '../../redux/slices/chatSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  addMessages,
+  clearMessages,
+  selectMessages,
+} from '../../redux/slices/chatSlice';
 import { toGiftedUser, toIMessage, toMessage } from '../../types/chat';
 
 type Props = {
@@ -18,25 +22,11 @@ type Props = {
 export const Chat = ({ openSystemMessage }: Props) => {
   const tw = useTailwind();
   const dispatch = useAppDispatch();
-  const { messages, loading, sendMessages, cancel, errorMessage, clearError } =
+  const messages = useAppSelector(selectMessages);
+  const { loading, sendMessages, cancel, errorMessage, clearError } =
     useOpenAI();
 
   const giftedChatRef = useRef<GiftedChat>(null);
-
-  // const { speaking, speak, stop } = useSpeech();
-  // const speakLatestMessage = useCallback(() => {
-  //   if (messages.length < 2) {
-  //     return;
-  //   }
-  //   const latest = messages[messages.length - 1];
-  //   if (latest.user._id !== CHAT_AI._id) {
-  //     return;
-  //   }
-  //   speak(latest.text);
-  // }, [messages, speak]);
-  // useEffect(() => {
-  //   speakLatestMessage();
-  // }, [messages, speakLatestMessage]);
 
   const onSend = useCallback(
     (newGiftedMessages: Array<IMessage>) => {
@@ -72,13 +62,21 @@ export const Chat = ({ openSystemMessage }: Props) => {
           isTyping={loading}
           user={toGiftedUser(USER)}
           placeholder={i18n.t('sendMessage')}
+          renderDay={() => <></>}
+          renderTime={() => <></>}
           renderSend={(props) => (
-            <Send {...props}>
+            <Send {...props} disabled={loading}>
               <View style={tw('m-2')}>
                 <Ionicons
                   name="send"
                   size={25}
-                  color={Platform.OS === 'android' ? '#2196F3' : '#007AFF'}
+                  color={
+                    loading
+                      ? '#AAAAAA'
+                      : Platform.OS === 'android'
+                      ? '#2196F3'
+                      : '#007AFF'
+                  }
                 />
               </View>
             </Send>
@@ -88,6 +86,7 @@ export const Chat = ({ openSystemMessage }: Props) => {
               <Button
                 title={i18n.t('reset')}
                 onPress={() => {
+                  cancel();
                   clearError();
                   dispatch(clearMessages());
                   giftedChatRef.current?.focusTextInput();
@@ -96,11 +95,7 @@ export const Chat = ({ openSystemMessage }: Props) => {
               {loading && (
                 <Button title={i18n.t('cancel')} color="red" onPress={cancel} />
               )}
-              {/* {speaking && <Button title="Stop" color="red" onPress={stop} />}
-            {!loading && !speaking && messages.length > 2 && (
-              <Button title="Replay" onPress={speakLatestMessage} />
-            )} */}
-              {!loading && /*!speaking &&*/ messages.length > 1 && (
+              {!loading && messages.length > 1 && (
                 <Button
                   title={i18n.t('resend')}
                   onPress={() => {

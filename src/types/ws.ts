@@ -1,4 +1,4 @@
-import { any, array, boolean, number, object, string, TypeOf } from 'zod';
+import { array, boolean, number, object, string, TypeOf } from 'zod';
 
 export const WSResponse = object({
   chunk: object({
