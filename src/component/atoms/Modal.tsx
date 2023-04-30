@@ -8,7 +8,10 @@ import {
 } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 
-type Props = Pick<ModalProps, 'visible' | 'presentationStyle' | 'children'>;
+type Props =
+  | Pick<ModalProps, 'visible' | 'presentationStyle' | 'children'> & {
+      disableFrame?: boolean;
+    };
 
 const ModalContent = ({ children }: { children: ReactNode }) => {
   const tw = useTailwind();
@@ -43,7 +46,12 @@ const ModalContent = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const Modal = ({ visible, presentationStyle, children }: Props) => {
+export const Modal = ({
+  visible,
+  presentationStyle,
+  children,
+  disableFrame,
+}: Props) => {
   return (
     <RNModal
       visible={visible}
@@ -53,7 +61,7 @@ export const Modal = ({ visible, presentationStyle, children }: Props) => {
         presentationStyle || Platform.OS === 'ios' ? 'pageSheet' : undefined
       }
     >
-      <ModalContent>{children}</ModalContent>
+      {disableFrame ? children : <ModalContent>{children}</ModalContent>}
     </RNModal>
   );
 };

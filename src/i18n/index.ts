@@ -31,6 +31,9 @@ export const i18n = new I18n({
       '- Sign up for OpenAPI at https://platform.openai.com .',
       "- Execute 'Create new secret key' on the page https://platform.openai.com/account/api-keys .",
     ],
+    systemMessageDescription:
+      'System messages are used to give instructions to the assistant.',
+    inputManually: 'Input manually',
     confirmSystemMessage: 'Are you sure you want to enter this system message?',
     gptModel: 'Model',
     changeModel: 'Change model',
@@ -64,6 +67,9 @@ export const i18n = new I18n({
       '・https://platform.openai.com からOpenAPIにサインアップする',
       '・https://platform.openai.com/account/api-keys のページでCreate new secret keyを実行',
     ],
+    systemMessageDescription:
+      'システムメッセージは、アシスタントに対して指示を行うために使われるものです。',
+    inputManually: 'テキスト入力で指定',
     confirmSystemMessage: 'このシステムメッセージを入力しますか？',
     gptModel: 'モデル',
     changeModel: 'モデルを変更',

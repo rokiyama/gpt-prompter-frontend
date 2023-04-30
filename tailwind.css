@@ -22,6 +22,10 @@
   margin-bottom: 0.5rem
 }
 
+.mr-8 {
+  margin-right: 2rem
+}
+
 .mt-10 {
   margin-top: 2.5rem
 }
@@ -40,10 +44,6 @@
 
 .flex-wrap {
   flex-wrap: wrap
-}
-
-.items-start {
-  align-items: flex-start
 }
 
 .items-center {
@@ -82,6 +82,10 @@
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
+}
+
+.p-2 {
+  padding: 0.5rem
 }
 
 .p-3 {

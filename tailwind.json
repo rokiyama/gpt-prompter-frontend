@@ -41,6 +41,11 @@
 			"marginBottom": 8
 		}
 	},
+	"mr-8": {
+		"style": {
+			"marginRight": 32
+		}
+	},
 	"mt-10": {
 		"style": {
 			"marginTop": 40
@@ -66,11 +71,6 @@
 	"flex-wrap": {
 		"style": {
 			"flexWrap": "wrap"
-		}
-	},
-	"items-start": {
-		"style": {
-			"alignItems": "flex-start"
 		}
 	},
 	"items-center": {
@@ -124,6 +124,14 @@
 		"style": {
 			"--tw-bg-opacity": 1,
 			"backgroundColor": "rgb(255 255 255 / var(--tw-bg-opacity))"
+		}
+	},
+	"p-2": {
+		"style": {
+			"paddingTop": 8,
+			"paddingRight": 8,
+			"paddingBottom": 8,
+			"paddingLeft": 8
 		}
 	},
 	"p-3": {
