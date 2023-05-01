@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "example-expo-chat",
-    "slug": "example-expo-chat",
+    "name": "expo-chat-command-gpt",
+    "slug": "expo-chat-command-gpt",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
