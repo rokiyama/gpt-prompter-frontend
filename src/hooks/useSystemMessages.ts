@@ -1,10 +1,25 @@
-import { useEffect } from 'react';
-import { useAppDispatch } from '../redux/hooks';
-import { loadExternalData } from '../redux/slices/externalDataSlice';
+import { getLocales } from 'expo-localization';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '../redux/hooks';
+import {
+  selectSystemMessages,
+  SystemMessage,
+} from '../redux/slices/externalDataSlice';
 
 export const useSystemMessages = () => {
-  const dispatch = useAppDispatch();
+  const systemMessages = useAppSelector(selectSystemMessages);
+  const [localeMessages, setLocaleMessages] = useState<Array<SystemMessage>>(
+    []
+  );
+
   useEffect(() => {
-    dispatch(loadExternalData());
-  }, [dispatch]);
+    const locales = getLocales()[0];
+    setLocaleMessages(
+      systemMessages[locales.languageCode] ||
+        systemMessages['ja'] ||
+        systemMessages['en']
+    );
+  }, [systemMessages]);
+
+  return { systemMessages: localeMessages };
 };

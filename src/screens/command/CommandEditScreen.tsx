@@ -8,7 +8,7 @@ import { useAppDispatch } from '../../redux/hooks';
 import { inputText } from '../../redux/slices/chatSlice';
 import { RootStackParamList } from '../../types/navigation';
 import { render, renderDefault } from './template';
-import { useCommands } from './useCommands';
+import { useCommands } from '../../hooks/useCommands';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CommandEdit'>;
 

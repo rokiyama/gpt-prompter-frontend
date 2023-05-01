@@ -4,7 +4,7 @@ import { useTailwind } from 'tailwind-rn';
 import { Card } from '../../component/atoms/Card';
 import { i18n } from '../../i18n';
 import { RootStackParamList } from '../../types/navigation';
-import { useCommands } from './useCommands';
+import { useCommands } from '../../hooks/useCommands';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Command'>;
 

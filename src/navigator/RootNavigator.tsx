@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import 'react-native-url-polyfill/auto';
 import { Button } from '../component/atoms/Button';
 import { useSettings } from '../hooks/useSettings';
-import { useSystemMessages } from '../hooks/useSystemMessages';
+import { useExternalData } from '../hooks/useExternalData';
 import { i18n } from '../i18n';
 import { CommandEditScreen } from '../screens/command/CommandEditScreen';
 import { CommandScreen } from '../screens/command/CommandScreen';
@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
   useSettings();
-  useSystemMessages();
+  useExternalData();
   return (
     <NavigationContainer>
       <Stack.Navigator>
