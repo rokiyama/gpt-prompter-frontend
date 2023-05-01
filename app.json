@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "config": {
@@ -27,10 +29,15 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-localization"],
+    "plugins": [
+      "expo-localization"
+    ],
     "extra": {
       "backendApiWsUrl": "wss://08tuojhmfg.execute-api.ap-northeast-2.amazonaws.com/prod",
-      "systemMessagesUrl": "https://gpt-chat-misc.vercel.app/systemMessage.json"
+      "systemMessagesUrl": "https://gpt-chat-misc.vercel.app/systemMessage.json",
+      "eas": {
+        "projectId": "28332568-8713-4a75-bbe1-6cd8ec9fd30b"
+      }
     }
   }
 }
