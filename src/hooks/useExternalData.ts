@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '../redux/hooks';
-import { loadExternalData } from '../redux/slices/externalDataSlice';
+import {
+  loadExternalData,
+  setLoading,
+} from '../redux/slices/externalDataSlice';
 
 export const useExternalData = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
+    dispatch(setLoading(true));
     dispatch(loadExternalData());
   }, [dispatch]);
 };

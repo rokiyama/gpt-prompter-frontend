@@ -3,14 +3,19 @@ import { useState } from 'react';
 import { FlatList, SafeAreaView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { Card } from '../../component/atoms/Card';
+import { useSystemMessages } from '../../hooks/useSystemMessages';
 import { i18n } from '../../i18n';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { addMessages } from '../../redux/slices/chatSlice';
+import {
+  loadExternalData,
+  selectLoading,
+  setLoading,
+} from '../../redux/slices/externalDataSlice';
 import { RootStackParamList } from '../../types/navigation';
 import { newSystemMessage } from '../../utils/message';
 import { SystemMessagesModal } from './SystemMessagesModal';
 import { TextInputModal } from './TextInputModal';
-import { useSystemMessages } from '../../hooks/useSystemMessages';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SystemMessage'>;
 
@@ -20,6 +25,7 @@ export const SystemMessageScreen = ({ navigation }: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   const { systemMessages } = useSystemMessages();
+  const loading = useAppSelector(selectLoading);
 
   return (
     <SafeAreaView style={tw('m-3 flex-1')}>
@@ -47,6 +53,11 @@ export const SystemMessageScreen = ({ navigation }: Props) => {
             <Text numberOfLines={4}>{item.text}</Text>
           </Card>
         )}
+        refreshing={loading}
+        onRefresh={() => {
+          dispatch(setLoading(true));
+          dispatch(loadExternalData());
+        }}
       />
       <SystemMessagesModal
         visible={modalVisible}

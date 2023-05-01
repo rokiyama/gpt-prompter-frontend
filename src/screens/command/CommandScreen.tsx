@@ -5,12 +5,20 @@ import { Card } from '../../component/atoms/Card';
 import { i18n } from '../../i18n';
 import { RootStackParamList } from '../../types/navigation';
 import { useCommands } from '../../hooks/useCommands';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  loadExternalData,
+  selectLoading,
+  setLoading,
+} from '../../redux/slices/externalDataSlice';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Command'>;
 
 export const CommandScreen = ({ navigation }: Props) => {
   const tw = useTailwind();
+  const dispatch = useAppDispatch();
   const { commands } = useCommands();
+  const loading = useAppSelector(selectLoading);
 
   return (
     <SafeAreaView style={tw('m-3 flex-1')}>
@@ -32,6 +40,11 @@ export const CommandScreen = ({ navigation }: Props) => {
             </Text>
           </Card>
         )}
+        refreshing={loading}
+        onRefresh={() => {
+          dispatch(setLoading(true));
+          dispatch(loadExternalData());
+        }}
       />
     </SafeAreaView>
   );

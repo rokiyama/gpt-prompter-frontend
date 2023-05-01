@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import { array, object, record, string } from 'zod';
@@ -19,14 +19,20 @@ export type Command = {
   source: string;
 };
 
-interface ExternalDataState {
-  systemMessages: Record<string, Array<SystemMessage>>;
-  commands: Record<string, Array<Command>>;
+interface ExternalsState {
+  data: {
+    systemMessages: Record<string, Array<SystemMessage>>;
+    commands: Record<string, Array<Command>>;
+  };
+  loading: boolean;
 }
 
-const initialState: ExternalDataState = {
-  systemMessages: {},
-  commands: {},
+const initialState: ExternalsState = {
+  data: {
+    systemMessages: {},
+    commands: {},
+  },
+  loading: false,
 };
 
 export const loadExternalData = createAsyncThunk(
@@ -41,7 +47,7 @@ export const loadExternalData = createAsyncThunk(
       return parsed;
     } catch (err) {
       console.error('loadExternalData error', err);
-      return initialState;
+      return initialState.data;
     }
   }
 );
@@ -49,21 +55,28 @@ export const loadExternalData = createAsyncThunk(
 export const externalDataSlice = createSlice({
   name: 'externalData',
   initialState,
-  reducers: {},
+  reducers: {
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loadExternalData.fulfilled, (state, action) => {
-      if (action.payload) {
-        return action.payload;
-      }
+      state.data = action.payload;
+      state.loading = false;
     });
   },
 });
 
-export const selectSystemMessages = (state: RootState) =>
-  state.externalData.systemMessages;
-export const selectCommands = (state: RootState) => state.externalData.commands;
+export const { setLoading } = externalDataSlice.actions;
 
-const ExternalData = schemaForType<ExternalDataState>()(
+export const selectSystemMessages = (state: RootState) =>
+  state.externalData.data.systemMessages;
+export const selectCommands = (state: RootState) =>
+  state.externalData.data.commands;
+export const selectLoading = (state: RootState) => state.externalData.loading;
+
+const ExternalData = schemaForType<ExternalsState['data']>()(
   object({
     systemMessages: record(
       array(
