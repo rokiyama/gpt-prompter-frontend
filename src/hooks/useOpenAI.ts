@@ -55,8 +55,8 @@ export const useOpenAI = () => {
         sock.send(JSON.stringify({ action: 'message', userId, body }));
       };
       sock.onmessage = (event) => {
+        console.log('received', event.data);
         const obj = JSON.parse(event.data);
-        console.log('received', obj);
         const parsed = WSResponse.safeParse(obj);
         if (!parsed.success) {
           console.error('parse error', parsed.error, obj);

@@ -5,6 +5,8 @@ import { Button } from '../component/atoms/Button';
 import { useSettings } from '../hooks/useSettings';
 import { useSystemMessages } from '../hooks/useSystemMessages';
 import { i18n } from '../i18n';
+import { CommandEditScreen } from '../screens/command/CommandEditScreen';
+import { CommandScreen } from '../screens/command/CommandScreen';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { SystemMessageScreen } from '../screens/systemMessage/SystemMessageScreen';
@@ -22,7 +24,13 @@ export const RootNavigator = () => {
           name="Home"
           component={HomeScreen}
           options={({ navigation }) => ({
-            headerTitle: 'ChatAI',
+            headerTitle: '',
+            headerLeft: () => (
+              <Button
+                title={i18n.t('systemMessage')}
+                onPress={() => navigation.push('SystemMessage')}
+              />
+            ),
             headerRight: () => (
               <Button
                 title={i18n.t('settings')}
@@ -40,6 +48,16 @@ export const RootNavigator = () => {
           name="SystemMessage"
           component={SystemMessageScreen}
           options={{ headerTitle: i18n.t('systemMessage') }}
+        />
+        <Stack.Screen
+          name="Command"
+          component={CommandScreen}
+          options={{ headerTitle: i18n.t('command') }}
+        />
+        <Stack.Screen
+          name="CommandEdit"
+          component={CommandEditScreen}
+          options={{ headerTitle: i18n.t('commandEdit') }}
         />
       </Stack.Navigator>
     </NavigationContainer>

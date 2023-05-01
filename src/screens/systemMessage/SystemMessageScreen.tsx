@@ -3,15 +3,13 @@ import { useState } from 'react';
 import { FlatList, SafeAreaView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { Card } from '../../component/atoms/Card';
-import { SystemMessagesModal } from './SystemMessagesModal';
-import { SYSTEM } from '../../constants';
+import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { addMessages } from '../../redux/slices/chatSlice';
 import { selectSystemMessages } from '../../redux/slices/externalDataSlice';
 import { RootStackParamList } from '../../types/navigation';
-import { uuid } from '../../utils/uuid';
-import { i18n } from '../../i18n';
-import { Button } from '../../component/atoms/Button';
+import { newSystemMessage } from '../../utils/message';
+import { SystemMessagesModal } from './SystemMessagesModal';
 import { TextInputModal } from './TextInputModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SystemMessage'>;
@@ -56,15 +54,7 @@ export const SystemMessageScreen = ({ navigation }: Props) => {
         onPressOk={() => {
           if (selected != null) {
             dispatch(
-              addMessages([
-                {
-                  id: uuid(),
-                  createdAt: Date.now(),
-                  text: systemMessages[selected].text,
-                  user: SYSTEM,
-                  system: true,
-                },
-              ])
+              addMessages([newSystemMessage(systemMessages[selected].text)])
             );
           } else {
             console.error('no items selected');

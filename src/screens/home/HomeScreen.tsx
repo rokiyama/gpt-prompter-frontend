@@ -4,6 +4,6 @@ import { Chat } from './Chat';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-export const HomeScreen = ({ navigation }: Props) => {
-  return <Chat openSystemMessage={() => navigation.push('SystemMessage')} />;
+export const HomeScreen = ({ navigation, route }: Props) => {
+  return <Chat openCommand={() => navigation.push('Command')} />;
 };

@@ -7,6 +7,7 @@ import { SYSTEM } from '../../constants';
 import { i18n } from '../../i18n';
 import { useAppDispatch } from '../../redux/hooks';
 import { addMessages } from '../../redux/slices/chatSlice';
+import { newSystemMessage } from '../../utils/message';
 import { uuid } from '../../utils/uuid';
 
 type Props = {
@@ -54,17 +55,7 @@ export const TextInputModal = ({ onClose }: Props) => {
               title={i18n.t('ok')}
               onPress={() => {
                 if (text != null) {
-                  dispatch(
-                    addMessages([
-                      {
-                        id: uuid(),
-                        createdAt: Date.now(),
-                        text: text.trim(),
-                        user: SYSTEM,
-                        system: true,
-                      },
-                    ])
-                  );
+                  dispatch(addMessages([newSystemMessage(text.trim())]));
                 }
                 setVisible(false);
                 onClose();

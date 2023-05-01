@@ -3,10 +3,12 @@ import { Message } from '../../types/chat';
 import { RootState } from '../store';
 
 interface ChatState {
+  text: string;
   messages: Array<Message>;
 }
 
 const initialState: ChatState = {
+  text: '',
   messages: [],
 };
 
@@ -14,6 +16,9 @@ export const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
+    inputText: (state, action: PayloadAction<string>) => {
+      state.text = action.payload;
+    },
     clearMessages: (state) => {
       state.messages = [];
     },
@@ -26,9 +31,10 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { clearMessages, addMessages, appendLastMessage } =
+export const { inputText, clearMessages, addMessages, appendLastMessage } =
   chatSlice.actions;
 
+export const selectText = (state: RootState) => state.chat.text;
 export const selectMessages = (state: RootState) => state.chat.messages;
 
 // export default chatSlice.reducer;

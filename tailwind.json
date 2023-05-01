@@ -63,6 +63,11 @@
 			"flexGrow": 1
 		}
 	},
+	"grow": {
+		"style": {
+			"flexGrow": 1
+		}
+	},
 	"flex-row": {
 		"style": {
 			"flexDirection": "row"
@@ -126,6 +131,14 @@
 			"backgroundColor": "rgb(255 255 255 / var(--tw-bg-opacity))"
 		}
 	},
+	"p-1": {
+		"style": {
+			"paddingTop": 4,
+			"paddingRight": 4,
+			"paddingBottom": 4,
+			"paddingLeft": 4
+		}
+	},
 	"p-2": {
 		"style": {
 			"paddingTop": 8,
@@ -174,6 +187,11 @@
 		"style": {
 			"fontSize": 14,
 			"lineHeight": 20
+		}
+	},
+	"font-bold": {
+		"style": {
+			"fontWeight": "700"
 		}
 	},
 	"text-blue-400": {

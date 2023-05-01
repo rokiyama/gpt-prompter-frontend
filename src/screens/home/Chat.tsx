@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Platform, SafeAreaView, Text, View } from 'react-native';
 import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
@@ -11,17 +11,20 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   addMessages,
   clearMessages,
+  inputText,
   selectMessages,
+  selectText,
 } from '../../redux/slices/chatSlice';
 import { toGiftedUser, toIMessage, toMessage } from '../../types/chat';
 
 type Props = {
-  openSystemMessage: () => void;
+  openCommand: () => void;
 };
 
-export const Chat = ({ openSystemMessage }: Props) => {
+export const Chat = ({ openCommand }: Props) => {
   const tw = useTailwind();
   const dispatch = useAppDispatch();
+  const text = useAppSelector(selectText);
   const messages = useAppSelector(selectMessages);
   const { loading, sendMessages, cancel, errorMessage, clearError } =
     useOpenAI();
@@ -58,6 +61,10 @@ export const Chat = ({ openSystemMessage }: Props) => {
         <GiftedChat
           ref={giftedChatRef}
           messages={messages.slice().reverse().map(toIMessage)}
+          text={text}
+          onInputTextChanged={(text) => {
+            dispatch(inputText(text));
+          }}
           onSend={onSend}
           isTyping={loading}
           user={toGiftedUser(USER)}
@@ -105,10 +112,7 @@ export const Chat = ({ openSystemMessage }: Props) => {
                 />
               )}
               {!loading && (
-                <Button
-                  title={i18n.t('systemMessage')}
-                  onPress={openSystemMessage}
-                />
+                <Button title={i18n.t('command')} onPress={openCommand} />
               )}
             </View>
           )}

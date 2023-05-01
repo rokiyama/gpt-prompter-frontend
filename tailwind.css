@@ -38,6 +38,10 @@
   flex-grow: 1
 }
 
+.grow {
+  flex-grow: 1
+}
+
 .flex-row {
   flex-direction: row
 }
@@ -84,6 +88,10 @@
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
+.p-1 {
+  padding: 0.25rem
+}
+
 .p-2 {
   padding: 0.5rem
 }
@@ -113,6 +121,10 @@
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem
+}
+
+.font-bold {
+  font-weight: 700
 }
 
 .text-blue-400 {

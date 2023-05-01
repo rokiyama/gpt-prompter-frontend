@@ -38,6 +38,7 @@ export const i18n = new I18n({
     gptModel: 'Model',
     changeModel: 'Change model',
     selectModel: 'Select model',
+    command: 'Command',
   },
   ja: {
     ok: 'OK',
@@ -74,6 +75,10 @@ export const i18n = new I18n({
     gptModel: 'モデル',
     changeModel: 'モデルを変更',
     selectModel: 'モデルを選択してください',
+    command: 'コマンド',
+    commandEdit: 'コマンド編集',
+    commandDescription:
+      'テンプレートをもとに、アシスタントに与える指示を作成します。',
   },
 });
 
