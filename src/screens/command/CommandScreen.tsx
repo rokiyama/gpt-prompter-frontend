@@ -1,20 +1,16 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useState } from 'react';
 import { FlatList, SafeAreaView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { Card } from '../../component/atoms/Card';
 import { i18n } from '../../i18n';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { selectSystemMessages } from '../../redux/slices/externalDataSlice';
 import { RootStackParamList } from '../../types/navigation';
-import { testdata } from './testdata';
+import { useCommands } from './useCommands';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Command'>;
 
 export const CommandScreen = ({ navigation }: Props) => {
   const tw = useTailwind();
-  const [selected, setSelected] = useState<string | null>(null);
-  const templates = testdata;
+  const { commands } = useCommands();
 
   return (
     <SafeAreaView style={tw('m-3 flex-1')}>
@@ -23,7 +19,7 @@ export const CommandScreen = ({ navigation }: Props) => {
       </View>
       <FlatList
         numColumns={2}
-        data={templates}
+        data={commands}
         renderItem={({ item }) => (
           <Card
             style={tw('flex-1')}

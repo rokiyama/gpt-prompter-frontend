@@ -7,8 +7,10 @@ import { Card } from '../../component/atoms/Card';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { addMessages } from '../../redux/slices/chatSlice';
-import { selectSystemMessages } from '../../redux/slices/externalDataSlice';
-import { SystemMessage } from '../../types/externalData';
+import {
+  selectSystemMessages,
+  SystemMessage,
+} from '../../redux/slices/externalDataSlice';
 import { RootStackParamList } from '../../types/navigation';
 import { newSystemMessage } from '../../utils/message';
 import { SystemMessagesModal } from './SystemMessagesModal';
