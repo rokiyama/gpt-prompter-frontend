@@ -18,13 +18,15 @@
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "bundleIdentifier": "dev.okiyama.expochatcommandgpt"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "dev.okiyama.expochatcommandgpt"
     },
     "web": {
       "favicon": "./assets/favicon.png"
