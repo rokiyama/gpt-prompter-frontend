@@ -39,6 +39,9 @@ export const i18n = new I18n({
     changeModel: 'Change model',
     selectModel: 'Select model',
     command: 'Command',
+    commandEdit: 'Edit command',
+    commandDescription:
+      'Create a command to give to the assistant based on the template.',
   },
   ja: {
     ok: 'OK',
@@ -78,7 +81,7 @@ export const i18n = new I18n({
     command: 'コマンド',
     commandEdit: 'コマンド編集',
     commandDescription:
-      'テンプレートをもとに、アシスタントに与える指示を作成します。',
+      'テンプレートをもとに、アシスタントに与えるコマンドを作成します。',
   },
 });
 

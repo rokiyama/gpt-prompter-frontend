@@ -8,7 +8,7 @@ import { i18n } from '../../i18n';
 import { useAppDispatch } from '../../redux/hooks';
 import { inputText } from '../../redux/slices/chatSlice';
 import { RootStackParamList } from '../../types/navigation';
-import { render } from './template';
+import { render, renderDefault } from './template';
 import { testdata } from './testdata';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CommandEdit'>;
@@ -28,15 +28,14 @@ export const CommandEditScreen = ({ navigation, route }: Props) => {
     if (!entry) {
       return;
     }
-    const result = render(entry.template, variables);
-    setOutput(result);
-  }, [variables]);
+    setOutput(render(entry.template, variables));
+  }, [entry, variables]);
 
   return (
     <SafeAreaView style={tw('m-3 flex-1')}>
-      <Text style={tw('flex-row text-lg')}>
-        {i18n.t('confirmSystemMessage')}
-      </Text>
+      <View style={tw('m-2')}>
+        <Text>{i18n.t('commandDescription')}</Text>
+      </View>
       {entry &&
         Object.entries(entry.variables).map(([name, placeholder], i) => (
           <InputVariable
@@ -63,8 +62,15 @@ export const CommandEditScreen = ({ navigation, route }: Props) => {
         <Button
           title={i18n.t('ok')}
           onPress={() => {
-            dispatch(inputText(output));
-            navigation.push('Home');
+            if (!entry) {
+              return;
+            }
+            dispatch(
+              inputText(
+                renderDefault(entry.template, variables, entry.variables as any)
+              )
+            );
+            navigation.pop(2);
           }}
         />
       </View>

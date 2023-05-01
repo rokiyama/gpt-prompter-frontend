@@ -18,7 +18,7 @@ export const CommandScreen = ({ navigation }: Props) => {
 
   return (
     <SafeAreaView style={tw('m-3 flex-1')}>
-      <View style={tw('m-2 text-slate-400')}>
+      <View style={tw('m-2')}>
         <Text>{i18n.t('commandDescription')}</Text>
       </View>
       <FlatList
