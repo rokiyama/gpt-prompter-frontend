@@ -44,9 +44,15 @@ export const TestScreen = (props: Props) => {
         sections={DATA}
         extraData={openSectionIds}
         keyExtractor={(item) => item}
-        renderItem={({ item, section }) =>
-          openSectionIds.includes(section.id) ? (
-            <View style={tw('bg-white mx-3 p-3')}>
+        renderItem={({ item, section: { id, data }, index }) =>
+          openSectionIds.includes(id) ? (
+            <View
+              style={[
+                tw('bg-white mx-3 px-3 py-1'),
+                index === 0 && tw('rounded-t-lg'),
+                index === data.length - 1 && tw('rounded-b-lg'),
+              ]}
+            >
               <Text style={tw('text-lg')}>{item}</Text>
             </View>
           ) : (
