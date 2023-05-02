@@ -7,7 +7,7 @@ import { i18n } from '../../i18n';
 import { useAppDispatch } from '../../redux/hooks';
 import { inputText } from '../../redux/slices/chatSlice';
 import { RootStackParamList } from '../../types/navigation';
-import { render, renderDefault } from './template';
+import { render } from './template';
 import { useCommands } from '../../hooks/useCommands';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CommandEdit'>;
@@ -19,7 +19,10 @@ export const CommandEditScreen = ({ navigation, route }: Props) => {
   const [output, setOutput] = useState('');
   const { commands } = useCommands();
 
-  const command = commands.find((d) => d.id === route.params.id);
+  const command = commands
+    .map((category) => category.data)
+    .flat()
+    .find((d) => d.id === route.params.id);
 
   useEffect(() => {
     if (!command) {
@@ -31,7 +34,7 @@ export const CommandEditScreen = ({ navigation, route }: Props) => {
   return (
     <SafeAreaView style={tw('m-3 flex-1')}>
       <View style={tw('m-2')}>
-        <Text>{i18n.t('commandDescription')}</Text>
+        <Text>{command?.description}</Text>
       </View>
       {command &&
         Object.entries(command.variables).map(([name, placeholder], i) => (
@@ -45,17 +48,11 @@ export const CommandEditScreen = ({ navigation, route }: Props) => {
             }}
           />
         ))}
-      <ScrollView contentContainerStyle={tw('flex-grow m-1')}>
-        <Text style={tw('m-1 text-lg font-bold')}>コマンド</Text>
+      <Text style={tw('m-1 text-lg font-bold')}>コマンド</Text>
+      <ScrollView contentContainerStyle={tw('m-1')}>
         <Text style={tw('m-1 text-sm')}>{output}</Text>
       </ScrollView>
-      <View style={tw('flex-row justify-end')}>
-        <Button
-          title={i18n.t('cancel')}
-          onPress={() => {
-            navigation.pop();
-          }}
-        />
+      <View style={tw('flex-grow m-2 p-2')}>
         <Button
           title={i18n.t('ok')}
           onPress={() => {
@@ -63,9 +60,7 @@ export const CommandEditScreen = ({ navigation, route }: Props) => {
               return;
             }
             dispatch(
-              inputText(
-                renderDefault(command.template, variables, command.variables)
-              )
+              inputText(render(command.template, variables, command.variables))
             );
             navigation.popToTop();
           }}

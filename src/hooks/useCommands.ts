@@ -1,10 +1,15 @@
 import { getLocales } from 'expo-localization';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../redux/hooks';
-import { Command, selectCommands } from '../redux/slices/externalDataSlice';
+import {
+  CommandCategory,
+  selectCommands,
+} from '../redux/slices/externalDataSlice';
 
 export const useCommands = () => {
-  const [localeCommands, setLocaleCommands] = useState<Array<Command>>([]);
+  const [localeCommands, setLocaleCommands] = useState<Array<CommandCategory>>(
+    []
+  );
   const commands = useAppSelector(selectCommands);
 
   useEffect(() => {

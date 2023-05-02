@@ -1,5 +1,5 @@
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { Pressable, SectionList, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 
@@ -9,28 +9,35 @@ type Props<T> = {
     title: string;
     data: Array<T>;
   }>;
-  initialOpenSections?: Array<string>;
+  openSectionIds: Array<string>;
+  setOpenSectionIds: (_: Array<string>) => void;
   renderItem: (item: T) => React.ReactElement;
+  refreshing: SectionList['props']['refreshing'];
+  onRefresh: SectionList['props']['onRefresh'];
 };
 
 export const CollapsibleList = <T extends { id: string }>({
   sections,
-  initialOpenSections,
+  openSectionIds,
+  setOpenSectionIds,
   renderItem,
+  refreshing,
+  onRefresh,
 }: Props<T>) => {
   const tw = useTailwind();
-  const [openSectionIds, setOpenSections] = useState<Array<string>>(
-    initialOpenSections || []
-  );
 
   const toggleSection = (sectionId: string) => {
     const open = openSectionIds.includes(sectionId);
     if (open) {
-      setOpenSections(openSectionIds.filter((id) => id !== sectionId));
+      setOpenSectionIds(openSectionIds.filter((id) => id !== sectionId));
     } else {
-      setOpenSections([...openSectionIds, sectionId]);
+      setOpenSectionIds([...openSectionIds, sectionId]);
     }
   };
+
+  useEffect(() => {
+    console.log(JSON.stringify(openSectionIds));
+  }, [openSectionIds]);
 
   return (
     <SectionList
@@ -67,6 +74,9 @@ export const CollapsibleList = <T extends { id: string }>({
       ItemSeparatorComponent={() => (
         <View style={tw('bg-gray-100 h-px mx-3')} />
       )}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      stickySectionHeadersEnabled={false}
     />
   );
 };

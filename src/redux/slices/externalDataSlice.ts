@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Constants from 'expo-constants';
-import { array, object, record, string } from 'zod';
+import { array, boolean, object, record, string } from 'zod';
 import { schemaForType } from '../../utils/schema';
 import { RootState } from '../store';
 
@@ -14,15 +14,23 @@ export type Command = {
   id: string;
   title: string;
   template: string;
+  description: string;
   variables: Record<string, string>;
   author: string;
   source: string;
 };
 
+export type CommandCategory = {
+  id: string;
+  title: string;
+  first: boolean;
+  data: Array<Command>;
+};
+
 interface ExternalsState {
   data: {
     systemMessages: Record<string, Array<SystemMessage>>;
-    commands: Record<string, Array<Command>>;
+    commands: Record<string, Array<CommandCategory>>;
   };
   loading: boolean;
 }
@@ -91,10 +99,18 @@ const ExternalData = schemaForType<ExternalsState['data']>()(
         object({
           id: string(),
           title: string(),
-          template: string(),
-          variables: record(string()),
-          author: string(),
-          source: string(),
+          first: boolean(),
+          data: array(
+            object({
+              id: string(),
+              title: string(),
+              template: string(),
+              description: string(),
+              variables: record(string()),
+              author: string(),
+              source: string(),
+            })
+          ),
         })
       )
     ),
