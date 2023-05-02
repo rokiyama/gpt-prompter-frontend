@@ -11,15 +11,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
       },
-      "bundleIdentifier": "dev.okiyama.expochatcommandgpt"
+      "bundleIdentifier": "dev.okiyama.expochatcommandgpt",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,9 +30,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-localization"
-    ],
+    "plugins": ["expo-localization"],
     "extra": {
       "backendApiWsUrl": "wss://08tuojhmfg.execute-api.ap-northeast-2.amazonaws.com/prod",
       "systemMessagesUrl": "https://gpt-chat-misc.vercel.app/systemMessage.json",
