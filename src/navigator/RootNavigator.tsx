@@ -11,6 +11,7 @@ import { HomeScreen } from '../screens/home/HomeScreen';
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { SystemMessageScreen } from '../screens/systemMessage/SystemMessageScreen';
 import { RootStackParamList } from '../types/navigation';
+import { TestScreen } from '../screens/test/TestScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -59,6 +60,7 @@ export const RootNavigator = () => {
           component={CommandEditScreen}
           options={{ headerTitle: i18n.t('commandEdit') }}
         />
+        <Stack.Screen name="Test" component={TestScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

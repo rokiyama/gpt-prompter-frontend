@@ -1,3 +1,5 @@
+import Constants from 'expo-constants';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ReactNode, useState } from 'react';
 import {
   Linking,
@@ -14,6 +16,7 @@ import { Modal } from '../../component/atoms/Modal';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
+import { RootStackParamList } from '../../types/navigation';
 import { SelectModelModal } from './SelectModelModal';
 
 const ListText = ({ children }: { children: ReactNode }) => {
@@ -37,7 +40,9 @@ const ListText = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const SettingsScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Settings'>;
+
+export const SettingsScreen = ({ navigation }: Props) => {
   const tw = useTailwind();
   const [modalVisible, setModalVisible] = useState(false);
   const settings = useAppSelector(selectSettings);
@@ -105,6 +110,10 @@ export const SettingsScreen = () => {
           <ListText>{i18n.t('apiKeyInstruction.2')}</ListText>
           <ListText>{i18n.t('apiKeyInstruction.3')}</ListText>
         </View>
+        <Button
+          title="Open TestScreen"
+          onPress={() => navigation.push('Test')}
+        />
       </ScrollView>
     </SafeAreaView>
   );

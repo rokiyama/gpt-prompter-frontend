@@ -6,4 +6,5 @@ export type RootStackParamList = {
   CommandEdit: {
     id: string;
   };
+  Test: undefined;
 };

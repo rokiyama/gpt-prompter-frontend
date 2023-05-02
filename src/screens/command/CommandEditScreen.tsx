@@ -67,7 +67,7 @@ export const CommandEditScreen = ({ navigation, route }: Props) => {
                 renderDefault(command.template, variables, command.variables)
               )
             );
-            navigation.pop(2);
+            navigation.popToTop();
           }}
         />
       </View>
