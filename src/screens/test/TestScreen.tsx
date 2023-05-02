@@ -42,6 +42,7 @@ export const TestScreen = (props: Props) => {
     <SafeAreaView style={tw('flex-1')}>
       <CollapsibleList
         sections={DATA}
+        initialOpenSections={['2']}
         renderItem={(item) => (
           <TouchableOpacity>
             <Text style={tw('text-lg')}>{item.text}</Text>

@@ -9,15 +9,19 @@ type Props<T> = {
     title: string;
     data: Array<T>;
   }>;
+  initialOpenSections?: Array<string>;
   renderItem: (item: T) => React.ReactElement;
 };
 
 export const CollapsibleList = <T extends { id: string }>({
   sections,
+  initialOpenSections,
   renderItem,
 }: Props<T>) => {
   const tw = useTailwind();
-  const [openSectionIds, setOpenSections] = useState<Array<string>>([]);
+  const [openSectionIds, setOpenSections] = useState<Array<string>>(
+    initialOpenSections || []
+  );
 
   const toggleSection = (sectionId: string) => {
     const open = openSectionIds.includes(sectionId);
