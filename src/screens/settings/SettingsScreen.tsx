@@ -1,5 +1,12 @@
 import { ReactNode, useState } from 'react';
-import { Linking, SafeAreaView, Switch, Text, View } from 'react-native';
+import {
+  Linking,
+  SafeAreaView,
+  ScrollView,
+  Switch,
+  Text,
+  View,
+} from 'react-native';
 import ParsedText from 'react-native-parsed-text';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
@@ -47,56 +54,58 @@ export const SettingsScreen = () => {
 
   return (
     <SafeAreaView style={tw('m-3')}>
-      <View style={tw('bg-white m-3 p-4 rounded-md')}>
-        <View style={tw('flex-row')}>
-          <Text style={tw('m-2')}>{i18n.t('gptModel')}:</Text>
-          <Text style={tw('m-2 flex-wrap text-slate-400')}>
-            {settings.model}
-          </Text>
+      <ScrollView>
+        <View style={tw('bg-white m-3 p-4 rounded-md')}>
+          <View style={tw('flex-row')}>
+            <Text style={tw('m-2')}>{i18n.t('gptModel')}:</Text>
+            <Text style={tw('m-2 flex-wrap text-slate-400')}>
+              {settings.model}
+            </Text>
+          </View>
+          <Button
+            title={i18n.t('changeModel')}
+            onPress={() => setModalVisible(true)}
+          />
         </View>
-        <Button
-          title={i18n.t('changeModel')}
-          onPress={() => setModalVisible(true)}
+        <SelectModelModal
+          visible={modalVisible}
+          setVisible={setModalVisible}
+          select={(model) => {
+            dispatch(save({ ...settings, model }));
+          }}
         />
-      </View>
-      <SelectModelModal
-        visible={modalVisible}
-        setVisible={setModalVisible}
-        select={(model) => {
-          dispatch(save({ ...settings, model }));
-        }}
-      />
 
-      <View
-        style={tw(
-          'flex-row items-center justify-between bg-white m-3 p-4 rounded-md'
-        )}
-      >
-        <Text style={tw('m-2')}>{i18n.t('useApiKeyMode')}</Text>
-        <Switch value={settings.mode === 'apiKey'} onValueChange={toggle} />
-      </View>
-      <View style={tw('m-2')}>
-        <ListText>{i18n.t('apiKeyDescription')}</ListText>
-      </View>
-      <View style={tw('bg-white m-3 p-4 rounded-md')}>
-        <Text style={tw('m-2')}>{i18n.t('apiKey')}:</Text>
-        <Text style={tw('m-2 flex-wrap text-slate-400')}>
-          {settings.isApiKeyConfigured
-            ? i18n.t('configured')
-            : i18n.t('notYetConfigured')}
-        </Text>
-        <Button
-          title={i18n.t('setApiKey')}
-          onPress={() => setModalVisible(true)}
-          disabled={settings.mode !== 'apiKey'}
-        />
-      </View>
-      <View style={tw('m-2')}>
-        <ListText>{i18n.t('apiKeyInstruction.0')}</ListText>
-        <ListText>{i18n.t('apiKeyInstruction.1')}</ListText>
-        <ListText>{i18n.t('apiKeyInstruction.2')}</ListText>
-        <ListText>{i18n.t('apiKeyInstruction.3')}</ListText>
-      </View>
+        <View
+          style={tw(
+            'flex-row items-center justify-between bg-white m-3 p-4 rounded-md'
+          )}
+        >
+          <Text style={tw('m-2')}>{i18n.t('useApiKeyMode')}</Text>
+          <Switch value={settings.mode === 'apiKey'} onValueChange={toggle} />
+        </View>
+        <View style={tw('m-2')}>
+          <ListText>{i18n.t('apiKeyDescription')}</ListText>
+        </View>
+        <View style={tw('bg-white m-3 p-4 rounded-md')}>
+          <Text style={tw('m-2')}>{i18n.t('apiKey')}:</Text>
+          <Text style={tw('m-2 flex-wrap text-slate-400')}>
+            {settings.isApiKeyConfigured
+              ? i18n.t('configured')
+              : i18n.t('notYetConfigured')}
+          </Text>
+          <Button
+            title={i18n.t('setApiKey')}
+            onPress={() => setModalVisible(true)}
+            disabled={settings.mode !== 'apiKey'}
+          />
+        </View>
+        <View style={tw('m-2')}>
+          <ListText>{i18n.t('apiKeyInstruction.0')}</ListText>
+          <ListText>{i18n.t('apiKeyInstruction.1')}</ListText>
+          <ListText>{i18n.t('apiKeyInstruction.2')}</ListText>
+          <ListText>{i18n.t('apiKeyInstruction.3')}</ListText>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
