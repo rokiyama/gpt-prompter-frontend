@@ -42,6 +42,7 @@ export const i18n = new I18n({
     commandEdit: 'Edit command',
     commandDescription:
       'Create a command to give to the assistant based on the template.',
+    prompt: 'Prompt',
   },
   ja: {
     ok: 'OK',
@@ -82,6 +83,7 @@ export const i18n = new I18n({
     commandEdit: 'コマンド編集',
     commandDescription:
       'テンプレートをもとに、アシスタントに与えるコマンドを作成します。',
+    prompt: 'プロンプト',
   },
 });
 

@@ -48,7 +48,7 @@ export const CommandEditScreen = ({ navigation, route }: Props) => {
             }}
           />
         ))}
-      <Text style={tw('m-1 text-lg font-bold')}>コマンド</Text>
+      <Text style={tw('m-1 text-lg font-bold')}>{i18n.t('prompt')}</Text>
       <ScrollView contentContainerStyle={tw('m-1')}>
         <Text style={tw('m-1 text-sm')}>{output}</Text>
       </ScrollView>
