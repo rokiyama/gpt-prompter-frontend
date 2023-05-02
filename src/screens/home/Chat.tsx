@@ -43,9 +43,9 @@ export const Chat = ({ openCommand }: Props) => {
   );
 
   return (
-    <SafeAreaView style={tw('flex-1 items-center bg-white')}>
+    <SafeAreaView style={tw('flex-1 bg-white')}>
       {errorMessage && (
-        <View>
+        <View style={tw('flex-1 items-center')}>
           <Text style={tw('text-lg mt-10 text-red-500')}>
             {i18n.t('errorOccurred')}:
           </Text>
@@ -53,7 +53,7 @@ export const Chat = ({ openCommand }: Props) => {
         </View>
       )}
       {messages.length < 1 && (
-        <View>
+        <View style={tw('flex-1 items-center')}>
           <Text style={tw('text-lg mt-10')}>{i18n.t('welcome')}</Text>
         </View>
       )}
