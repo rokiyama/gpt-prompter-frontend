@@ -1,6 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Platform, SafeAreaView, Text, View } from 'react-native';
+import { useCallback, useRef } from 'react';
+import {
+  Keyboard,
+  Platform,
+  SafeAreaView,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
@@ -53,9 +60,11 @@ export const Chat = ({ openCommand }: Props) => {
         </View>
       )}
       {messages.length < 1 && (
-        <View style={tw('flex-1 items-center')}>
-          <Text style={tw('text-lg mt-10')}>{i18n.t('welcome')}</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={tw('flex-1 items-center')}>
+            <Text style={tw('text-lg mt-10')}>{i18n.t('welcome')}</Text>
+          </View>
+        </TouchableWithoutFeedback>
       )}
       <View style={tw('flex-1 flex-row')}>
         <GiftedChat
