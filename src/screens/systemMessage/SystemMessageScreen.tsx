@@ -15,7 +15,7 @@ import {
 import { RootStackParamList } from '../../types/navigation';
 import { newSystemMessage } from '../../utils/message';
 import { SystemMessagesModal } from './SystemMessagesModal';
-import { TextInputModal } from './TextInputModal';
+import { SystemMessageEditModal } from './SystemMessageEditModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SystemMessage'>;
 
@@ -33,8 +33,8 @@ export const SystemMessageScreen = ({ navigation }: Props) => {
         <Text>{i18n.t('systemMessageDescription')}</Text>
       </View>
       <View style={tw('bg-white m-2 p-2 rounded-md')}>
-        <TextInputModal
-          onClose={() => {
+        <SystemMessageEditModal
+          onPressOk={() => {
             navigation.pop();
           }}
         />

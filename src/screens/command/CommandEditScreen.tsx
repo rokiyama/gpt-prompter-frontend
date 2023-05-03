@@ -35,6 +35,7 @@ export const CommandEditScreen = ({ navigation, route }: Props) => {
     <SafeAreaView style={tw('m-3 flex-1')}>
       <View style={tw('m-2')}>
         <Text>{command?.description}</Text>
+        <Text style={tw('mt-2')}>{i18n.t('commandEditDescription')}</Text>
       </View>
       {command &&
         Object.entries(command.variables).map(([name, placeholder], i) => (

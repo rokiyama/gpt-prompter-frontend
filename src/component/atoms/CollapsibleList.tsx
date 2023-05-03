@@ -2,6 +2,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { useEffect } from 'react';
 import { Pressable, SectionList, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
+import { PRIMARY_COLOR } from '../../constants';
 
 type Props<T> = {
   sections: Array<{
@@ -66,7 +67,7 @@ export const CollapsibleList = <T extends { id: string }>({
             <SimpleLineIcons
               name={openSectionIds.includes(id) ? 'arrow-down' : 'arrow-right'}
               size={12}
-              color="black"
+              color={PRIMARY_COLOR}
             />
           </View>
         </Pressable>

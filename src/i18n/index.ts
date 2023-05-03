@@ -38,10 +38,12 @@ export const i18n = new I18n({
     gptModel: 'Model',
     changeModel: 'Change model',
     selectModel: 'Select model',
-    command: 'Command',
-    commandEdit: 'Edit command',
+    command: 'Prompt',
+    commandEdit: 'Edit prompt',
     commandDescription:
-      'Create a command to give to the assistant based on the template.',
+      'Create a prompt to give to the assistant based on the template.',
+    commandEditDescription:
+      'Default values are automatically entered where omitted.',
     prompt: 'Prompt',
   },
   ja: {
@@ -73,16 +75,17 @@ export const i18n = new I18n({
       '・https://platform.openai.com/account/api-keys のページでCreate new secret keyを実行',
     ],
     systemMessageDescription:
-      'システムメッセージは、アシスタントに対して指示を行うために使われるものです。',
+      'システムメッセージは、アシスタントに対してシステムから指示を行うためのものです。AIの口調、スタイルなどを操作することができます。',
     inputManually: 'テキスト入力で指定',
     confirmSystemMessage: 'このシステムメッセージを入力しますか？',
     gptModel: 'モデル',
     changeModel: 'モデルを変更',
     selectModel: 'モデルを選択してください',
-    command: 'コマンド',
-    commandEdit: 'コマンド編集',
+    command: 'プロンプト',
+    commandEdit: 'プロンプト編集',
     commandDescription:
-      'テンプレートをもとに、アシスタントに与えるコマンドを作成します。',
+      'テンプレートをもとに、アシスタントに与えるプロンプトを作成します。',
+    commandEditDescription: '省略した箇所はデフォルト値が自動入力されます。',
     prompt: 'プロンプト',
   },
 });

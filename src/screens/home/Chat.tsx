@@ -1,17 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useCallback, useRef } from 'react';
-import {
-  Keyboard,
-  Platform,
-  SafeAreaView,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { useCallback, useRef, useState } from 'react';
+import { SafeAreaView, Text, TextInput, View } from 'react-native';
 import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
-import { USER } from '../../constants';
+import { PRIMARY_COLOR, USER } from '../../constants';
 import { useOpenAI } from '../../hooks/useOpenAI';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -23,6 +16,7 @@ import {
   selectText,
 } from '../../redux/slices/chatSlice';
 import { toGiftedUser, toIMessage, toMessage } from '../../types/chat';
+import { EditModal } from './EditModal';
 
 type Props = {
   openCommand: () => void;
@@ -35,6 +29,7 @@ export const Chat = ({ openCommand }: Props) => {
   const messages = useAppSelector(selectMessages);
   const { loading, sendMessages, cancel, errorMessage, clearError } =
     useOpenAI();
+  const [editModalVisible, setEditModalVisible] = useState(false);
 
   const giftedChatRef = useRef<GiftedChat>(null);
 
@@ -60,13 +55,11 @@ export const Chat = ({ openCommand }: Props) => {
         </View>
       )}
       {messages.length < 1 && (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View style={tw('flex-1 items-center')}>
-            <Text style={tw('text-lg mt-10')}>{i18n.t('welcome')}</Text>
-          </View>
-        </TouchableWithoutFeedback>
+        <View style={tw('flex-1 items-center')}>
+          <Text style={tw('text-lg mt-10')}>{i18n.t('welcome')}</Text>
+        </View>
       )}
-      <View style={tw('flex-1 flex-row')}>
+      <View style={tw('flex-1')}>
         <GiftedChat
           ref={giftedChatRef}
           messages={messages.slice().reverse().map(toIMessage)}
@@ -86,13 +79,7 @@ export const Chat = ({ openCommand }: Props) => {
                 <Ionicons
                   name="send"
                   size={25}
-                  color={
-                    loading
-                      ? '#AAAAAA'
-                      : Platform.OS === 'android'
-                      ? '#2196F3'
-                      : '#007AFF'
-                  }
+                  color={loading ? '#AAAAAA' : PRIMARY_COLOR}
                 />
               </View>
             </Send>
@@ -108,9 +95,7 @@ export const Chat = ({ openCommand }: Props) => {
                   giftedChatRef.current?.focusTextInput();
                 }}
               />
-              {loading && (
-                <Button title={i18n.t('cancel')} color="red" onPress={cancel} />
-              )}
+              {loading && <Button title={i18n.t('cancel')} onPress={cancel} />}
               {!loading && messages.length > 1 && (
                 <Button
                   title={i18n.t('resend')}
@@ -125,8 +110,23 @@ export const Chat = ({ openCommand }: Props) => {
               )}
             </View>
           )}
+          disableComposer
+          textInputProps={
+            {
+              onPressIn: () => {
+                setEditModalVisible(true);
+              },
+            } as TextInput['props']
+          }
         />
       </View>
+      <EditModal
+        visible={editModalVisible}
+        setVisible={setEditModalVisible}
+        onPressOk={() => {
+          console.log('onPressOk');
+        }}
+      />
     </SafeAreaView>
   );
 };

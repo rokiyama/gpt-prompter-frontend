@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { User } from './types/chat';
 
 export const USER: User = {
@@ -15,3 +16,5 @@ export const SYSTEM: User = {
   id: 'system',
   name: 'system',
 };
+
+export const PRIMARY_COLOR = Platform.OS === 'android' ? '#2196F3' : '#007AFF';

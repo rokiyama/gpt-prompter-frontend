@@ -57,9 +57,49 @@
 			"marginTop": 40
 		}
 	},
+	"mt-1": {
+		"style": {
+			"marginTop": 4
+		}
+	},
+	"mt-2": {
+		"style": {
+			"marginTop": 8
+		}
+	},
+	"flex": {
+		"style": {
+			"display": "flex"
+		}
+	},
 	"h-px": {
 		"style": {
 			"height": 1
+		}
+	},
+	"h-80": {
+		"style": {
+			"height": 320
+		}
+	},
+	"max-h-32": {
+		"style": {
+			"maxHeight": 128
+		}
+	},
+	"max-h-fit": {
+		"style": {
+			"maxHeight": "fit-content"
+		}
+	},
+	"max-h-96": {
+		"style": {
+			"maxHeight": 384
+		}
+	},
+	"max-h-80": {
+		"style": {
+			"maxHeight": 320
 		}
 	},
 	"flex-1": {
