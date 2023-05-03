@@ -5,8 +5,8 @@ import { Button } from '../component/atoms/Button';
 import { useSettings } from '../hooks/useSettings';
 import { useExternalData } from '../hooks/useExternalData';
 import { i18n } from '../i18n';
-import { CommandEditScreen } from '../screens/command/CommandEditScreen';
-import { CommandScreen } from '../screens/command/CommandScreen';
+import { PromptEditScreen } from '../screens/prompt/PromptEditScreen';
+import { PromptScreen } from '../screens/prompt/PromptScreen';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { SystemMessageScreen } from '../screens/systemMessage/SystemMessageScreen';
@@ -53,14 +53,14 @@ export const RootNavigator = () => {
             options={{ headerTitle: i18n.t('systemMessage') }}
           />
           <Stack.Screen
-            name="Command"
-            component={CommandScreen}
-            options={{ headerTitle: i18n.t('command') }}
+            name="Prompt"
+            component={PromptScreen}
+            options={{ headerTitle: i18n.t('prompt') }}
           />
           <Stack.Screen
-            name="CommandEdit"
-            component={CommandEditScreen}
-            options={{ headerTitle: i18n.t('commandEdit') }}
+            name="PromptEdit"
+            component={PromptEditScreen}
+            options={{ headerTitle: i18n.t('promptEdit') }}
           />
           <Stack.Screen name="Test" component={TestScreen} />
         </Stack.Navigator>

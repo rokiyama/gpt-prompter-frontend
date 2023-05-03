@@ -10,7 +10,7 @@ export type SystemMessage = {
   text: string;
 };
 
-export type Command = {
+export type Prompt = {
   id: string;
   title: string;
   template: string;
@@ -20,17 +20,17 @@ export type Command = {
   source: string;
 };
 
-export type CommandCategory = {
+export type PromptCategory = {
   id: string;
   title: string;
   first: boolean;
-  data: Array<Command>;
+  data: Array<Prompt>;
 };
 
 interface ExternalsState {
   data: {
     systemMessages: Record<string, Array<SystemMessage>>;
-    commands: Record<string, Array<CommandCategory>>;
+    prompts: Record<string, Array<PromptCategory>>;
   };
   loading: boolean;
 }
@@ -38,7 +38,7 @@ interface ExternalsState {
 const initialState: ExternalsState = {
   data: {
     systemMessages: {},
-    commands: {},
+    prompts: {},
   },
   loading: false,
 };
@@ -47,9 +47,7 @@ export const loadExternalData = createAsyncThunk(
   'externalData/load',
   async () => {
     try {
-      const res = await axios.get(
-        Constants.expoConfig?.extra?.systemMessagesUrl
-      );
+      const res = await axios.get(Constants.expoConfig?.extra?.externalDataUrl);
       const parsed = ExternalData.parse(res.data);
       console.log('ExternalData', parsed);
       return parsed;
@@ -80,8 +78,8 @@ export const { setLoading } = externalDataSlice.actions;
 
 export const selectSystemMessages = (state: RootState) =>
   state.externalData.data.systemMessages;
-export const selectCommands = (state: RootState) =>
-  state.externalData.data.commands;
+export const selectPrompts = (state: RootState) =>
+  state.externalData.data.prompts;
 export const selectLoading = (state: RootState) => state.externalData.loading;
 
 const ExternalData = schemaForType<ExternalsState['data']>()(
@@ -94,7 +92,7 @@ const ExternalData = schemaForType<ExternalsState['data']>()(
         })
       )
     ),
-    commands: record(
+    prompts: record(
       array(
         object({
           id: string(),

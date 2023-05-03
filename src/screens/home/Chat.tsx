@@ -19,10 +19,10 @@ import { toGiftedUser, toIMessage, toMessage } from '../../types/chat';
 import { EditModal } from './EditModal';
 
 type Props = {
-  openCommand: () => void;
+  openPrompt: () => void;
 };
 
-export const Chat = ({ openCommand }: Props) => {
+export const Chat = ({ openPrompt }: Props) => {
   const tw = useTailwind();
   const dispatch = useAppDispatch();
   const text = useAppSelector(selectText);
@@ -106,7 +106,7 @@ export const Chat = ({ openCommand }: Props) => {
                 />
               )}
               {!loading && (
-                <Button title={i18n.t('command')} onPress={openCommand} />
+                <Button title={i18n.t('prompt')} onPress={openPrompt} />
               )}
             </View>
           )}

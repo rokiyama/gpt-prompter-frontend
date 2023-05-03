@@ -4,7 +4,7 @@ import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { CollapsibleList } from '../../component/atoms/CollapsibleList';
 import { CHAT_AI } from '../../constants';
-import { useCommands } from '../../hooks/useCommands';
+import { usePrompts } from '../../hooks/usePrompts';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectMessages } from '../../redux/slices/chatSlice';
@@ -15,12 +15,12 @@ import {
 } from '../../redux/slices/externalDataSlice';
 import { RootStackParamList } from '../../types/navigation';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Command'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Prompt'>;
 
-export const CommandScreen = ({ navigation }: Props) => {
+export const PromptScreen = ({ navigation }: Props) => {
   const tw = useTailwind();
   const dispatch = useAppDispatch();
-  const { commands } = useCommands();
+  const { prompts } = usePrompts();
   const loading = useAppSelector(selectLoading);
   const messages = useAppSelector(selectMessages);
   const [openSectionIds, setOpenSectionIds] = useState<Array<string>>([]);
@@ -28,25 +28,25 @@ export const CommandScreen = ({ navigation }: Props) => {
   useEffect(() => {
     const first = messages.filter((m) => m.user.id === CHAT_AI.id).length < 1;
     setOpenSectionIds(
-      commands.filter((c) => (first ? c.first : !c.first)).map((c) => c.id)
+      prompts.filter((c) => (first ? c.first : !c.first)).map((c) => c.id)
     );
-  }, [commands, messages]);
+  }, [prompts, messages]);
 
   console.log(JSON.stringify({ openSectionIds }));
 
   return (
     <SafeAreaView style={tw('m-3 flex-1')}>
       <View style={tw('m-2')}>
-        <Text>{i18n.t('commandDescription')}</Text>
+        <Text>{i18n.t('promptDescription')}</Text>
       </View>
       <CollapsibleList
-        sections={commands}
+        sections={prompts}
         openSectionIds={openSectionIds}
         setOpenSectionIds={setOpenSectionIds}
         renderItem={(item) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.push('CommandEdit', { id: item.id });
+              navigation.push('PromptEdit', { id: item.id });
             }}
           >
             <Text>{item.title}</Text>

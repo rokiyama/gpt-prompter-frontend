@@ -2,8 +2,8 @@ export type RootStackParamList = {
   Home: undefined;
   Settings: undefined;
   SystemMessage: undefined;
-  Command: undefined;
-  CommandEdit: {
+  Prompt: undefined;
+  PromptEdit: {
     id: string;
   };
   Test: undefined;

@@ -38,13 +38,12 @@ export const i18n = new I18n({
     gptModel: 'Model',
     changeModel: 'Change model',
     selectModel: 'Select model',
-    command: 'Prompt',
-    commandEdit: 'Edit prompt',
-    commandDescription:
-      'Create a prompt to give to the assistant based on the template.',
-    commandEditDescription:
-      'Default values are automatically entered where omitted.',
     prompt: 'Prompt',
+    promptEdit: 'Edit prompt',
+    promptDescription:
+      'Create a prompt to give to the assistant based on the template.',
+    promptEditDescription:
+      'Default values are automatically entered where omitted.',
   },
   ja: {
     ok: 'OK',
@@ -81,12 +80,11 @@ export const i18n = new I18n({
     gptModel: 'モデル',
     changeModel: 'モデルを変更',
     selectModel: 'モデルを選択してください',
-    command: 'プロンプト',
-    commandEdit: 'プロンプト編集',
-    commandDescription:
-      'テンプレートをもとに、アシスタントに与えるプロンプトを作成します。',
-    commandEditDescription: '省略した箇所はデフォルト値が自動入力されます。',
     prompt: 'プロンプト',
+    promptEdit: 'プロンプト編集',
+    promptDescription:
+      'テンプレートをもとに、アシスタントに与えるプロンプトを作成します。',
+    promptEditDescription: '省略した箇所はデフォルト値が自動入力されます。',
   },
 });
 

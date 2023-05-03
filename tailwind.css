@@ -35,40 +35,12 @@
   margin-top: 2.5rem
 }
 
-.mt-1 {
-  margin-top: 0.25rem
-}
-
 .mt-2 {
   margin-top: 0.5rem
 }
 
-.flex {
-  display: flex
-}
-
 .h-px {
   height: 1px
-}
-
-.h-80 {
-  height: 20rem
-}
-
-.max-h-32 {
-  max-height: 8rem
-}
-
-.max-h-fit {
-  max-height: fit-content
-}
-
-.max-h-96 {
-  max-height: 24rem
-}
-
-.max-h-80 {
-  max-height: 20rem
 }
 
 .flex-1 {
