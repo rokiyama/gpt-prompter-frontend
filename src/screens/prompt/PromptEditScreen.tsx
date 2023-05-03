@@ -35,7 +35,10 @@ export const PromptEditScreen = ({ navigation, route }: Props) => {
     <SafeAreaView style={tw('m-3 flex-1')}>
       <View style={tw('m-2')}>
         <Text>{prompt?.description}</Text>
-        <Text style={tw('mt-2')}>{i18n.t('promptEditDescription')}</Text>
+        {(prompt?.variables && Object.keys(prompt.variables).length && (
+          <Text style={tw('mt-2')}>{i18n.t('promptEditDescription')}</Text>
+        )) ||
+          undefined}
       </View>
       {prompt &&
         Object.entries(prompt.variables).map(([name, placeholder], i) => (
