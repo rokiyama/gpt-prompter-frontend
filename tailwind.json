@@ -217,12 +217,6 @@
 			"paddingBottom": 8
 		}
 	},
-	"text-base": {
-		"style": {
-			"fontSize": 16,
-			"lineHeight": 24
-		}
-	},
 	"text-lg": {
 		"style": {
 			"fontSize": 18,

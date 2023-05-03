@@ -1,15 +1,14 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
+import { usePrompts } from '../../hooks/usePrompts';
 import { i18n } from '../../i18n';
 import { useAppDispatch } from '../../redux/hooks';
 import { inputText } from '../../redux/slices/chatSlice';
 import { RootStackParamList } from '../../types/navigation';
 import { render } from './template';
-import { usePrompts } from '../../hooks/usePrompts';
-import { TextInput } from '../../component/atoms/TextInput';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'PromptEdit'>;
 
@@ -88,7 +87,7 @@ const InputVariable = ({
     <View style={tw('flex-row items-center bg-white m-2 p-2 rounded-md')}>
       <Text style={tw('m-1 p-1')}>{name}</Text>
       <TextInput
-        style={tw('grow m-1 p-1 text-base')}
+        style={tw('grow m-1 p-1')}
         value={value}
         placeholder={placeholder}
         onChangeText={onChange}

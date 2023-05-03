@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
+  TextInput,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -10,7 +11,6 @@ import { useKeyboardHeightContext } from '../../context/KeyboardHeightContext';
 import { i18n } from '../../i18n';
 import { Button } from '../atoms/Button';
 import { Modal } from '../atoms/Modal';
-import { TextInput } from '../atoms/TextInput';
 
 type Props = {
   text: string;
@@ -30,12 +30,6 @@ export const TextInputModal = ({
   onPressCancel,
 }: Props) => {
   const tw = useTailwind();
-  const ref = useRef<TextInput>(null);
-  useEffect(() => {
-    if (visible) {
-      ref.current?.focus();
-    }
-  }, [visible]);
 
   const keyboardHeight = useKeyboardHeightContext();
   const limitHeightOfTextbox: TextInput['props']['style'] = useMemo(() => {
@@ -50,11 +44,11 @@ export const TextInputModal = ({
           <View style={tw('flex-1 justify-start bg-white')}>
             <View style={tw('justify-start bg-white m-8 p-5 rounded-md')}>
               <TextInput
-                ref={ref}
                 multiline
+                autoFocus
                 onChangeText={setText}
                 value={text}
-                style={[limitHeightOfTextbox, tw('text-xl')]}
+                style={[limitHeightOfTextbox, tw('text-lg')]}
               />
             </View>
             <KeyboardAvoidingView
