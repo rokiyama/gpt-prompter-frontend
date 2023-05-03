@@ -7,6 +7,8 @@ import {
 } from 'react';
 import { Keyboard } from 'react-native';
 
+const INITIAL_HEIGHT = 300;
+
 const keyboardHeightContext = createContext(0);
 
 export const useKeyboardHeightContext = () => useContext(keyboardHeightContext);
@@ -16,7 +18,7 @@ type Props = {
 };
 
 export const KeyboardHeightContextProvider = ({ children }: Props) => {
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [keyboardHeight, setKeyboardHeight] = useState(INITIAL_HEIGHT);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(

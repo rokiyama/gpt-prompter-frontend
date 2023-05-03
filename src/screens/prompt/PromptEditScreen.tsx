@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
 import { i18n } from '../../i18n';
@@ -9,6 +9,7 @@ import { inputText } from '../../redux/slices/chatSlice';
 import { RootStackParamList } from '../../types/navigation';
 import { render } from './template';
 import { usePrompts } from '../../hooks/usePrompts';
+import { TextInput } from '../../component/atoms/TextInput';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'PromptEdit'>;
 

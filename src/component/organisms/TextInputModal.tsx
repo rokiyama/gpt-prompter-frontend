@@ -2,16 +2,15 @@ import { useEffect, useMemo, useRef } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
-  TextInput,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
+import { useKeyboardHeightContext } from '../../context/KeyboardHeightContext';
+import { i18n } from '../../i18n';
 import { Button } from '../atoms/Button';
 import { Modal } from '../atoms/Modal';
-import { i18n } from '../../i18n';
-import { useKeyboardHeightContext } from '../../context/KeyboardHeightContext';
+import { TextInput } from '../atoms/TextInput';
 
 type Props = {
   text: string;
@@ -55,7 +54,7 @@ export const TextInputModal = ({
                 multiline
                 onChangeText={setText}
                 value={text}
-                style={limitHeightOfTextbox}
+                style={[limitHeightOfTextbox, tw('text-xl')]}
               />
             </View>
             <KeyboardAvoidingView
