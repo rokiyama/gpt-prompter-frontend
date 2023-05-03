@@ -9,7 +9,7 @@ const _TextInput = (
   ref: ForwardedRef<RNTextInput>
 ) => {
   const tw = useTailwind();
-  return <RNTextInput {...props} ref={ref} style={[style, tw('text-lg')]} />;
+  return <RNTextInput {...props} ref={ref} style={[tw('text-lg'), style]} />;
 };
 
 export const TextInput = forwardRef(_TextInput);
