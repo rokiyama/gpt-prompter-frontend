@@ -18,7 +18,7 @@
         "usesNonExemptEncryption": false
       },
       "bundleIdentifier": "dev.okiyama.expochatcommandgpt",
-      "buildNumber": "3"
+      "buildNumber": "4"
     },
     "android": {
       "adaptiveIcon": {
