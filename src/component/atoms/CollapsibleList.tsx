@@ -49,7 +49,7 @@ export const CollapsibleList = <T extends { id: string }>({
         openSectionIds.includes(id) ? (
           <View
             style={[
-              tw('bg-white mx-3 px-3 py-2'),
+              tw('bg-white mx-3 p-4'),
               index === 0 && tw('rounded-t-lg'),
               index === data.length - 1 && tw('rounded-b-lg'),
             ]}

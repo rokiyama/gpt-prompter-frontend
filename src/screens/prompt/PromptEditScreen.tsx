@@ -89,7 +89,7 @@ const InputVariable = ({
     <View style={tw('flex-row items-center bg-white m-2 p-2 rounded-md')}>
       <Text style={tw('m-1 p-1')}>{name}</Text>
       <TextInput
-        style={tw('grow m-1 p-1')}
+        style={tw('grow m-1 p-1 bg-red-600 w-0')}
         value={value}
         placeholder={placeholder}
         onChangeText={onChange}
