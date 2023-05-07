@@ -22,6 +22,7 @@ import {
 } from '../../redux/slices/chatSlice';
 import { toGiftedUser, toIMessage, toMessage } from '../../types/chat';
 import { EditModal } from './EditModal';
+import { Tutorial } from './Tutorial';
 
 type Props = {
   openPrompt: () => void;
@@ -67,6 +68,7 @@ export const Chat = ({ openPrompt }: Props) => {
   const renderChatFooter = useCallback(
     () => (
       <View style={tw('flex-row justify-center mb-2')}>
+        <Tutorial />
         <Button
           title={i18n.t('reset')}
           onPress={() => {

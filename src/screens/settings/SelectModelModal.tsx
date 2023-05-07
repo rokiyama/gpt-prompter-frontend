@@ -14,9 +14,9 @@ export const SelectModelModal = ({ visible, setVisible, select }: Props) => {
   const tw = useTailwind();
 
   return (
-    <Modal visible={visible} presentationStyle={'formSheet'}>
-      <Text style={tw('flex-row text-lg')}>{i18n.t('selectModel')}:</Text>
-      <View style={tw('flex-1 justify-start items-center')}>
+    <Modal visible={visible}>
+      <Text style={tw('text-lg')}>{i18n.t('selectModel')}:</Text>
+      <View>
         {['gpt-4', 'gpt-3.5-turbo'].map((model) => (
           <Button
             key={model}

@@ -48,6 +48,14 @@ export const i18n = new I18n({
       limitExceeded:
         'You have reached the daily character limit. We apologize for the inconvenience. Please try again tomorrow or later.',
     },
+    tutorial: {
+      welcome: '👋 Welcome to GPT Prompter',
+      message1: ['Send a message and try having a conversation with the AI.'],
+      message2: [
+        'Tap on "Prompt" and try giving various instructions to the AI.',
+      ],
+    },
+    redisplayTutorial: 'Redisplay the tutorial',
   },
   ja: {
     ok: 'OK',
@@ -93,6 +101,14 @@ export const i18n = new I18n({
       limitExceeded:
         '1日あたりの文字数上限に達しました。恐れ入りますが、明日以降に再度お試しください。',
     },
+    tutorial: {
+      welcome: '👋 GPT Prompterへようこそ',
+      message1: ['メッセージを送信して、AIと会話してみましょう。'],
+      message2: [
+        '「プロンプト」をタップして、AIに様々な指示を出してみましょう。',
+      ],
+    },
+    redisplayTutorial: 'チュートリアルを再表示する',
   },
 });
 

@@ -7,21 +7,34 @@ import { Modal } from '../atoms/Modal';
 type Props = {
   visible: boolean;
   setVisible: (visible: boolean) => void;
-  onPressOk: () => void;
+  title: string;
+  messages: Array<string>;
+  onPressOk?: () => void;
 };
 
-export const AlertModal = ({ visible, setVisible, onPressOk }: Props) => {
+export const AlertModal = ({
+  visible,
+  setVisible,
+  title,
+  messages,
+  onPressOk,
+}: Props) => {
   const tw = useTailwind();
 
   return (
     <Modal visible={visible}>
-      <Text style={tw('m-2 text-lg')}>{i18n.t('apiKeyIsNotSet')}</Text>
+      <Text style={tw('m-2 text-xl font-bold')}>{title}</Text>
+      {messages.map((m, i) => (
+        <Text key={i} style={tw('m-2 text-lg')}>
+          {m}
+        </Text>
+      ))}
       <View style={tw('flex-row justify-end')}>
         <Button
-          title={i18n.t('settings')}
+          title={i18n.t('ok')}
           onPress={() => {
             setVisible(false);
-            onPressOk();
+            onPressOk?.();
           }}
         />
       </View>

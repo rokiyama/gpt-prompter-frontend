@@ -1,44 +1,34 @@
-import Constants from 'expo-constants';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ReactNode, useState } from 'react';
-import {
-  Linking,
-  SafeAreaView,
-  ScrollView,
-  Switch,
-  Text,
-  View,
-} from 'react-native';
-import ParsedText from 'react-native-parsed-text';
+import { useState } from 'react';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
-import { Modal } from '../../component/atoms/Modal';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
 import { RootStackParamList } from '../../types/navigation';
 import { SelectModelModal } from './SelectModelModal';
 
-const ListText = ({ children }: { children: ReactNode }) => {
-  const tw = useTailwind();
-  const onPress = (url: string) => {
-    Linking.openURL(url);
-  };
-  return (
-    <ParsedText
-      style={tw('m-1 flex-wrap text-slate-500')}
-      parse={[
-        {
-          type: 'url',
-          style: tw('text-blue-400 underline'),
-          onPress,
-        },
-      ]}
-    >
-      {children}
-    </ParsedText>
-  );
-};
+// const ListText = ({ children }: { children: ReactNode }) => {
+//   const tw = useTailwind();
+//   const onPress = (url: string) => {
+//     Linking.openURL(url);
+//   };
+//   return (
+//     <ParsedText
+//       style={tw('m-1 flex-wrap text-slate-500')}
+//       parse={[
+//         {
+//           type: 'url',
+//           style: tw('text-blue-400 underline'),
+//           onPress,
+//         },
+//       ]}
+//     >
+//       {children}
+//     </ParsedText>
+//   );
+// };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Settings'>;
 
@@ -48,14 +38,14 @@ export const SettingsScreen = ({ navigation }: Props) => {
   const settings = useAppSelector(selectSettings);
   const dispatch = useAppDispatch();
 
-  const toggle = (value: boolean) => {
-    dispatch(
-      save({
-        ...settings,
-        mode: value ? 'apiKey' : 'userId',
-      })
-    );
-  };
+  // const toggle = (value: boolean) => {
+  //   dispatch(
+  //     save({
+  //       ...settings,
+  //       mode: value ? 'apiKey' : 'userId',
+  //     })
+  //   );
+  // };
 
   return (
     <SafeAreaView style={tw('m-3')}>
@@ -71,15 +61,25 @@ export const SettingsScreen = ({ navigation }: Props) => {
             title={i18n.t('changeModel')}
             onPress={() => setModalVisible(true)}
           />
+          <SelectModelModal
+            visible={modalVisible}
+            setVisible={setModalVisible}
+            select={(model) => {
+              dispatch(save({ ...settings, model }));
+            }}
+          />
         </View>
-        <SelectModelModal
-          visible={modalVisible}
-          setVisible={setModalVisible}
-          select={(model) => {
-            dispatch(save({ ...settings, model }));
-          }}
-        />
+        <View style={tw('bg-white m-3 p-4 rounded-md')}>
+          <Button
+            title={i18n.t('redisplayTutorial')}
+            onPress={() => {
+              dispatch(save({ ...settings, hideTutorial: false }));
+              navigation.popToTop();
+            }}
+          />
+        </View>
 
+        {/*
         <View
           style={tw(
             'flex-row items-center justify-between bg-white m-3 p-4 rounded-md'
@@ -114,6 +114,7 @@ export const SettingsScreen = ({ navigation }: Props) => {
           title="Open TestScreen"
           onPress={() => navigation.push('Test')}
         />
+      */}
       </ScrollView>
     </SafeAreaView>
   );

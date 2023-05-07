@@ -12,6 +12,7 @@ interface SettingsState {
   mode: 'userId' | 'apiKey';
   isApiKeyConfigured: boolean;
   model: 'gpt-4' | 'gpt-3.5-turbo';
+  hideTutorial: boolean;
 }
 
 const initialState: SettingsState = {
@@ -19,6 +20,7 @@ const initialState: SettingsState = {
   mode: 'userId',
   isApiKeyConfigured: false,
   model: 'gpt-4',
+  hideTutorial: false,
 };
 
 export const load = createAsyncThunk('settings/load', async () => {
@@ -83,5 +85,6 @@ const Settings = schemaForType<SettingsState>()(
     mode: union([literal('userId'), literal('apiKey')]),
     isApiKeyConfigured: boolean(),
     model: union([literal('gpt-4'), literal('gpt-3.5-turbo')]),
+    hideTutorial: boolean(),
   })
 );
