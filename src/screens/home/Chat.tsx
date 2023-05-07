@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useRef, useState } from 'react';
-import { SafeAreaView, Text, TextInput, View } from 'react-native';
+import { Platform, SafeAreaView, Text, TextInput, View } from 'react-native';
 import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
@@ -110,13 +110,15 @@ export const Chat = ({ openPrompt }: Props) => {
               )}
             </View>
           )}
-          disableComposer
+          disableComposer={Platform.OS === 'ios'}
           textInputProps={
-            {
-              onPressIn: () => {
-                setEditModalVisible(true);
-              },
-            } as TextInput['props']
+            Platform.OS === 'ios'
+              ? ({
+                  onPressIn: () => {
+                    setEditModalVisible(true);
+                  },
+                } as TextInput['props'])
+              : undefined
           }
         />
       </View>
