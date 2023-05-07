@@ -2,6 +2,7 @@ import Constants from 'expo-constants';
 import { ChatCompletionRequestMessage } from 'openai';
 import { useCallback, useState } from 'react';
 import { CHAT_AI, SYSTEM } from '../constants';
+import { i18n } from '../i18n';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { addMessages, appendLastMessage } from '../redux/slices/chatSlice';
 import { selectSettings } from '../redux/slices/settingsSlice';
@@ -69,10 +70,16 @@ export const useOpenAI = () => {
           return;
         }
         if (parsed.data.error) {
-          console.error(parsed.data.error, body);
-          setErrorMessage(
-            parsed.data.error.code + ':' + parsed.data.error.message
-          );
+          if (parsed.data.error.code === 'token_limit_exceeded') {
+            setErrorMessage(
+              i18n.t('errors.limitExceeded') + `(${parsed.data.error.message})`
+            );
+          } else {
+            console.error(parsed.data.error, body);
+            setErrorMessage(
+              parsed.data.error.code + ':' + parsed.data.error.message
+            );
+          }
           sock.close();
           return;
         }

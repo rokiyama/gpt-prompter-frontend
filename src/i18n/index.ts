@@ -44,6 +44,10 @@ export const i18n = new I18n({
       'Create a prompt to give to the assistant based on the template.',
     promptEditDescription:
       'Default values are automatically entered where omitted.',
+    errors: {
+      limitExceeded:
+        'You have reached the daily character limit. We apologize for the inconvenience. Please try again tomorrow or later.',
+    },
   },
   ja: {
     ok: 'OK',
@@ -85,6 +89,10 @@ export const i18n = new I18n({
     promptDescription:
       'テンプレートをもとに、アシスタントに与えるプロンプトを作成します。',
     promptEditDescription: '省略した箇所はデフォルト値が自動入力されます。',
+    errors: {
+      limitExceeded:
+        '1日あたりの文字数上限に達しました。恐れ入りますが、明日以降に再度お試しください。',
+    },
   },
 });
 
