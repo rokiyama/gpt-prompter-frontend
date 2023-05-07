@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { addMessages, appendLastMessage } from '../redux/slices/chatSlice';
 import { selectSettings } from '../redux/slices/settingsSlice';
 import { Message } from '../types/chat';
+import { ApiGwError } from '../types/response';
 import { WSResponse } from '../types/ws';
 import { uuid } from '../utils/uuid';
 
@@ -59,7 +60,12 @@ export const useOpenAI = () => {
         const obj = JSON.parse(event.data);
         const parsed = WSResponse.safeParse(obj);
         if (!parsed.success) {
-          console.error('parse error', parsed.error, obj);
+          const parsedErr = ApiGwError.safeParse(obj);
+          if (parsedErr.success) {
+            console.log('ApiGwError', parsedErr.data);
+          } else {
+            console.error('parse error', parsed.error, obj);
+          }
           return;
         }
         if (parsed.data.error) {
@@ -68,16 +74,13 @@ export const useOpenAI = () => {
             parsed.data.error.code + ':' + parsed.data.error.message
           );
           sock.close();
+          return;
         }
         if (parsed.data.done) {
           sock.close();
           return;
         }
-        if (parsed.data.chunk?.choices.length) {
-          dispatch(
-            appendLastMessage(parsed.data.chunk?.choices[0].delta.content)
-          );
-        }
+        dispatch(appendLastMessage(parsed.data.content));
       };
       sock.onclose = () => {
         setSocket(null);
