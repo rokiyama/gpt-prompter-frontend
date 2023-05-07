@@ -1,7 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useRef, useState } from 'react';
-import { Platform, SafeAreaView, Text, TextInput, View } from 'react-native';
-import { GiftedChat, IMessage, Send } from 'react-native-gifted-chat';
+import { Platform, SafeAreaView, Text, View } from 'react-native';
+import {
+  GiftedChat,
+  IMessage,
+  Send,
+  SendProps,
+} from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
 import { PRIMARY_COLOR, USER } from '../../constants';
@@ -44,6 +49,58 @@ export const Chat = ({ openPrompt }: Props) => {
     [dispatch, clearError, sendMessages, messages]
   );
 
+  const renderSend = useCallback(
+    (props: SendProps<IMessage>) => (
+      <Send {...props} disabled={loading}>
+        <View style={tw('m-2')}>
+          <Ionicons
+            name="send"
+            size={25}
+            color={loading ? '#AAAAAA' : PRIMARY_COLOR}
+          />
+        </View>
+      </Send>
+    ),
+    [tw, loading]
+  );
+
+  const renderChatFooter = useCallback(
+    () => (
+      <View style={tw('flex-row justify-center mb-2')}>
+        <Button
+          title={i18n.t('reset')}
+          onPress={() => {
+            cancel();
+            clearError();
+            dispatch(clearMessages());
+            giftedChatRef.current?.focusTextInput();
+          }}
+        />
+        {loading && <Button title={i18n.t('cancel')} onPress={cancel} />}
+        {!loading && messages.length > 1 && (
+          <Button
+            title={i18n.t('resend')}
+            onPress={() => {
+              clearError();
+              sendMessages(messages);
+            }}
+          />
+        )}
+        {!loading && <Button title={i18n.t('prompt')} onPress={openPrompt} />}
+      </View>
+    ),
+    [
+      dispatch,
+      tw,
+      cancel,
+      clearError,
+      loading,
+      messages,
+      openPrompt,
+      sendMessages,
+    ]
+  );
+
   return (
     <SafeAreaView style={tw('flex-1 bg-white')}>
       {errorMessage && (
@@ -73,51 +130,16 @@ export const Chat = ({ openPrompt }: Props) => {
           placeholder={i18n.t('sendMessage')}
           renderDay={() => <></>}
           renderTime={() => <></>}
-          renderSend={(props) => (
-            <Send {...props} disabled={loading}>
-              <View style={tw('m-2')}>
-                <Ionicons
-                  name="send"
-                  size={25}
-                  color={loading ? '#AAAAAA' : PRIMARY_COLOR}
-                />
-              </View>
-            </Send>
-          )}
-          renderChatFooter={() => (
-            <View style={tw('flex-row justify-center mb-2')}>
-              <Button
-                title={i18n.t('reset')}
-                onPress={() => {
-                  cancel();
-                  clearError();
-                  dispatch(clearMessages());
-                  giftedChatRef.current?.focusTextInput();
-                }}
-              />
-              {loading && <Button title={i18n.t('cancel')} onPress={cancel} />}
-              {!loading && messages.length > 1 && (
-                <Button
-                  title={i18n.t('resend')}
-                  onPress={() => {
-                    clearError();
-                    sendMessages(messages);
-                  }}
-                />
-              )}
-              {!loading && (
-                <Button title={i18n.t('prompt')} onPress={openPrompt} />
-              )}
-            </View>
-          )}
+          renderSend={renderSend}
+          renderChatFooter={renderChatFooter}
           disableComposer={Platform.OS === 'ios'}
           textInputProps={
             Platform.OS === 'ios'
-              ? ({
+              ? {
                   onPressIn: () => {
                     setEditModalVisible(true);
                   },
-                } as TextInput['props'])
+                }
               : undefined
           }
         />
