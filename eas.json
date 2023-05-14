@@ -18,6 +18,9 @@
       }
     },
     "production": {
+      "env": {
+        "APP_ENV": "production"
+      },
       "ios": {
         "resourceClass": "m-medium"
       }

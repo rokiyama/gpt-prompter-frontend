@@ -1,9 +1,7 @@
-import { object, string, TypeOf } from 'zod';
+import { object, string } from 'zod';
 
 export const ApiGwError = object({
   message: string(),
   connectionId: string(),
   requestId: string(),
 });
-
-// export type ApiGwError = TypeOf<typeof ApiGwError>;

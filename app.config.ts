@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       usesNonExemptEncryption: false,
     },
     bundleIdentifier: 'dev.okiyama.expochatcommandgpt',
-    buildNumber: '11',
+    buildNumber: '18',
   },
   android: {
     adaptiveIcon: {
@@ -29,13 +29,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     package: 'dev.okiyama.expochatcommandgpt',
   },
-  web: {
-    favicon: './assets/favicon.png',
-  },
   plugins: ['expo-localization'],
   extra: {
+    appEnv: process.env.APP_ENV,
     backendApiWsUrl:
-      process.env.NODE_ENV === 'production'
+      process.env.APP_ENV === 'production'
         ? 'wss://56jx8ioa0j.execute-api.ap-northeast-1.amazonaws.com/prod'
         : 'wss://08tuojhmfg.execute-api.ap-northeast-2.amazonaws.com/dev',
     externalDataUrl: 'https://gpt-chat-misc.vercel.app/prompts.json',

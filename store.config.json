@@ -1,0 +1,25 @@
+{
+  "configVersion": 0,
+  "apple": {
+    "info": {
+      "ja": {
+        "title": "Prompter",
+        "subtitle": "AIに高度なプロンプトで指示を与える",
+        "description": "Prompterは、チャットAIとのより高度な対話を支援するアプリです。\n\nプロンプトと呼ばれる高度な指示文を、テンプレートをもとに編集し、AIに送信することができます。\n\nまた、システムメッセージを使用して、AIの役割や口調を操作することができます。\n\n【プロンプト編集】\nテンプレートから題材を選び、穴埋め形式で高度なプロンプトを簡単に作成できます。\n\n【システムメッセージ】\nAIの行動や口調を操作するシステムメッセージを簡単に入力できます。AIにくだけた口調や、ちょっと変わったことを言わせることもできるようになります。\n\nユーザー登録不要でご利用いただけます。1日に使用できる文字数に上限がございます。",
+        "keywords": ["gpt", "chatgpt"],
+        "marketingUrl": "https://okiyama.dev",
+        "supportUrl": "https://okiyama.dev",
+        "privacyPolicyUrl": "https://gpt-chat-misc.vercel.app/prompter-privacy-policy.html"
+      },
+      "en-US": {
+        "title": "Prompter",
+        "subtitle": "AI with advanced prompts",
+        "description": "Prompter is an app designed to facilitate more advanced interactions with chat AI.\n\nYou can edit and send sophisticated instruction sentences, known as \"prompts\", to the AI based on templates.\n\nAdditionally, you can manipulate the AI's role and tone through system messages.\n\n【Prompt Editing】\nChoose topics from templates and easily create advanced prompts in a fill-in-the-blank format.\n\n【System Messages】\nEasily input system messages to control the AI's actions and tone. You can even make the AI speak in a casual tone or say something a bit unusual.\n\nNo user registration is required to use the app. Please note that there is a limit to the number of characters you can use per day.\n",
+        "keywords": ["gpt", "chatgpt"],
+        "marketingUrl": "https://okiyama.dev",
+        "supportUrl": "https://okiyama.dev",
+        "privacyPolicyUrl": "https://gpt-chat-misc.vercel.app/prompter-privacy-policy.html"
+      }
+    }
+  }
+}
