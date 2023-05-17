@@ -35,7 +35,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     backendApiWsUrl:
       process.env.APP_ENV === 'production'
         ? 'wss://56jx8ioa0j.execute-api.ap-northeast-1.amazonaws.com/prod'
-        : 'wss://08tuojhmfg.execute-api.ap-northeast-2.amazonaws.com/dev',
+        : 'wss://t2v5wu7qle.execute-api.ap-northeast-2.amazonaws.com/dev',
     externalDataUrl: 'https://gpt-chat-misc.vercel.app/prompts.json',
     eas: {
       projectId: '28332568-8713-4a75-bbe1-6cd8ec9fd30b',

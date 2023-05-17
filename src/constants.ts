@@ -9,7 +9,7 @@ export const USER: User = {
 export const CHAT_AI: User = {
   id: 'chatGpt',
   name: 'ChatGPT',
-  avatar: 'https://chat.openai.com/apple-touch-icon.png',
+  avatar: require('../assets/icon.png'),
 };
 
 export const SYSTEM: User = {
