@@ -15,12 +15,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    supportsTablet: true,
+    supportsTablet: false,
     config: {
       usesNonExemptEncryption: false,
     },
     bundleIdentifier: 'dev.okiyama.expochatcommandgpt',
-    buildNumber: '18',
+    buildNumber: '19',
   },
   android: {
     adaptiveIcon: {
