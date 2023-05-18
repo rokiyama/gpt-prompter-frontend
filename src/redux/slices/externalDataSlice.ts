@@ -10,7 +10,7 @@ export type SystemMessage = {
   text: string;
 };
 
-export type Prompt = {
+type Prompt = {
   id: string;
   title: string;
   template: string;

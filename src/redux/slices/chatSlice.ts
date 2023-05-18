@@ -36,5 +36,3 @@ export const { inputText, clearMessages, addMessages, appendLastMessage } =
 
 export const selectText = (state: RootState) => state.chat.text;
 export const selectMessages = (state: RootState) => state.chat.messages;
-
-// export default chatSlice.reducer;
