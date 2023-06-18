@@ -13,6 +13,7 @@ import { SystemMessageScreen } from '../screens/systemMessage/SystemMessageScree
 import { RootStackParamList } from '../types/navigation';
 import { TestScreen } from '../screens/test/TestScreen';
 import { KeyboardHeightContextProvider } from '../context/KeyboardHeightContext';
+import { AuthTestScreen } from '../screens/authtest/AuthTestScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -46,6 +47,11 @@ export const RootNavigator = () => {
             name="Settings"
             component={SettingsScreen}
             options={{ headerTitle: i18n.t('settings') }}
+          />
+          <Stack.Screen
+            name="AuthTest"
+            component={AuthTestScreen}
+            options={{ headerTitle: 'AuthTest' }}
           />
           <Stack.Screen
             name="SystemMessage"

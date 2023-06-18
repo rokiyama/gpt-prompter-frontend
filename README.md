@@ -1,5 +1,15 @@
 # gpt-prompter-frontend
 
+## development
+
+```sh
+# expo
+npm start
+
+# tailwind
+npm run dev:tailwind
+```
+
 ## build
 
 ```sh

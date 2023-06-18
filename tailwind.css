@@ -43,8 +43,16 @@
   height: 1px
 }
 
+.h-11 {
+  height: 2.75rem
+}
+
 .w-0 {
   width: 0px
+}
+
+.w-52 {
+  width: 13rem
 }
 
 .flex-1 {

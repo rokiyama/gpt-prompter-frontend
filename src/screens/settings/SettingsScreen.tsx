@@ -80,6 +80,12 @@ export const SettingsScreen = ({ navigation }: Props) => {
           />
         </View>
         <Info />
+        <Button
+          title="AuthTest"
+          onPress={() => {
+            navigation.push('AuthTest');
+          }}
+        />
 
         {/*
         <View

@@ -67,9 +67,19 @@
 			"height": 1
 		}
 	},
+	"h-11": {
+		"style": {
+			"height": 44
+		}
+	},
 	"w-0": {
 		"style": {
 			"width": 0
+		}
+	},
+	"w-52": {
+		"style": {
+			"width": 208
 		}
 	},
 	"flex-1": {

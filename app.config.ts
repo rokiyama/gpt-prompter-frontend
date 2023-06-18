@@ -29,7 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     package: 'dev.okiyama.expochatcommandgpt',
   },
-  plugins: ['expo-localization'],
+  plugins: ['expo-localization', 'expo-apple-authentication'],
   extra: {
     appEnv: process.env.APP_ENV,
     backendApiWsUrl:
