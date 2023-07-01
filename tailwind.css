@@ -2,6 +2,10 @@
   margin: 0.25rem
 }
 
+.m-10 {
+  margin: 2.5rem
+}
+
 .m-2 {
   margin: 0.5rem
 }
@@ -39,12 +43,12 @@
   margin-top: 0.5rem
 }
 
-.h-px {
-  height: 1px
-}
-
 .h-11 {
   height: 2.75rem
+}
+
+.h-px {
+  height: 1px
 }
 
 .w-0 {

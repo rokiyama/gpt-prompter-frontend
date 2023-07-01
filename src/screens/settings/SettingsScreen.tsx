@@ -9,6 +9,7 @@ import { save, selectSettings } from '../../redux/slices/settingsSlice';
 import { RootStackParamList } from '../../types/navigation';
 import { Info } from './Info';
 import { SelectModelModal } from './SelectModelModal';
+import { SignOut } from './SignOut';
 
 // const ListText = ({ children }: { children: ReactNode }) => {
 //   const tw = useTailwind();
@@ -80,12 +81,7 @@ export const SettingsScreen = ({ navigation }: Props) => {
           />
         </View>
         <Info />
-        <Button
-          title="AuthTest"
-          onPress={() => {
-            navigation.push('AuthTest');
-          }}
-        />
+        <SignOut navigateToTop={() => navigation.popToTop()} />
 
         {/*
         <View

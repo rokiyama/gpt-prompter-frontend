@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import { CHAT_AI, SYSTEM } from '../constants';
 import { i18n } from '../i18n';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { selectAuth } from '../redux/slices/authSlice';
 import { addMessages, appendLastMessage } from '../redux/slices/chatSlice';
 import { selectSettings } from '../redux/slices/settingsSlice';
 import { Message } from '../types/chat';
@@ -12,7 +13,7 @@ import { WSResponse } from '../types/ws';
 import { uuid } from '../utils/uuid';
 
 export const useOpenAI = () => {
-  const { userId } = useAppSelector(selectSettings);
+  const { idToken } = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -54,7 +55,14 @@ export const useOpenAI = () => {
       const sock = new WebSocket(Constants.expoConfig?.extra?.backendApiWsUrl);
       setSocket(sock);
       sock.onopen = () => {
-        sock.send(JSON.stringify({ action: 'message', userId, body }));
+        sock.send(
+          JSON.stringify({
+            action: 'message',
+            userId: 'dummy', // TODO: remove
+            idToken,
+            body,
+          })
+        );
       };
       sock.onmessage = (event) => {
         console.log('received', event.data);
@@ -94,7 +102,7 @@ export const useOpenAI = () => {
         setLoading(false);
       };
     },
-    [dispatch, model, userId]
+    [dispatch, idToken, model]
   );
 
   const cancel = useCallback(() => {

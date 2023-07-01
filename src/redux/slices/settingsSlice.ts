@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { string, object, boolean, union, literal } from 'zod';
+import { boolean, literal, object, string, union } from 'zod';
 import { schemaForType } from '../../utils/schema';
 import { uuid } from '../../utils/uuid';
 import { RootState } from '../store';

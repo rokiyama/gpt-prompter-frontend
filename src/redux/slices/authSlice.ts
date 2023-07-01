@@ -47,6 +47,14 @@ export const save = createAsyncThunk('auth/save', async (auth: SavedAuth) => {
   return auth;
 });
 
+export const reset = createAsyncThunk('auth/reset', async () => {
+  await saveAuth({
+    idToken: '',
+    user: '',
+  });
+  return initialState;
+});
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,

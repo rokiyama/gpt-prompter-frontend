@@ -2,18 +2,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import 'react-native-url-polyfill/auto';
 import { Button } from '../component/atoms/Button';
-import { useSettings } from '../hooks/useSettings';
+import { KeyboardHeightContextProvider } from '../context/KeyboardHeightContext';
 import { useExternalData } from '../hooks/useExternalData';
+import { useSettings } from '../hooks/useSettings';
 import { i18n } from '../i18n';
+import { AuthScreen } from '../screens/auth/AuthScreen';
+import { HomeScreen } from '../screens/home/HomeScreen';
 import { PromptEditScreen } from '../screens/prompt/PromptEditScreen';
 import { PromptScreen } from '../screens/prompt/PromptScreen';
-import { HomeScreen } from '../screens/home/HomeScreen';
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { SystemMessageScreen } from '../screens/systemMessage/SystemMessageScreen';
-import { RootStackParamList } from '../types/navigation';
 import { TestScreen } from '../screens/test/TestScreen';
-import { KeyboardHeightContextProvider } from '../context/KeyboardHeightContext';
-import { AuthTestScreen } from '../screens/authtest/AuthTestScreen';
+import { RootStackParamList } from '../types/navigation';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -44,14 +44,14 @@ export const RootNavigator = () => {
             })}
           />
           <Stack.Screen
+            name="Auth"
+            component={AuthScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="Settings"
             component={SettingsScreen}
             options={{ headerTitle: i18n.t('settings') }}
-          />
-          <Stack.Screen
-            name="AuthTest"
-            component={AuthTestScreen}
-            options={{ headerTitle: 'AuthTest' }}
           />
           <Stack.Screen
             name="SystemMessage"
