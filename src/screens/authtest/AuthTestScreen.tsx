@@ -2,47 +2,50 @@ import {
   AppleAuthenticationButton,
   AppleAuthenticationButtonStyle,
   AppleAuthenticationButtonType,
-  AppleAuthenticationCredentialState,
-  AppleAuthenticationScope,
-  getCredentialStateAsync,
   signInAsync,
 } from 'expo-apple-authentication';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { useEffect } from 'react';
+import { SafeAreaView, Text } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
-import { Button } from '../../component/atoms/Button';
-import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { save, selectSettings } from '../../redux/slices/settingsSlice';
-import { RootStackParamList } from '../../types/navigation';
+import { load, save, selectAuth } from '../../redux/slices/authSlice';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'AuthTest'>;
+// type Props = NativeStackScreenProps<RootStackParamList, 'AuthTest'>;
 
-export const AuthTestScreen = ({ navigation }: Props) => {
+export const AuthTestScreen = () => {
   const tw = useTailwind();
-  const [loading, setLoading] = useState(true);
-  const [credential, setCredential] =
-    useState<AppleAuthenticationCredentialState | null>(null);
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(selectAuth);
+
   useEffect(() => {
-    getCredentialStateAsync('001520.aacb700afb0241918d7236416ebf4854.0211')
-      .then((c) => {
-        setCredential(c);
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.log(e);
-        setCredential(null);
-        setLoading(false);
-      });
-  }, []);
+    if (auth.status === 'loading') return;
+    if (auth.status === 'uninitialized') {
+      dispatch(load());
+      return;
+    }
+
+    // const a = async () => {
+    //   if (auth.user && auth.idToken) {
+    //     const credState = await getCredentialStateAsync(auth.user);
+    //     if (credState === AppleAuthenticationCredentialState.AUTHORIZED) {
+    //       console.log('authenticated');
+    //     } else {
+    //       console.log('credState:', credState);
+    //       console.log('unauthenticated');
+    //     }
+    //   } else {
+    //     console.log('auth.idToken or auth.user is empty');
+    //     console.log('unauthenticated');
+    //   }
+    // };
+    // a();
+  }, [auth.idToken, auth.status, auth.user, dispatch]);
 
   return (
     <SafeAreaView style={tw('m-3')}>
-      {loading ? (
+      <Text>auth.idToken={auth.idToken}</Text>
+      {auth.status !== 'loaded' ? (
         <Text>Loading</Text>
-      ) : credential ? (
-        <Text>{credential}</Text>
       ) : (
         <AppleAuthenticationButton
           buttonType={AppleAuthenticationButtonType.SIGN_IN}
@@ -51,14 +54,24 @@ export const AuthTestScreen = ({ navigation }: Props) => {
           style={tw('w-52 h-11')}
           onPress={async () => {
             try {
-              const credential = await signInAsync({
-                requestedScopes: [
-                  AppleAuthenticationScope.FULL_NAME,
-                  AppleAuthenticationScope.EMAIL,
-                ],
-              });
+              const credential = await signInAsync();
+              //{
+              // requestedScopes: [
+              // AppleAuthenticationScope.FULL_NAME,
+              // AppleAuthenticationScope.EMAIL,
+              // ],
+              // }
+
               // signed in
               console.log('🔑 credential', credential);
+              dispatch(
+                save({
+                  idToken: credential.identityToken || '',
+                  user: credential.user,
+                })
+              );
+
+              // debug(credential);
             } catch (e) {
               if (
                 e &&
@@ -79,3 +92,13 @@ export const AuthTestScreen = ({ navigation }: Props) => {
     </SafeAreaView>
   );
 };
+
+// async function debug(cred: AppleAuthenticationCredential) {
+//   console.log('debug');
+//   const res = await axios
+//     .post('http://localhost:8080', null, {
+//       headers: { token: cred.identityToken },
+//     })
+//     .catch(console.error);
+//   console.log(res);
+// }
