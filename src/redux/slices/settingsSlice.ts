@@ -1,14 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { boolean, literal, object, string, union } from 'zod';
+import { boolean, literal, object, union } from 'zod';
 import { schemaForType } from '../../utils/schema';
-import { uuid } from '../../utils/uuid';
 import { RootState } from '../store';
 
 const ASYNC_STORAGE_KEY_SETTINGS = 'SETTINGS';
 
 interface SettingsState {
-  userId: string;
   mode: 'userId' | 'apiKey';
   isApiKeyConfigured: boolean;
   model: 'gpt-4' | 'gpt-3.5-turbo';
@@ -16,7 +14,6 @@ interface SettingsState {
 }
 
 const initialState: SettingsState = {
-  userId: '',
   mode: 'userId',
   isApiKeyConfigured: false,
   model: 'gpt-4',
@@ -36,7 +33,6 @@ export const load = createAsyncThunk('settings/load', async () => {
   // create new settings and save
   const settings = {
     ...initialState,
-    userId: uuid(),
   };
   await saveSettings(settings);
   return settings;
@@ -81,7 +77,6 @@ const saveSettings = async (settings: SettingsState) => {
 
 const Settings = schemaForType<SettingsState>()(
   object({
-    userId: string(),
     mode: union([literal('userId'), literal('apiKey')]),
     isApiKeyConfigured: boolean(),
     model: union([literal('gpt-4'), literal('gpt-3.5-turbo')]),
