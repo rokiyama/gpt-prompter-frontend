@@ -57,6 +57,7 @@ export const i18n = new I18n({
     },
     redisplayTutorial: 'Redisplay the tutorial',
     signin: 'Sign in to start using AI Prompt Editor.',
+    signOut: 'Sign out',
   },
   ja: {
     ok: 'OK',
@@ -111,6 +112,7 @@ export const i18n = new I18n({
     },
     redisplayTutorial: 'チュートリアルを再表示する',
     signin: 'サインインして AI Prompt Editor の使用を開始しましょう。',
+    signOut: 'サインアウトする',
   },
 });
 

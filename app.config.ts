@@ -1,10 +1,11 @@
 import { ExpoConfig, ConfigContext } from 'expo/config';
+import buildNumber from './build-number.json';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'AI Prompt',
   slug: 'expo-chat-command-gpt',
-  version: '1.0.1',
+  version: '1.0.2',
   orientation: 'portrait',
   icon: './assets/icon.png',
   userInterfaceStyle: 'light',
@@ -20,7 +21,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       usesNonExemptEncryption: false,
     },
     bundleIdentifier: 'dev.okiyama.expochatcommandgpt',
-    buildNumber: '21',
+    buildNumber: `${buildNumber}`,
   },
   android: {
     adaptiveIcon: {

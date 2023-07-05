@@ -10,6 +10,7 @@ import { RootStackParamList } from '../../types/navigation';
 import { Info } from './Info';
 import { SelectModelModal } from './SelectModelModal';
 import { SignOut } from './SignOut';
+import { Card } from '../../component/atoms/Card';
 
 // const ListText = ({ children }: { children: ReactNode }) => {
 //   const tw = useTailwind();
@@ -52,7 +53,7 @@ export const SettingsScreen = ({ navigation }: Props) => {
   return (
     <SafeAreaView style={tw('m-3')}>
       <ScrollView>
-        <View style={tw('bg-white m-3 p-4 rounded-md')}>
+        <Card>
           <View style={tw('flex-row')}>
             <Text style={tw('m-2')}>{i18n.t('gptModel')}:</Text>
             <Text style={tw('m-2 flex-wrap text-slate-400')}>
@@ -70,8 +71,8 @@ export const SettingsScreen = ({ navigation }: Props) => {
               dispatch(save({ ...settings, model }));
             }}
           />
-        </View>
-        <View style={tw('bg-white m-3 p-4 rounded-md')}>
+        </Card>
+        <Card>
           <Button
             title={i18n.t('redisplayTutorial')}
             onPress={() => {
@@ -79,9 +80,11 @@ export const SettingsScreen = ({ navigation }: Props) => {
               navigation.popToTop();
             }}
           />
-        </View>
+        </Card>
+        <Card>
+          <SignOut navigateToTop={() => navigation.popToTop()} />
+        </Card>
         <Info />
-        <SignOut navigateToTop={() => navigation.popToTop()} />
 
         {/*
         <View

@@ -3,13 +3,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { boolean, literal, object, union } from 'zod';
 import { schemaForType } from '../../utils/schema';
 import { RootState } from '../store';
+import { GptModel } from '../../types/openai';
 
 const ASYNC_STORAGE_KEY_SETTINGS = 'SETTINGS';
 
 interface SettingsState {
   mode: 'userId' | 'apiKey';
   isApiKeyConfigured: boolean;
-  model: 'gpt-4' | 'gpt-3.5-turbo';
+  model: GptModel;
   hideTutorial: boolean;
 }
 

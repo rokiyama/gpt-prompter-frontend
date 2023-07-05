@@ -3,9 +3,9 @@ import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { load, save, selectAuth } from '../redux/slices/authSlice';
 
-export const useAuth = (onSignIn: () => void) => {
+export const useAuth = (onSignIn?: () => void) => {
   const dispatch = useAppDispatch();
-  const { status, idToken } = useAppSelector(selectAuth);
+  const { status, idToken, user } = useAppSelector(selectAuth);
 
   useEffect(() => {
     if (status === 'uninitialized') {
@@ -24,7 +24,7 @@ export const useAuth = (onSignIn: () => void) => {
             user: credential.user,
           })
         );
-        onSignIn();
+        onSignIn?.();
       }
     } catch (e) {
       if (
@@ -45,6 +45,7 @@ export const useAuth = (onSignIn: () => void) => {
   return {
     status,
     idToken,
+    user,
     signIn,
   };
 };

@@ -58,7 +58,6 @@ export const useOpenAI = () => {
         sock.send(
           JSON.stringify({
             action: 'message',
-            userId: 'dummy', // TODO: remove
             idToken,
             body,
           })

@@ -14,13 +14,14 @@ npm run dev:tailwind
 
 ```sh
 npm ci
+npm run build:tailwind
 
 # increment ios buildNumber
-jq '.expo.ios.buildNumber = (."expo".ios.buildNumber | tonumber + 1 | tostring) | . ' app.json > app_new.json && mv app_new.json app.json
+echo $(jq '. = (. + 1)' build-number.json) > build-number.json
 
 # build and submit via EAS
-eas build --platform ios --auto-submit
+npx eas-cli@latest build --platform ios --auto-submit
 
 # push store metadata
-eas metadata:push
+npx eas-cli@latest metadata:push
 ```
