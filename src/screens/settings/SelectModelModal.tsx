@@ -3,7 +3,7 @@ import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
 import { Modal } from '../../component/atoms/Modal';
 import { i18n } from '../../i18n';
-import { GPT_MODELS, GptModel } from '../../types/openai';
+import { GPT_MODELS, GptModel } from '../../types/openAI';
 
 type Props = {
   visible: boolean;

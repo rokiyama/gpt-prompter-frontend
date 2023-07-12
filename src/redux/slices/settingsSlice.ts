@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { boolean, literal, object, union } from 'zod';
 import { schemaForType } from '../../utils/schema';
 import { RootState } from '../store';
-import { GptModel } from '../../types/openai';
+import { GptModel } from '../../types/openAI';
 
 const ASYNC_STORAGE_KEY_SETTINGS = 'SETTINGS';
 
