@@ -1,15 +1,8 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useRef, useState } from 'react';
 import { Platform, SafeAreaView, Text, View } from 'react-native';
-import {
-  GiftedChat,
-  IMessage,
-  Send,
-  SendProps,
-} from 'react-native-gifted-chat';
+import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
-import { Button } from '../../component/atoms/Button';
-import { PRIMARY_COLOR, USER } from '../../constants';
+import { USER } from '../../constants';
 import { useAuth } from '../../hooks/useAuth';
 import { useOpenAI } from '../../hooks/useOpenAI';
 import { i18n } from '../../i18n';
@@ -22,8 +15,9 @@ import {
   selectText,
 } from '../../redux/slices/chatSlice';
 import { toGiftedUser, toIMessage, toMessage } from '../../types/chat';
+import { ChatFooter } from './ChatFooter';
 import { EditModal } from './EditModal';
-import { Tutorial } from './Tutorial';
+import { SendButton } from './SendButton';
 
 type Props = {
   openPrompt: () => void;
@@ -64,59 +58,6 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
     ]
   );
 
-  const renderSend = useCallback(
-    (props: SendProps<IMessage>) => (
-      <Send {...props} disabled={loading}>
-        <View style={tw('m-2')}>
-          <Ionicons
-            name="send"
-            size={25}
-            color={loading ? '#AAAAAA' : PRIMARY_COLOR}
-          />
-        </View>
-      </Send>
-    ),
-    [tw, loading]
-  );
-
-  const renderChatFooter = useCallback(
-    () => (
-      <View style={tw('flex-row justify-center mb-2')}>
-        <Tutorial />
-        <Button
-          title={i18n.t('reset')}
-          onPress={() => {
-            cancel();
-            clearError();
-            dispatch(clearMessages());
-            giftedChatRef.current?.focusTextInput();
-          }}
-        />
-        {loading && <Button title={i18n.t('cancel')} onPress={cancel} />}
-        {!loading && messages.length > 1 && (
-          <Button
-            title={i18n.t('resend')}
-            onPress={() => {
-              clearError();
-              sendMessages(messages);
-            }}
-          />
-        )}
-        {!loading && <Button title={i18n.t('prompt')} onPress={openPrompt} />}
-      </View>
-    ),
-    [
-      dispatch,
-      tw,
-      cancel,
-      clearError,
-      loading,
-      messages,
-      openPrompt,
-      sendMessages,
-    ]
-  );
-
   return (
     <SafeAreaView style={tw('flex-1 bg-white')}>
       {errorMessage && (
@@ -146,8 +87,24 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
           placeholder={i18n.t('sendMessage')}
           renderDay={() => <></>}
           renderTime={() => <></>}
-          renderSend={renderSend}
-          renderChatFooter={renderChatFooter}
+          renderSend={(props) => <SendButton {...props} loading={loading} />}
+          renderChatFooter={() => (
+            <ChatFooter
+              loading={loading}
+              reset={() => {
+                cancel();
+                clearError();
+                dispatch(clearMessages());
+                giftedChatRef.current?.focusTextInput();
+              }}
+              cancel={cancel}
+              resend={() => {
+                clearError();
+                sendMessages(messages);
+              }}
+              openPrompt={openPrompt}
+            />
+          )}
           disableComposer={Platform.OS === 'ios'}
           textInputProps={
             Platform.OS === 'ios'
