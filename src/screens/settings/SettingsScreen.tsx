@@ -1,8 +1,10 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import Constants from 'expo-constants';
 import { useState } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
+import { Card } from '../../component/atoms/Card';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
@@ -10,7 +12,6 @@ import { RootStackParamList } from '../../types/navigation';
 import { Info } from './Info';
 import { SelectModelModal } from './SelectModelModal';
 import { SignOut } from './SignOut';
-import { Card } from '../../component/atoms/Card';
 
 // const ListText = ({ children }: { children: ReactNode }) => {
 //   const tw = useTailwind();
@@ -85,6 +86,14 @@ export const SettingsScreen = ({ navigation }: Props) => {
           <SignOut navigateToTop={() => navigation.popToTop()} />
         </Card>
         <Info />
+        {Constants.expoConfig?.extra?.appEnv === 'production' ? (
+          <></>
+        ) : (
+          <Button
+            title="Open TestScreen"
+            onPress={() => navigation.push('Test')}
+          />
+        )}
 
         {/*
         <View
@@ -117,10 +126,6 @@ export const SettingsScreen = ({ navigation }: Props) => {
           <ListText>{i18n.t('apiKeyInstruction.2')}</ListText>
           <ListText>{i18n.t('apiKeyInstruction.3')}</ListText>
         </View>
-        <Button
-          title="Open TestScreen"
-          onPress={() => navigation.push('Test')}
-        />
       */}
       </ScrollView>
     </SafeAreaView>

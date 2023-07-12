@@ -1,18 +1,16 @@
-import Constants from 'expo-constants';
-import { useState } from 'react';
-import { Text, View } from 'react-native';
-import { useTailwind } from 'tailwind-rn/dist';
-import { Button } from '../../component/atoms/Button';
 import {
   AppleAuthenticationCredentialState,
   getCredentialStateAsync,
 } from 'expo-apple-authentication';
-import { useAuth } from '../../hooks/useAuth';
+import Constants from 'expo-constants';
+import { useState } from 'react';
+import { Text } from 'react-native';
+import { Button } from '../../component/atoms/Button';
 import { Card } from '../../component/atoms/Card';
+import { useAuth } from '../../hooks/useAuth';
 
 export const Info = () => {
   const [visible, setVisible] = useState(false);
-  const tw = useTailwind();
   const { user } = useAuth();
   const [authState, setAuthState] = useState('');
   return Constants.expoConfig?.extra?.appEnv === 'production' ? (

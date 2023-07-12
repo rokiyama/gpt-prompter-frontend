@@ -1,8 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
-import { RootStackParamList } from '../../types/navigation';
 import { CollapsibleList } from '../../component/atoms/CollapsibleList';
+import { RootStackParamList } from '../../types/navigation';
 
 const DATA = [
   {
@@ -36,18 +37,26 @@ const DATA = [
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Test'>;
 
-export const TestScreen = (props: Props) => {
+export const TestScreen = ({ route }: Props) => {
   const tw = useTailwind();
+  const [openSectionIds, setOpenSectionIds] = useState<Array<string>>(['2']);
+  const [count, setCount] = useState(0);
+
   return (
     <SafeAreaView style={tw('flex-1')}>
+      <Text>{route.name}</Text>
+      <Text>refresh count:{count}</Text>
       <CollapsibleList
         sections={DATA}
-        initialOpenSections={['2']}
+        openSectionIds={openSectionIds}
+        setOpenSectionIds={setOpenSectionIds}
         renderItem={(item) => (
           <TouchableOpacity>
             <Text style={tw('text-lg')}>{item.text}</Text>
           </TouchableOpacity>
         )}
+        refreshing={false}
+        onRefresh={() => setCount(count + 1)}
       />
     </SafeAreaView>
   );
