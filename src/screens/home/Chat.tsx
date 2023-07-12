@@ -10,6 +10,7 @@ import {
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
 import { PRIMARY_COLOR, USER } from '../../constants';
+import { useAuth } from '../../hooks/useAuth';
 import { useOpenAI } from '../../hooks/useOpenAI';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -26,15 +27,17 @@ import { Tutorial } from './Tutorial';
 
 type Props = {
   openPrompt: () => void;
+  navigateToAuthScreen: () => void;
 };
 
-export const Chat = ({ openPrompt }: Props) => {
+export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
   const tw = useTailwind();
   const dispatch = useAppDispatch();
   const text = useAppSelector(selectText);
   const messages = useAppSelector(selectMessages);
   const { loading, sendMessages, cancel, errorMessage, clearError } =
     useOpenAI();
+  const { checkToken } = useAuth();
   const [editModalVisible, setEditModalVisible] = useState(false);
 
   const giftedChatRef = useRef<GiftedChat>(null);
@@ -43,11 +46,22 @@ export const Chat = ({ openPrompt }: Props) => {
     (newGiftedMessages: Array<IMessage>) => {
       clearError();
       giftedChatRef.current?.textInput.blur();
+      if (!checkToken()) {
+        navigateToAuthScreen();
+        return;
+      }
       const newMessages = newGiftedMessages.map(toMessage);
       dispatch(addMessages(newMessages));
       sendMessages([...messages, ...newMessages]);
     },
-    [dispatch, clearError, sendMessages, messages]
+    [
+      clearError,
+      checkToken,
+      dispatch,
+      sendMessages,
+      messages,
+      navigateToAuthScreen,
+    ]
   );
 
   const renderSend = useCallback(

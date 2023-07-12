@@ -14,5 +14,10 @@ export const HomeScreen = ({ navigation }: Props) => {
     }
   }, [navigation, status, idToken]);
 
-  return <Chat openPrompt={() => navigation.push('Prompt')} />;
+  return (
+    <Chat
+      openPrompt={() => navigation.push('Prompt')}
+      navigateToAuthScreen={() => navigation.push('Auth')}
+    />
+  );
 };
