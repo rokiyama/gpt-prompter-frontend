@@ -8,14 +8,15 @@ import {
 } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { useKeyboardHeightContext } from '../../context/KeyboardHeightContext';
-import { i18n } from '../../i18n';
 import { Button } from '../atoms/Button';
 import { Modal } from '../atoms/Modal';
 
 type Props = {
   text: string;
-  setText: (text: string) => void;
   visible: boolean;
+  okTitle: string;
+  cancelTitle: string;
+  setText: (text: string) => void;
   setVisible: (visible: boolean) => void;
   onPressOk?: () => void;
   onPressCancel?: () => void;
@@ -23,8 +24,10 @@ type Props = {
 
 export const TextInputModal = ({
   text,
-  setText,
   visible,
+  okTitle,
+  cancelTitle,
+  setText,
   setVisible,
   onPressOk,
   onPressCancel,
@@ -55,14 +58,14 @@ export const TextInputModal = ({
               style={tw('flex-1 flex-row justify-end mr-8')}
             >
               <Button
-                title={i18n.t('cancel')}
+                title={cancelTitle}
                 onPress={() => {
                   setVisible(false);
                   onPressCancel?.();
                 }}
               />
               <Button
-                title={i18n.t('ok')}
+                title={okTitle}
                 onPress={() => {
                   setVisible(false);
                   onPressOk?.();

@@ -5,6 +5,7 @@ export const i18n = new I18n({
   en: {
     ok: 'OK',
     cancel: 'Cancel',
+    close: 'Close',
     welcome: "Let's talk about something.",
     systemMessage: 'System message',
     reset: 'Reset',
@@ -62,6 +63,7 @@ export const i18n = new I18n({
   ja: {
     ok: 'OK',
     cancel: 'キャンセル',
+    close: '閉じる',
     welcome: '何か話してみましょう。',
     systemMessage: 'システムメッセージ',
     reset: 'リセット',

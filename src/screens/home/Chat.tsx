@@ -1,6 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Platform, SafeAreaView, Text, View } from 'react-native';
-import { GiftedChat, IMessage } from 'react-native-gifted-chat';
+import { GiftedChat } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { USER } from '../../constants';
 import { useAuth } from '../../hooks/useAuth';
@@ -14,7 +14,8 @@ import {
   selectMessages,
   selectText,
 } from '../../redux/slices/chatSlice';
-import { toGiftedUser, toIMessage, toMessage } from '../../types/chat';
+import { toGiftedUser, toIMessage } from '../../types/chat';
+import { uuid } from '../../utils/uuid';
 import { ChatFooter } from './ChatFooter';
 import { EditModal } from './EditModal';
 import { SendButton } from './SendButton';
@@ -36,27 +37,23 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
 
   const giftedChatRef = useRef<GiftedChat>(null);
 
-  const onSend = useCallback(
-    (newGiftedMessages: Array<IMessage>) => {
-      clearError();
-      giftedChatRef.current?.textInput.blur();
-      if (!checkToken()) {
-        navigateToAuthScreen();
-        return;
-      }
-      const newMessages = newGiftedMessages.map(toMessage);
-      dispatch(addMessages(newMessages));
-      sendMessages([...messages, ...newMessages]);
-    },
-    [
-      clearError,
-      checkToken,
-      dispatch,
-      sendMessages,
-      messages,
-      navigateToAuthScreen,
-    ]
-  );
+  const sendText = () => {
+    clearError();
+    giftedChatRef.current?.textInput.blur();
+    if (!checkToken()) {
+      navigateToAuthScreen();
+      return;
+    }
+    const newMessage = {
+      id: uuid(),
+      text,
+      createdAt: new Date().getTime(),
+      user: USER,
+      system: false,
+    };
+    dispatch(addMessages([newMessage]));
+    sendMessages([...messages, newMessage]);
+  };
 
   return (
     <SafeAreaView style={tw('flex-1 bg-white')}>
@@ -81,7 +78,7 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
           onInputTextChanged={(text) => {
             dispatch(inputText(text));
           }}
-          onSend={onSend}
+          onSend={sendText}
           isTyping={loading}
           user={toGiftedUser(USER)}
           placeholder={i18n.t('sendMessage')}
@@ -120,9 +117,7 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
       <EditModal
         visible={editModalVisible}
         setVisible={setEditModalVisible}
-        onPressOk={() => {
-          console.log('onPressOk');
-        }}
+        onPressOk={sendText}
       />
     </SafeAreaView>
   );
