@@ -53,6 +53,7 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
     };
     dispatch(addMessages([newMessage]));
     sendMessages([...messages, newMessage]);
+    dispatch(inputText(''));
   };
 
   return (

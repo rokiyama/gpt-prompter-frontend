@@ -24,7 +24,6 @@ export const EditModal = ({ visible, setVisible, onPressOk }: Props) => {
       onPressOk={() => {
         if (text) {
           onPressOk();
-          dispatch(inputText(''));
         }
       }}
     />
