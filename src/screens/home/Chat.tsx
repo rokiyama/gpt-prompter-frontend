@@ -76,9 +76,6 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
           ref={giftedChatRef}
           messages={messages.slice().reverse().map(toIMessage)}
           text={text}
-          onInputTextChanged={(text) => {
-            dispatch(inputText(text));
-          }}
           onSend={sendText}
           isTyping={loading}
           user={toGiftedUser(USER)}
