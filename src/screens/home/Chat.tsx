@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Platform, SafeAreaView, Text, View } from 'react-native';
+import { Platform, SafeAreaView, Text, TextInput, View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { USER } from '../../constants';
@@ -35,11 +35,11 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
   const { checkToken } = useAuth();
   const [editModalVisible, setEditModalVisible] = useState(false);
 
-  const giftedChatRef = useRef<GiftedChat>(null);
+  const giftedInputRef = useRef<TextInput>(null);
 
   const sendText = () => {
     clearError();
-    giftedChatRef.current?.textInput.blur();
+    giftedInputRef.current?.blur();
     if (!checkToken()) {
       navigateToAuthScreen();
       return;
@@ -73,7 +73,7 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
       )}
       <View style={tw('flex-1')}>
         <GiftedChat
-          ref={giftedChatRef}
+          textInputRef={giftedInputRef}
           messages={messages.slice().reverse().map(toIMessage)}
           text={text}
           onSend={sendText}
@@ -90,7 +90,7 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
                 cancel();
                 clearError();
                 dispatch(clearMessages());
-                giftedChatRef.current?.focusTextInput();
+                giftedInputRef.current?.focus();
               }}
               cancel={cancel}
               resend={() => {
