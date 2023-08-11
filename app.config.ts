@@ -5,7 +5,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'AI Prompt',
   slug: 'expo-chat-command-gpt',
-  version: '1.0.3',
+  version: '1.0.4',
   orientation: 'portrait',
   icon: './assets/icon.png',
   userInterfaceStyle: 'light',
