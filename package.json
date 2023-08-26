@@ -9,6 +9,7 @@
     "web": "expo start --web",
     "lint": "eslint ./src",
     "format": "prettier -w .",
+    "ts:check": "tsc",
     "build:tailwind": "tailwindcss --input input.css --output tailwind.css --no-autoprefixer && tailwind-rn",
     "dev:tailwind": "concurrently \"tailwindcss --input input.css --output tailwind.css --no-autoprefixer --watch\" \"tailwind-rn --watch\"",
     "postinstall": "patch-package"

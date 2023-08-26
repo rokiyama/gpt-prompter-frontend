@@ -26,6 +26,8 @@ export const SystemMessageEditModal = ({ onPressOk }: Props) => {
       <TextInputModal
         visible={visible}
         text={text}
+        okTitle={i18n.t('ok')}
+        cancelTitle={i18n.t('cancel')}
         setText={setText}
         setVisible={setVisible}
         onPressOk={() => {
