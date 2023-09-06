@@ -59,6 +59,10 @@ export const i18n = new I18n({
     redisplayTutorial: 'Redisplay the tutorial',
     signin: 'Sign in to start using AI Prompt Editor.',
     signOut: 'Sign out',
+    deleteAccount: 'Delete account',
+    deleteAccountConfirmTitle: 'Are you sure you want to delete your account?',
+    deleteAccountConfirmBody:
+      'Once deleted, you will not be able to recreate an account until the next day.',
   },
   ja: {
     ok: 'OK',
@@ -115,6 +119,10 @@ export const i18n = new I18n({
     redisplayTutorial: 'チュートリアルを再表示する',
     signin: 'サインインして AI Prompt Editor の使用を開始しましょう。',
     signOut: 'サインアウトする',
+    deleteAccount: 'アカウントを削除する',
+    deleteAccountConfirmTitle: 'アカウントを削除してもよろしいですか？',
+    deleteAccountConfirmBody:
+      'アカウントを削除してから翌日まではアカウントの再作成を行うことはできません。',
   },
 });
 

@@ -9,6 +9,7 @@ import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
 import { RootStackParamList } from '../../types/navigation';
+import { DeleteAccount } from './DeleteAccount';
 import { Info } from './Info';
 import { SelectModelModal } from './SelectModelModal';
 import { SignOut } from './SignOut';
@@ -84,6 +85,9 @@ export const SettingsScreen = ({ navigation }: Props) => {
         </Card>
         <Card>
           <SignOut navigateToTop={() => navigation.popToTop()} />
+        </Card>
+        <Card>
+          <DeleteAccount navigateToTop={() => navigation.popToTop()} />
         </Card>
         <Info />
         {Constants.expoConfig?.extra?.appEnv === 'production' ? (
