@@ -32,7 +32,22 @@ export const DeleteAccount = ({ navigateToTop }: Props) => {
                 text: i18n.t('ok'),
                 onPress: async () => {
                   try {
-                    await deleteAccount(idToken);
+                    const res = await deleteAccount(idToken);
+                    switch (res) {
+                      case 'success':
+                        break;
+                      case 'unauthorized':
+                        Alert.alert(
+                          i18n.t('deleteAccount'),
+                          i18n.t('deleteAccountAuthError')
+                        );
+                        break;
+                      case 'alreadyReservedForDeletion':
+                        Alert.alert(
+                          i18n.t('deleteAccount'),
+                          i18n.t('deleteAccountAlreadyReserved')
+                        );
+                    }
                     dispatch(save({ idToken: '', user: '' }));
                     navigateToTop();
                   } catch (err) {

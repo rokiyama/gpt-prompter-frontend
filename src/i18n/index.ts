@@ -63,7 +63,12 @@ export const i18n = new I18n({
     deleteAccountConfirmTitle: 'Are you sure you want to delete your account?',
     deleteAccountConfirmBody:
       'Once deleted, you will not be able to recreate an account until the next day.',
+    deleteAccountAuthError:
+      'Failed to delete the account. Please sign in again and try deleting.',
+    deleteAccountAlreadyReserved:
+      'The account has already been deleted. You will not be able to recreate an account until the next day.',
   },
+
   ja: {
     ok: 'OK',
     cancel: 'キャンセル',
@@ -123,6 +128,10 @@ export const i18n = new I18n({
     deleteAccountConfirmTitle: 'アカウントを削除してもよろしいですか？',
     deleteAccountConfirmBody:
       'アカウントを削除してから翌日まではアカウントの再作成を行うことはできません。',
+    deleteAccountAuthError:
+      'アカウントを削除できませんでした。再度サインインしてから削除を行ってください。',
+    deleteAccountAlreadyReserved:
+      'アカウントは既に削除されています。翌日まではアカウントの再作成を行うことはできません。',
   },
 });
 
