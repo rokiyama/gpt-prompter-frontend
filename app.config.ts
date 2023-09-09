@@ -36,7 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     backendApiWsUrl:
       process.env.APP_ENV === 'production'
         ? 'wss://56jx8ioa0j.execute-api.ap-northeast-1.amazonaws.com/prod'
-        : 'wss://t2v5wu7qle.execute-api.ap-northeast-2.amazonaws.com/dev',
+        : 'wss://fzo2wqjdv4.execute-api.ap-northeast-2.amazonaws.com/dev',
     backendApiDeleteAccountUrl:
       process.env.APP_ENV === 'production'
         ? ''
