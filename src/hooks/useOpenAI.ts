@@ -81,6 +81,8 @@ export const useOpenAI = () => {
             setErrorMessage(
               i18n.t('errors.limitExceeded') + `(${parsed.data.error.message})`
             );
+          } else if (parsed.data.error.code === 'user_will_be_deleted') {
+            setErrorMessage(i18n.t('errors.userWillBeDeleted'));
           } else {
             console.error(parsed.data.error, body);
             setErrorMessage(

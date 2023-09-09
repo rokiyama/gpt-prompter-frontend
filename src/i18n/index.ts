@@ -36,6 +36,7 @@ export const i18n = new I18n({
     promptEditDescription: "Default values are automatically entered where omitted.",
     errors: {
       limitExceeded: "You have reached the daily character limit. We apologize for the inconvenience. Please try again tomorrow or later.",
+      userWillBeDeleted: "Your account is scheduled for deletion. You cannot recreate it for 12 hours after deletion.",
     },
     tutorial: {
       welcome: "👋 Welcome to AI Prompt Editor",
@@ -87,6 +88,7 @@ export const i18n = new I18n({
     promptEditDescription: "省略した箇所はデフォルト値が自動入力されます。",
     errors: {
       limitExceeded: "1日あたりの文字数上限に達しました。恐れ入りますが、明日以降に再度お試しください。",
+      userWillBeDeleted: "アカウントは削除予約されています。削除後12時間はアカウントの再作成を行うことはできません。",
     },
     tutorial: {
       welcome: "👋 AI Prompt Editorへようこそ",
