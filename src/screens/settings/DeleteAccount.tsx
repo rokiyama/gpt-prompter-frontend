@@ -35,6 +35,10 @@ export const DeleteAccount = ({ navigateToTop }: Props) => {
                     const res = await deleteAccount(idToken);
                     switch (res) {
                       case 'success':
+                        Alert.alert(
+                          i18n.t('deleteAccount'),
+                          i18n.t('deleteAccountReserved')
+                        );
                         break;
                       case 'unauthorized':
                         Alert.alert(

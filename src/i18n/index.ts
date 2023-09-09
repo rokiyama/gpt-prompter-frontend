@@ -62,7 +62,9 @@ export const i18n = new I18n({
     deleteAccount: 'Delete account',
     deleteAccountConfirmTitle: 'Are you sure you want to delete your account?',
     deleteAccountConfirmBody:
-      'Once deleted, you will not be able to recreate an account until the next day.',
+      'Once you delete your account, you cannot recreate it for 12 hours.',
+    deleteAccountReserved:
+      'Your account has been deleted. You cannot recreate it for 12 hours after deletion.',
     deleteAccountAuthError:
       'Failed to delete the account. Please sign in again and try deleting.',
     deleteAccountAlreadyReserved:
@@ -127,7 +129,9 @@ export const i18n = new I18n({
     deleteAccount: 'アカウントを削除する',
     deleteAccountConfirmTitle: 'アカウントを削除してもよろしいですか？',
     deleteAccountConfirmBody:
-      'アカウントを削除してから翌日まではアカウントの再作成を行うことはできません。',
+      'アカウントを削除してから12時間後まではアカウントの再作成を行うことはできません。',
+    deleteAccountReserved:
+      'アカウントが削除されました。削除してから12時間後まではアカウントの再作成を行うことはできません。',
     deleteAccountAuthError:
       'アカウントを削除できませんでした。再度サインインしてから削除を行ってください。',
     deleteAccountAlreadyReserved:
