@@ -54,6 +54,7 @@ export const Info = () => {
               }}
             />
             <Text>authState: {authState}</Text>
+            <Text>user: {user}</Text>
           </Card>
         </>
       )}

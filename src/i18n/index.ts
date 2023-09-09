@@ -36,7 +36,7 @@ export const i18n = new I18n({
     promptEditDescription: "Default values are automatically entered where omitted.",
     errors: {
       limitExceeded: "You have reached the daily character limit. We apologize for the inconvenience. Please try again tomorrow or later.",
-      userWillBeDeleted: "Your account is scheduled for deletion. You cannot recreate it for 12 hours after deletion.",
+      userWillBeDeleted: "Your account has been deleted. You cannot recreate it until the next day.",
     },
     tutorial: {
       welcome: "👋 Welcome to AI Prompt Editor",
@@ -48,8 +48,8 @@ export const i18n = new I18n({
     signOut: "Sign out",
     deleteAccount: "Delete account",
     deleteAccountConfirmTitle: "Are you sure you want to delete your account?",
-    deleteAccountConfirmBody: "Once you delete your account, you cannot recreate it for 12 hours.",
-    deleteAccountReserved: "Your account has been deleted. You cannot recreate it for 12 hours after deletion.",
+    deleteAccountConfirmBody: "If you delete your account, you cannot recreate it until the next day.",
+    deleteAccountReserved: "Your account has been deleted.",
     deleteAccountAuthError: "Failed to delete the account. Please sign in again and try deleting.",
     deleteAccountAlreadyReserved: "The account has already been deleted. You will not be able to recreate an account until the next day.",
   },
@@ -88,7 +88,7 @@ export const i18n = new I18n({
     promptEditDescription: "省略した箇所はデフォルト値が自動入力されます。",
     errors: {
       limitExceeded: "1日あたりの文字数上限に達しました。恐れ入りますが、明日以降に再度お試しください。",
-      userWillBeDeleted: "アカウントは削除予約されています。削除後12時間はアカウントの再作成を行うことはできません。",
+      userWillBeDeleted: "アカウントは削除されました。翌日まではアカウントの再作成を行うことはできません。",
     },
     tutorial: {
       welcome: "👋 AI Prompt Editorへようこそ",
@@ -100,8 +100,8 @@ export const i18n = new I18n({
     signOut: "サインアウトする",
     deleteAccount: "アカウントを削除する",
     deleteAccountConfirmTitle: "アカウントを削除してもよろしいですか？",
-    deleteAccountConfirmBody: "アカウントを削除してから12時間後まではアカウントの再作成を行うことはできません。",
-    deleteAccountReserved: "アカウントが削除されました。削除してから12時間後まではアカウントの再作成を行うことはできません。",
+    deleteAccountConfirmBody: "アカウントを削除すると、翌日まではアカウントの再作成を行うことはできません。",
+    deleteAccountReserved: "アカウントが削除されました。",
     deleteAccountAuthError: "アカウントを削除できませんでした。再度サインインしてから削除を行ってください。",
     deleteAccountAlreadyReserved: "アカウントは既に削除されています。翌日まではアカウントの再作成を行うことはできません。",
   },
