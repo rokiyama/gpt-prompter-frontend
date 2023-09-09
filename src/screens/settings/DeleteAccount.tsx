@@ -5,11 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectAuth } from '../../redux/slices/authSlice';
 import { useDeleteAccount } from './useDeleteAccount';
 
-type Props = {
-  navigateToTop: () => void;
-};
-
-export const DeleteAccount = ({ navigateToTop }: Props) => {
+export const DeleteAccount = () => {
   const dispatch = useAppDispatch();
   const { idToken } = useAppSelector(selectAuth);
   const { deleteAccount } = useDeleteAccount();
@@ -53,7 +49,6 @@ export const DeleteAccount = ({ navigateToTop }: Props) => {
                         );
                     }
                     dispatch(save({ idToken: '', user: '' }));
-                    navigateToTop();
                   } catch (err) {
                     console.error(err);
                     Alert.alert(

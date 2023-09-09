@@ -87,7 +87,7 @@ export const SettingsScreen = ({ navigation }: Props) => {
           <SignOut navigateToTop={() => navigation.popToTop()} />
         </Card>
         <Card>
-          <DeleteAccount navigateToTop={() => navigation.popToTop()} />
+          <DeleteAccount />
         </Card>
         <Info />
         {Constants.expoConfig?.extra?.appEnv === 'production' ? (

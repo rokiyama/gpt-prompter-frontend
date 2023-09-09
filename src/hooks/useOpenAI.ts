@@ -1,10 +1,11 @@
 import Constants from 'expo-constants';
 import { ChatCompletionRequestMessage } from 'openai';
 import { useCallback, useState } from 'react';
+import { Alert } from 'react-native';
 import { CHAT_AI, SYSTEM } from '../constants';
 import { i18n } from '../i18n';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { selectAuth } from '../redux/slices/authSlice';
+import { save, selectAuth } from '../redux/slices/authSlice';
 import { addMessages, appendLastMessage } from '../redux/slices/chatSlice';
 import { selectSettings } from '../redux/slices/settingsSlice';
 import { Message } from '../types/chat';
@@ -82,7 +83,11 @@ export const useOpenAI = () => {
               i18n.t('errors.limitExceeded') + `(${parsed.data.error.message})`
             );
           } else if (parsed.data.error.code === 'user_will_be_deleted') {
-            setErrorMessage(i18n.t('errors.userWillBeDeleted'));
+            Alert.alert(
+              i18n.t('errorOccurred'),
+              i18n.t('errors.userWillBeDeleted')
+            );
+            dispatch(save({ idToken: '', user: '' }));
           } else {
             console.error(parsed.data.error, body);
             setErrorMessage(
