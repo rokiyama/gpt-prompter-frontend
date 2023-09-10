@@ -38,7 +38,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         : 'wss://fzo2wqjdv4.execute-api.ap-northeast-2.amazonaws.com/dev',
     backendApiDeleteAccountUrl:
       process.env.APP_ENV === 'production'
-        ? ''
+        ? 'https://i985f7f83d.execute-api.ap-northeast-1.amazonaws.com/reserve-user-deletion'
         : 'https://9t4hypjwxh.execute-api.ap-northeast-2.amazonaws.com/reserve-user-deletion',
     externalDataUrl: 'https://gpt-chat-misc.vercel.app/prompts.json',
     eas: {
