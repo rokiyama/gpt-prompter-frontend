@@ -27,6 +27,12 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "rei.okiyama@gmail.com",
+        "ascAppId": "6448696132",
+        "appleTeamId": "Z29JH366BF"
+      }
+    }
   }
 }
