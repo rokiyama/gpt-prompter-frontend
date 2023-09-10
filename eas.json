@@ -1,7 +1,8 @@
 {
   "cli": {
     "version": ">= 3.8.0",
-    "promptToConfigurePushNotifications": false
+    "promptToConfigurePushNotifications": false,
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -27,6 +28,12 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "rei.okiyama@gmail.com",
+        "ascAppId": "6448696132",
+        "appleTeamId": "Z29JH366BF"
+      }
+    }
   }
 }

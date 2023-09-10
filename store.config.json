@@ -20,7 +20,7 @@
         "marketingUrl": "https://okiyama.dev",
         "supportUrl": "https://okiyama.dev",
         "privacyPolicyUrl": "https://gpt-chat-misc.vercel.app/prompter-privacy-policy.html",
-        "releaseNotes": "Minor bug fixes"
+        "releaseNotes": "Fixed minor bugs."
       }
     }
   }
