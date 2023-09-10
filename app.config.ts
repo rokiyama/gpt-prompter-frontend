@@ -20,7 +20,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       usesNonExemptEncryption: false,
     },
     bundleIdentifier: 'dev.okiyama.expochatcommandgpt',
-    buildNumber: '3',
   },
   android: {
     adaptiveIcon: {
