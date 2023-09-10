@@ -1,5 +1,4 @@
 import { ExpoConfig, ConfigContext } from 'expo/config';
-import buildNumber from './build-number.json';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -21,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       usesNonExemptEncryption: false,
     },
     bundleIdentifier: 'dev.okiyama.expochatcommandgpt',
-    buildNumber: `${buildNumber}`,
+    buildNumber: '3',
   },
   android: {
     adaptiveIcon: {
