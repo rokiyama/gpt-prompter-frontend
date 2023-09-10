@@ -72,12 +72,14 @@ export const useOpenAI = () => {
           const parsedErr = ApiGwError.safeParse(obj);
           if (parsedErr.success) {
             console.log('ApiGwError', parsedErr.data);
+            setErrorMessage(parsedErr.data.message);
           } else {
             console.error('parse error', parsed.error, obj);
           }
           return;
         }
         if (parsed.data.error) {
+          setLoading(false);
           if (parsed.data.error.code === 'token_limit_exceeded') {
             setErrorMessage(
               i18n.t('errors.limitExceeded') + `(${parsed.data.error.message})`

@@ -3,7 +3,6 @@ import { Platform, SafeAreaView, Text, TextInput, View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { useTailwind } from 'tailwind-rn';
 import { USER } from '../../constants';
-import { useAuth } from '../../hooks/useAuth';
 import { useOpenAI } from '../../hooks/useOpenAI';
 import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -25,14 +24,13 @@ type Props = {
   navigateToAuthScreen: () => void;
 };
 
-export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
+export const Chat = ({ openPrompt }: Props) => {
   const tw = useTailwind();
   const dispatch = useAppDispatch();
   const text = useAppSelector(selectText);
   const messages = useAppSelector(selectMessages);
   const { loading, sendMessages, cancel, errorMessage, clearError } =
     useOpenAI();
-  const { checkToken } = useAuth();
   const [editModalVisible, setEditModalVisible] = useState(false);
 
   const giftedInputRef = useRef<TextInput>(null);
@@ -40,10 +38,6 @@ export const Chat = ({ openPrompt, navigateToAuthScreen }: Props) => {
   const sendText = () => {
     clearError();
     giftedInputRef.current?.blur();
-    if (!checkToken()) {
-      navigateToAuthScreen();
-      return;
-    }
     const newMessage = {
       id: uuid(),
       text,

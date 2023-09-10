@@ -10,7 +10,7 @@
         "marketingUrl": "https://okiyama.dev",
         "supportUrl": "https://okiyama.dev",
         "privacyPolicyUrl": "https://gpt-chat-misc.vercel.app/prompter-privacy-policy.html",
-        "releaseNotes": "軽微な不具合を修正しました。\nアカウントの削除に対応しました。"
+        "releaseNotes": "軽微な不具合を修正しました。"
       },
       "en-US": {
         "title": "AI Prompt Editor",
@@ -20,7 +20,7 @@
         "marketingUrl": "https://okiyama.dev",
         "supportUrl": "https://okiyama.dev",
         "privacyPolicyUrl": "https://gpt-chat-misc.vercel.app/prompter-privacy-policy.html",
-        "releaseNotes": "Fixed minor bugs.\nImplemented account deletion support."
+        "releaseNotes": "Fixed minor bugs."
       }
     }
   }
