@@ -48,5 +48,5 @@ export const useCheckUpdate = () => {
     return () => {
       subscription.remove();
     };
-  }, []);
+  }, [dismissed]);
 };
