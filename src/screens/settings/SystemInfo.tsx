@@ -9,7 +9,7 @@ import { Button } from '../../component/atoms/Button';
 import { Card } from '../../component/atoms/Card';
 import { useAuth } from '../../hooks/useAuth';
 
-export const Info = () => {
+export const SystemInfo = () => {
   const [visible, setVisible] = useState(false);
   const { user } = useAuth();
   const [authState, setAuthState] = useState('');
@@ -24,8 +24,9 @@ export const Info = () => {
       {visible && (
         <>
           <Card>
-            <Text>NODE_ENV: {process.env.NODE_ENV}</Text>
+            <Text>process.env.NODE_ENV: {process.env.NODE_ENV}</Text>
             <Text>appEnv: {Constants.expoConfig?.extra?.appEnv}</Text>
+            <Text>process.env.APP_ENV: {process.env.APP_ENV}</Text>
             <Text>{Constants.expoConfig?.extra?.backendApiWsUrl}</Text>
           </Card>
           <Card>
