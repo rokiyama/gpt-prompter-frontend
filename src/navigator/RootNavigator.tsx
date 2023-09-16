@@ -14,10 +14,12 @@ import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { SystemMessageScreen } from '../screens/systemMessage/SystemMessageScreen';
 import { TestScreen } from '../screens/test/TestScreen';
 import { RootStackParamList } from '../types/navigation';
+import { useCheckUpdate } from '../hooks/useCheckUpdate';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
+  useCheckUpdate();
   useSettings();
   useExternalData();
   return (
