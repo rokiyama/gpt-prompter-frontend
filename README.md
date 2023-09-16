@@ -22,3 +22,15 @@ npx eas-cli@latest build --platform ios --auto-submit --non-interactive --no-wai
 # push store metadata
 npx eas-cli@latest metadata:push
 ```
+
+### build & update
+
+```sh
+# development channel
+
+## build
+npx eas-cli@latest build --profile development --platform ios
+
+## update
+npx eas-cli@latest update --branch development --platform ios
+```
