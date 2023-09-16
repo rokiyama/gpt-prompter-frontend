@@ -6,19 +6,15 @@
   },
   "build": {
     "development": {
-      "developmentClient": true,
-      "distribution": "internal",
-      "ios": {
-        "resourceClass": "m-medium"
-      }
-    },
-    "preview": {
+      "channel": "development",
+      "developmentClient": false,
       "distribution": "internal",
       "ios": {
         "resourceClass": "m-medium"
       }
     },
     "production": {
+      "channel": "main",
       "env": {
         "APP_ENV": "production"
       },
