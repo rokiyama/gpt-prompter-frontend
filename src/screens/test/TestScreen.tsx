@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { Button } from '../../component/atoms/Button';
 
@@ -7,14 +7,18 @@ import { Button } from '../../component/atoms/Button';
 
 export const TestScreen = () => {
   const tw = useTailwind();
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const add = (a: number) => (b: number) => a + b;
   const increment = add(1);
 
   return (
-    <SafeAreaView style={tw('flex-1')}>
-      <Text>{count}</Text>
-      <Button title="Increment" onPress={() => setCount(increment)} />
+    <SafeAreaView style={tw('flex-1 items-center')}>
+      <View style={tw('flex-1 justify-end')}>
+        <Text>{count}</Text>
+      </View>
+      <View style={tw('flex-1')}>
+        <Button title="Increment" onPress={() => setCount(increment)} />
+      </View>
     </SafeAreaView>
   );
 };
