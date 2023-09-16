@@ -8,6 +8,7 @@ import { GptModel } from '../../types/openAI';
 const ASYNC_STORAGE_KEY_SETTINGS = 'SETTINGS';
 
 interface SettingsState {
+  loaded: boolean;
   mode: 'userId' | 'apiKey';
   isApiKeyConfigured: boolean;
   model: GptModel;
@@ -15,6 +16,7 @@ interface SettingsState {
 }
 
 const initialState: SettingsState = {
+  loaded: false,
   mode: 'userId',
   isApiKeyConfigured: false,
   model: 'gpt-4',
@@ -26,7 +28,10 @@ export const load = createAsyncThunk('settings/load', async () => {
   try {
     const obj = Settings.parse(JSON.parse(value ?? ''));
     console.log(`load from asyncStorage`, obj);
-    return obj;
+    return {
+      ...obj,
+      loaded: true,
+    };
   } catch (err) {
     // ignore error
     console.log('could not load settings', err);
@@ -34,6 +39,7 @@ export const load = createAsyncThunk('settings/load', async () => {
   // create new settings and save
   const settings = {
     ...initialState,
+    loaded: true,
   };
   await saveSettings(settings);
   return settings;
@@ -78,6 +84,7 @@ const saveSettings = async (settings: SettingsState) => {
 
 const Settings = schemaForType<SettingsState>()(
   object({
+    loaded: boolean(),
     mode: union([literal('userId'), literal('apiKey')]),
     isApiKeyConfigured: boolean(),
     model: union([literal('gpt-4'), literal('gpt-3.5-turbo')]),
