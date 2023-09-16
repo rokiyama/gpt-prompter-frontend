@@ -52,6 +52,8 @@ export const i18n = new I18n({
     deleteAccountReserved: "Your account has been deleted.",
     deleteAccountAuthError: "Failed to delete the account. Please sign in again and try deleting.",
     deleteAccountAlreadyReserved: "The account has already been deleted. You will not be able to recreate an account until the next day.",
+    updateAvailableTitle: "Update Available",
+    updateAvailableBody: "The latest version of the app is available. Would you like to restart and update?",
   },
 
   ja: {
@@ -104,6 +106,8 @@ export const i18n = new I18n({
     deleteAccountReserved: "アカウントが削除されました。",
     deleteAccountAuthError: "アカウントを削除できませんでした。再度サインインしてから削除を行ってください。",
     deleteAccountAlreadyReserved: "アカウントは既に削除されています。翌日まではアカウントの再作成を行うことはできません。",
+    updateAvailableTitle: "アップデート可能",
+    updateAvailableBody: "アプリの最新版が利用可能です。再起動して更新しますか？",
   },
 });
 
