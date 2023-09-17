@@ -11,7 +11,7 @@ export const useCheckUpdate = () => {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.EXPO_PUBLIC_APP_ENV !== 'production') {
       return;
     }
     const subscription = AppState.addEventListener(
@@ -29,12 +29,12 @@ export const useCheckUpdate = () => {
               i18n.t('updateAvailableBody'),
               [
                 {
-                  text: 'Cancel',
+                  text: i18n.t('cancel'),
                   onPress: () => setDismissed(true),
                   style: 'cancel',
                 },
                 {
-                  text: 'OK',
+                  text: i18n.t('ok'),
                   onPress: () => reloadAsync(),
                 },
               ]

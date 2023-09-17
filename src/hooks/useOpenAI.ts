@@ -1,4 +1,3 @@
-import Constants from 'expo-constants';
 import { ChatCompletionRequestMessage } from 'openai';
 import { useCallback, useState } from 'react';
 import { Alert } from 'react-native';
@@ -53,7 +52,7 @@ export const useOpenAI = () => {
         ])
       );
 
-      const sock = new WebSocket(Constants.expoConfig?.extra?.backendApiWsUrl);
+      const sock = new WebSocket(process.env.EXPO_PUBLIC_API_WS_URL || '');
       setSocket(sock);
       sock.onopen = () => {
         sock.send(
@@ -72,7 +71,7 @@ export const useOpenAI = () => {
           const parsedErr = ApiGwError.safeParse(obj);
           if (parsedErr.success) {
             console.log('ApiGwError', parsedErr.data);
-            setErrorMessage(parsedErr.data.message);
+            console.error(parsedErr.data.message);
           } else {
             console.error('parse error', parsed.error, obj);
           }

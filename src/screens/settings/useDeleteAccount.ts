@@ -1,16 +1,12 @@
 import axios from 'axios';
-import Constants from 'expo-constants';
 import { useCallback } from 'react';
 
 export const useDeleteAccount = () => {
   const deleteAccount = useCallback(async (idToken: string) => {
     try {
-      await axios.post(
-        Constants.expoConfig?.extra?.backendApiDeleteAccountUrl,
-        {
-          idToken,
-        }
-      );
+      await axios.post(process.env.EXPO_PUBLIC_API_HTTP_URL || '', {
+        idToken,
+      });
       return 'success';
     } catch (err) {
       if (axios.isAxiosError(err)) {

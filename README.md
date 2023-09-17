@@ -30,7 +30,7 @@ npx eas-cli@latest metadata:push
 
 ```sh
 # build
-npx eas-cli@latest build --profile preview --platform ios
+npx eas-cli@latest build --profile preview --platform ios --non-interactive --no-wait
 
 # update
 npx eas-cli@latest update --branch preview --platform ios
