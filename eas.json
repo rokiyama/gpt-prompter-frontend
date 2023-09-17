@@ -5,8 +5,8 @@
     "appVersionSource": "remote"
   },
   "build": {
-    "development": {
-      "channel": "development",
+    "main": {
+      "channel": "dev",
       "developmentClient": false,
       "distribution": "internal",
       "ios": {

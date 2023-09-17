@@ -26,11 +26,11 @@ npx eas-cli@latest metadata:push
 ### build & update
 
 ```sh
-# development channel
+# dev channel
 
 ## build
-npx eas-cli@latest build --profile development --platform ios
+npx eas-cli@latest build --profile main --platform ios
 
 ## update
-npx eas-cli@latest update --branch development --platform ios
+npx eas-cli@latest update --branch main --platform ios
 ```
