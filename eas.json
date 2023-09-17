@@ -5,14 +5,6 @@
     "appVersionSource": "remote"
   },
   "build": {
-    "preview": {
-      "channel": "preview",
-      "developmentClient": false,
-      "distribution": "internal",
-      "ios": {
-        "resourceClass": "m-medium"
-      }
-    },
     "main": {
       "channel": "production",
       "env": {
@@ -22,6 +14,11 @@
         "resourceClass": "m-medium"
       },
       "autoIncrement": true
+    },
+    "preview": {
+      "extends": "production",
+      "channel": "preview",
+      "distribution": "internal"
     }
   },
   "submit": {

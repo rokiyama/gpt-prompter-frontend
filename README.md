@@ -10,27 +10,28 @@ npm start
 npm run dev:tailwind
 ```
 
-## build
+## production
 
 ```sh
 npm ci
 npm run build:tailwind
 
 # build and submit via EAS
-npx eas-cli@latest build --platform ios --auto-submit --non-interactive --no-wait
+npx eas-cli@latest build --profile production --platform ios --auto-submit --non-interactive --no-wait
+
+# update
+npx eas-cli@latest update --branch production --platform ios
 
 # push store metadata
 npx eas-cli@latest metadata:push
 ```
 
-### build & update
+### preview
 
 ```sh
-# dev channel
+# build
+npx eas-cli@latest build --profile preview --platform ios
 
-## build
-npx eas-cli@latest build --profile main --platform ios
-
-## update
-npx eas-cli@latest update --branch main --platform ios
+# update
+npx eas-cli@latest update --branch preview --platform ios
 ```
