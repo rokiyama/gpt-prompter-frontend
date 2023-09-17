@@ -71,7 +71,7 @@ export const useOpenAI = () => {
           const parsedErr = ApiGwError.safeParse(obj);
           if (parsedErr.success) {
             console.log('ApiGwError', parsedErr.data);
-            setErrorMessage(parsedErr.data.message);
+            console.error(parsedErr.data.message);
           } else {
             console.error('parse error', parsed.error, obj);
           }
