@@ -35,4 +35,4 @@ jobs:
         run: npm ci
 
       - name: Publish update
-        run: eas update --platform ios
+        run: eas update --auto --platform ios
