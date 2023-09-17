@@ -29,12 +29,12 @@ export const useCheckUpdate = () => {
               i18n.t('updateAvailableBody'),
               [
                 {
-                  text: 'Cancel',
+                  text: i18n.t('cancel'),
                   onPress: () => setDismissed(true),
                   style: 'cancel',
                 },
                 {
-                  text: 'OK',
+                  text: i18n.t('ok'),
                   onPress: () => reloadAsync(),
                 },
               ]
