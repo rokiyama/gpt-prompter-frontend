@@ -16,7 +16,7 @@
       "autoIncrement": true
     },
     "preview": {
-      "extends": "production",
+      "extends": "main",
       "channel": "preview",
       "distribution": "internal"
     }
