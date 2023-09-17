@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import Constants from 'expo-constants';
 import { array, boolean, object, record, string } from 'zod';
 import { schemaForType } from '../../utils/schema';
 import { RootState } from '../store';
@@ -47,7 +46,9 @@ export const loadExternalData = createAsyncThunk(
   'externalData/load',
   async () => {
     try {
-      const res = await axios.get(Constants.expoConfig?.extra?.externalDataUrl);
+      const res = await axios.get(
+        process.env.EXPO_PUBLIC_EXTERNAL_DATA_URL || ''
+      );
       const parsed = ExternalData.parse(res.data);
       console.log('ExternalData', parsed);
       return parsed;

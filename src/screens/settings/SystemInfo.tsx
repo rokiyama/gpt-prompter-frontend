@@ -2,7 +2,6 @@ import {
   AppleAuthenticationCredentialState,
   getCredentialStateAsync,
 } from 'expo-apple-authentication';
-import Constants from 'expo-constants';
 import { useState } from 'react';
 import { Text } from 'react-native';
 import { Button } from '../../component/atoms/Button';
@@ -13,7 +12,7 @@ export const SystemInfo = () => {
   const [visible, setVisible] = useState(false);
   const { user } = useAuth();
   const [authState, setAuthState] = useState('');
-  return Constants.expoConfig?.extra?.appEnv === 'production' ? (
+  return process.env.EXPO_PUBLIC_APP_ENV === 'production' ? (
     <></>
   ) : (
     <>
@@ -24,10 +23,11 @@ export const SystemInfo = () => {
       {visible && (
         <>
           <Card>
-            <Text>process.env.NODE_ENV: {process.env.NODE_ENV}</Text>
-            <Text>appEnv: {Constants.expoConfig?.extra?.appEnv}</Text>
-            <Text>process.env.APP_ENV: {process.env.APP_ENV}</Text>
-            <Text>{Constants.expoConfig?.extra?.backendApiWsUrl}</Text>
+            <Text>NODE_ENV: {process.env.NODE_ENV}</Text>
+            <Text>EXPO_PUBLIC_APP_ENV: {process.env.EXPO_PUBLIC_APP_ENV}</Text>
+            <Text>
+              EXPO_PUBLIC_API_WS_URL: {process.env.EXPO_PUBLIC_API_WS_URL}
+            </Text>
           </Card>
           <Card>
             <Button

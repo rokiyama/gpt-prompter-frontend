@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import Constants from 'expo-constants';
 import logger from 'redux-logger';
 import { authSlice } from './slices/authSlice';
 import { chatSlice } from './slices/chatSlice';
@@ -14,7 +13,7 @@ export const store = configureStore({
     externalData: externalDataSlice.reducer,
   },
   middleware:
-    Constants.expoConfig?.extra?.appEnv === 'production'
+    process.env.EXPO_PUBLIC_APP_ENV === 'production'
       ? undefined
       : (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

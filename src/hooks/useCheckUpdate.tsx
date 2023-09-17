@@ -11,7 +11,7 @@ export const useCheckUpdate = () => {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.EXPO_PUBLIC_APP_ENV === 'dev') {
       return;
     }
     const subscription = AppState.addEventListener(

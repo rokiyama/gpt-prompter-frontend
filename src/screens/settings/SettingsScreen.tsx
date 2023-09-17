@@ -1,5 +1,4 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Constants from 'expo-constants';
 import { useState } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
@@ -9,8 +8,8 @@ import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
 import { RootStackParamList } from '../../types/navigation';
-import { SystemInfo } from './SystemInfo';
 import { SelectModelModal } from './SelectModelModal';
+import { SystemInfo } from './SystemInfo';
 
 // const ListText = ({ children }: { children: ReactNode }) => {
 //   const tw = useTailwind();
@@ -82,7 +81,7 @@ export const SettingsScreen = ({ navigation }: Props) => {
           />
         </Card>
         <SystemInfo />
-        {Constants.expoConfig?.extra?.appEnv === 'production' ? (
+        {process.env.EXPO_PUBLIC_APP_ENV === 'production' ? (
           <></>
         ) : (
           <Button
