@@ -4,7 +4,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'AI Prompt',
   slug: 'expo-chat-command-gpt',
-  version: '1.0.4',
+  version: '1.0.5',
   orientation: 'portrait',
   icon: './assets/icon.png',
   userInterfaceStyle: 'light',
@@ -43,5 +43,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     eas: {
       projectId: '28332568-8713-4a75-bbe1-6cd8ec9fd30b',
     },
+  },
+  updates: {
+    url: 'https://u.expo.dev/28332568-8713-4a75-bbe1-6cd8ec9fd30b',
+  },
+  runtimeVersion: {
+    policy: 'appVersion',
   },
 });

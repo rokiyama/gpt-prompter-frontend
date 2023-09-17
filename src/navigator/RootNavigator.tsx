@@ -18,8 +18,14 @@ import { RootStackParamList } from '../types/navigation';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
-  useSettings();
+  const {
+    settings: { loaded },
+  } = useSettings();
   useExternalData();
+
+  if (!loaded) {
+    return <></>;
+  }
   return (
     <KeyboardHeightContextProvider>
       <NavigationContainer>

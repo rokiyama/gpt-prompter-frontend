@@ -9,7 +9,7 @@ import { i18n } from '../../i18n';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { save, selectSettings } from '../../redux/slices/settingsSlice';
 import { RootStackParamList } from '../../types/navigation';
-import { Info } from './Info';
+import { SystemInfo } from './SystemInfo';
 import { SelectModelModal } from './SelectModelModal';
 
 // const ListText = ({ children }: { children: ReactNode }) => {
@@ -81,7 +81,7 @@ export const SettingsScreen = ({ navigation }: Props) => {
             }}
           />
         </Card>
-        <Info />
+        <SystemInfo />
         {Constants.expoConfig?.extra?.appEnv === 'production' ? (
           <></>
         ) : (
