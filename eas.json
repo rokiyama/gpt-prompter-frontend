@@ -5,15 +5,15 @@
     "appVersionSource": "remote"
   },
   "build": {
-    "main": {
-      "channel": "dev",
+    "preview": {
+      "channel": "preview",
       "developmentClient": false,
       "distribution": "internal",
       "ios": {
         "resourceClass": "m-medium"
       }
     },
-    "production": {
+    "main": {
       "channel": "production",
       "env": {
         "APP_ENV": "production"
