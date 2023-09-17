@@ -16,10 +16,14 @@
       "autoIncrement": true
     },
     "preview": {
-      "extends": "main",
       "channel": "preview",
       "distribution": "internal",
-      "autoIncrement": false
+      "env": {
+        "APP_ENV": "production"
+      },
+      "ios": {
+        "resourceClass": "m-medium"
+      }
     }
   },
   "submit": {
