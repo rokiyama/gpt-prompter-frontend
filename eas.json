@@ -8,7 +8,8 @@
     "main": {
       "channel": "production",
       "env": {
-        "EXPO_PUBLIC_APP_ENV": "production"
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "EXPO_PUBLIC_TEST": "test value"
       },
       "ios": {
         "resourceClass": "m-medium"
