@@ -1,3 +1,4 @@
+import * as Updates from 'expo-updates';
 import {
   AppleAuthenticationCredentialState,
   getCredentialStateAsync,
@@ -25,9 +26,7 @@ export const SystemInfo = () => {
           <Card>
             <Text>NODE_ENV: {process.env.NODE_ENV}</Text>
             <Text>EXPO_PUBLIC_APP_ENV: {process.env.EXPO_PUBLIC_APP_ENV}</Text>
-            <Text>
-              EXPO_PUBLIC_API_WS_URL: {process.env.EXPO_PUBLIC_API_WS_URL}
-            </Text>
+            <Text>Updates.channel: {Updates.channel}</Text>
           </Card>
           <Card>
             <Button
