@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
@@ -18,7 +19,7 @@ import { SystemInfo } from './SystemInfo';
 //   };
 //   return (
 //     <ParsedText
-//       style={tw('m-1 flex-wrap text-slate-500')}
+//       style={tw('m-1 flex-wrap text-slate-400')}
 //       parse={[
 //         {
 //           type: 'url',
@@ -88,6 +89,12 @@ export const SettingsScreen = ({ navigation }: Props) => {
             title="Open TestScreen"
             onPress={() => navigation.push('Test')}
           />
+        )}
+
+        {Constants.manifest2 && (
+          <Text style={tw('text-slate-400')}>
+            Version: {Constants.manifest2.runtimeVersion}
+          </Text>
         )}
 
         {/*
