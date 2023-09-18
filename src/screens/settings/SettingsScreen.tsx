@@ -89,7 +89,6 @@ export const SettingsScreen = ({ navigation }: Props) => {
             onPress={() => navigation.push('Test')}
           />
         )}
-        <Text>{process.env.EXPO_PUBLIC_TEST}</Text>
 
         {/*
         <View
