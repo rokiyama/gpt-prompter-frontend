@@ -2,6 +2,7 @@ import {
   AppleAuthenticationCredentialState,
   getCredentialStateAsync,
 } from 'expo-apple-authentication';
+import * as Updates from 'expo-updates';
 import { useState } from 'react';
 import { Text } from 'react-native';
 import { Button } from '../../component/atoms/Button';
@@ -12,9 +13,21 @@ export const SystemInfo = () => {
   const [visible, setVisible] = useState(false);
   const { user } = useAuth();
   const [authState, setAuthState] = useState('');
-  return process.env.EXPO_PUBLIC_APP_ENV === 'production' ? (
-    <></>
-  ) : (
+
+  if (process.env.EXPO_PUBLIC_APP_ENV === 'production') {
+    if (Updates.channel === 'production') {
+      return <></>;
+    }
+    if (Updates.channel === 'preview') {
+      return (
+        <Card>
+          <Variables />
+        </Card>
+      );
+    }
+  }
+
+  return (
     <>
       <Button
         title="Show system information"
@@ -23,11 +36,7 @@ export const SystemInfo = () => {
       {visible && (
         <>
           <Card>
-            <Text>NODE_ENV: {process.env.NODE_ENV}</Text>
-            <Text>EXPO_PUBLIC_APP_ENV: {process.env.EXPO_PUBLIC_APP_ENV}</Text>
-            <Text>
-              EXPO_PUBLIC_API_WS_URL: {process.env.EXPO_PUBLIC_API_WS_URL}
-            </Text>
+            <Variables />
           </Card>
           <Card>
             <Button
@@ -59,6 +68,17 @@ export const SystemInfo = () => {
           </Card>
         </>
       )}
+    </>
+  );
+};
+
+const Variables = () => {
+  return (
+    <>
+      <Text>NODE_ENV: {process.env.NODE_ENV}</Text>
+      <Text>EXPO_PUBLIC_APP_ENV: {process.env.EXPO_PUBLIC_APP_ENV}</Text>
+      <Text>Updates.channel: {Updates.channel}</Text>
+      <Text>Updates.runtimeVersion: {Updates.runtimeVersion}</Text>
     </>
   );
 };
