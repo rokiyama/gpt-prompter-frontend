@@ -78,6 +78,7 @@ const Variables = () => {
       <Text>NODE_ENV: {process.env.NODE_ENV}</Text>
       <Text>EXPO_PUBLIC_APP_ENV: {process.env.EXPO_PUBLIC_APP_ENV}</Text>
       <Text>Updates.channel: {Updates.channel}</Text>
+      <Text>Updates.runtimeVersion: {Updates.runtimeVersion}</Text>
     </>
   );
 };
