@@ -8,7 +8,8 @@
     "production": {
       "channel": "production",
       "env": {
-        "EXPO_PUBLIC_APP_ENV": "production"
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "EXPO_PUBLIC_TEST": "test value"
       },
       "ios": {
         "resourceClass": "m-medium"
@@ -18,11 +19,7 @@
     "preview": {
       "extends": "production",
       "channel": "preview",
-      "distribution": "internal",
-      "env": {
-        "EXPO_PUBLIC_APP_ENV": "production",
-        "EXPO_PUBLIC_TEST": "test value"
-      }
+      "distribution": "internal"
     }
   },
   "submit": {
