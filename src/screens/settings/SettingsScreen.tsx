@@ -91,11 +91,11 @@ export const SettingsScreen = ({ navigation }: Props) => {
           />
         )}
 
-        {Constants.manifest2 && (
-          <Text style={tw('text-slate-400')}>
-            Version: {Constants.manifest2.runtimeVersion}
-          </Text>
-        )}
+        <Text style={tw('text-slate-400')}>
+          Version: {Constants.manifest2?.runtimeVersion || '1.0.0'}
+          {' · '}
+          {Constants.platform?.ios?.buildNumber || '0'}
+        </Text>
 
         {/*
         <View
